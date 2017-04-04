@@ -311,10 +311,11 @@ namespace HCIProjekat
                     }
                     else
                     {
-                        newSpomenik.Tip = TipBox.SelectedItem as TipSpomenika;
+                        newSpomenik.Tip = _tipSpomenika;
                         if (FileBox.Text.Equals(""))
                         {
-                            newSpomenik.IkonicaPath = (TipBox.SelectedItem as TipSpomenika).IkonicaPath;
+                            ;
+                            newSpomenik.IkonicaPath = _tipSpomenika.IkonicaPath;
                         }
                         Main.GetInstance().GetSpomenikLista.Add(newSpomenik);
                         // Console.WriteLine(Main.GetInstance().GetSpomenikLista.Count);

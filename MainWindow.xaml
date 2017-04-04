@@ -79,7 +79,7 @@
                             <TextBlock Text="Spomenici" />
                         </StackPanel>
                     </TabItem.Header>
-                    <ListView Name="SpomenikLista" MouseDoubleClick="SpomeniciLista_OnMouseDoubleClick" ItemsSource="{Binding GetSpomenikLista}" DockPanel.Dock="Left" Width="200px">
+                    <ListView Name="SpomenikLista" PreviewMouseLeftButtonDown="List_PreviewMouseLeftButtonDown" PreviewMouseMove="List_MouseMove" MouseDoubleClick="SpomeniciLista_OnMouseDoubleClick" ItemsSource="{Binding GetSpomenikLista}" DockPanel.Dock="Left" Width="200px">
                         <ListView.ItemTemplate>
                             <DataTemplate>
                                 <StackPanel>
@@ -136,7 +136,7 @@
                 </TabItem>
             </TabControl>
 
-            <StackPanel Margin="0">
+            <StackPanel Margin="0" Drop="DropMapa_Drop" DragEnter="DropMapa_DragEnter" AllowDrop="True">
                 <StackPanel.Background>
                     <ImageBrush ImageSource="resources/worldmap-worldmap2.jpg"></ImageBrush>
                 </StackPanel.Background>

@@ -34,3 +34,4 @@ D:\mono\E2\HCI\HCIProjekat\HCIProjekat\obj\Debug\HCIProjekat.Properties.Resource
 D:\mono\E2\HCI\HCIProjekat\HCIProjekat\obj\Debug\HCIProjekat.csproj.GenerateResource.Cache
 D:\mono\E2\HCI\HCIProjekat\HCIProjekat\obj\Debug\HCIProjekat.exe
 D:\mono\E2\HCI\HCIProjekat\HCIProjekat\obj\Debug\HCIProjekat.pdb
+D:\mono\E2\HCI\HCIProjekat\HCIProjekat\obj\Debug\HCIProjekat.csprojResolveAssemblyReference.cache
