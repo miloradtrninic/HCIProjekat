@@ -1,0 +1,97 @@
+﻿<Window x:Class="HCIProjekat.NewTip"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:projek="clr-namespace:HCIProjekat"
+        x:Name="NewTipWindow"
+        Title="Novi tip" Height="360" Width="500" WindowStartupLocation="CenterOwner">
+    <Window.Resources>
+        <Style TargetType="TextBox">
+            <Setter Property="Foreground" Value="Gray" />
+            <Setter Property="Margin" Value="0,15,0,0"></Setter>
+            <Setter Property="MinHeight" Value="30px"></Setter>
+            <Setter Property="FontSize" Value="24" />
+        </Style>
+
+        <ControlTemplate x:Key="ValidationErrorTemplate">
+            <DockPanel>
+                <StackPanel Orientation="Horizontal" DockPanel.Dock="Top">
+                    <Grid Width="12" Height="12">
+                        <Ellipse Width="12" Height="12" Fill="Red" HorizontalAlignment="Center" VerticalAlignment="Center"></Ellipse>
+                        <TextBlock Foreground="White" FontWeight="Heavy" FontSize="8" HorizontalAlignment="Center" VerticalAlignment="Center" TextAlignment="Center"
+                            ToolTip="{Binding ElementName=ErrorAdorner, 
+                            Path=AdornedElement.(Validation.Errors)[0].ErrorContent}">X</TextBlock>
+                    </Grid>
+                    <TextBlock Foreground="Red" FontWeight="12" Margin="2,0,0,0" Text="{Binding ElementName=ErrorAdorner, Path=AdornedElement.(Validation.Errors)[0].ErrorContent}"></TextBlock>
+                </StackPanel>
+                <AdornedElementPlaceholder x:Name="ErrorAdorner"></AdornedElementPlaceholder>
+            </DockPanel>
+        </ControlTemplate>
+
+
+    </Window.Resources>
+    <Grid Margin="5">
+
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="1*" />
+            <ColumnDefinition Width="2*" />
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="1*" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="auto" />
+            <RowDefinition Height="auto" />
+        </Grid.RowDefinitions>
+
+        <Label VerticalAlignment="Center" Grid.Column="0" Grid.Row="0" Content="Oznaka*:"></Label>
+        <TextBox Grid.Column="1" x:Name="OznakaBox" Grid.Row="0" Validation.ErrorTemplate="{StaticResource ValidationErrorTemplate}">
+            <TextBox.Text>
+                <Binding Path="OznakaTip" UpdateSourceTrigger="PropertyChanged">
+                    <Binding.ValidationRules>
+                        <projek:EmptyStringValidation ValidationStep="RawProposedValue"></projek:EmptyStringValidation>
+                        <projek:NumberCharValidation ValidationStep="RawProposedValue"></projek:NumberCharValidation>
+                    </Binding.ValidationRules>
+                </Binding>
+            </TextBox.Text>
+        </TextBox>
+
+
+        <Label VerticalAlignment="Center"  Grid.Column="0" Grid.Row="1"  Content="Ime*:"></Label>
+        <TextBox Grid.Column="1" x:Name="ImeBox" Grid.Row="1" Validation.ErrorTemplate="{StaticResource ValidationErrorTemplate}" >
+            <TextBox.Text>
+                <Binding Path="ImeTip" UpdateSourceTrigger="PropertyChanged">
+                    <Binding.ValidationRules>
+                        <projek:EmptyStringValidation ValidationStep="RawProposedValue"></projek:EmptyStringValidation>
+                    </Binding.ValidationRules>
+                </Binding>
+            </TextBox.Text>
+        </TextBox>
+
+        <Label VerticalAlignment="Top" Grid.Column="0" Grid.Row="2"  Content="Opis: "></Label>
+        <TextBox TextWrapping="Wrap" VerticalScrollBarVisibility="Auto" Grid.Column="1" x:Name="OpisBox" Text="{Binding Path=Opis}" Grid.Row="2" Height="100px" MinHeight="30px" BorderBrush="Black" VerticalAlignment="Top"/>
+
+        <Label Grid.Column="0" Grid.Row="3" VerticalAlignment="Center" Content="Ikonica*:"/>
+        <StackPanel Orientation="Horizontal" Grid.Column="1" Grid.Row="3">
+            <TextBox x:Name="FileBox" HorizontalAlignment="Left" Width="200px" IsEnabled="False" Validation.ErrorTemplate="{StaticResource ValidationErrorTemplate}" >
+                <TextBox.Text>
+                    <Binding Path="FilePathTip" UpdateSourceTrigger="PropertyChanged">
+                        <Binding.ValidationRules>
+                            <projek:EmptyStringValidation ValidationStep="RawProposedValue"></projek:EmptyStringValidation>
+                        </Binding.ValidationRules>
+                    </Binding>
+                </TextBox.Text>
+            </TextBox>
+            <Button HorizontalAlignment="Right" Margin="15,15,0,0" Width="100px" Content="Odaberi" Click="DialogButton_Click"/>
+        </StackPanel>
+
+
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,15,0,0" Grid.Column="1" Grid.Row="4">
+            <Button HorizontalAlignment="Left" MinWidth="80px" MinHeight="30px" Click="SaveButton_Click" >Snimi</Button>
+            <Button HorizontalAlignment="Right" MinWidth="80px" MinHeight="30px" Margin="15,0,0,0" Click="CloseButton_Click">Odustani</Button>
+        </StackPanel>
+
+
+
+
+    </Grid>
+</Window>

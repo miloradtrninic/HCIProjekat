@@ -1,0 +1,149 @@
+﻿<Window x:Class="HCIProjekat.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:proj="clr-namespace:HCIProjekat"
+        Title="MainWindow" Height="700" Width="900">
+    <Window.Resources>
+
+        <ObjectDataProvider x:Key="SingletoneMain" ObjectType="{x:Type proj:Main}" MethodName="GetInstance" />
+
+    </Window.Resources>
+    <Grid DataContext="{Binding Source={StaticResource SingletoneMain}}">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="101*"/>
+            <ColumnDefinition Width="791*"/>
+        </Grid.ColumnDefinitions>
+        <DockPanel LastChildFill="true" Grid.ColumnSpan="2">
+            <StackPanel Orientation="Vertical" DockPanel.Dock="Top">
+                <Menu  Height="35px">
+                    <MenuItem Height="35px">
+                        <MenuItem.Header>
+                            <TextBlock VerticalAlignment="Center" >Fajl</TextBlock>
+                        </MenuItem.Header>
+                        <MenuItem Header="Novi spomenik"></MenuItem>
+                        <MenuItem Header="Nova etiketa"></MenuItem>
+                        <MenuItem Header="Novi tip"></MenuItem>
+                        <Separator></Separator>
+
+                    </MenuItem>
+                    <MenuItem Height="35px">
+                        <MenuItem.Header>
+                            <TextBlock VerticalAlignment="Center">Izmeni</TextBlock>
+                        </MenuItem.Header>
+                    </MenuItem>
+                    <MenuItem Height="35px">
+                        <MenuItem.Header>
+                            <TextBlock VerticalAlignment="Center">Pomoc</TextBlock>
+                        </MenuItem.Header>
+                    </MenuItem>
+                </Menu>
+                <ToolBarTray Margin="0,0,0,0">
+                    <ToolBar>
+                        <Button ToolTip="Novi spomenik" Click="Button_NoviSpomenik">
+                            <StackPanel Orientation="Horizontal">
+                                <Image Source="resources/Plus_50.png"/>
+                                <TextBlock VerticalAlignment="Center">Novi spomenik</TextBlock>
+                            </StackPanel>
+                        </Button>
+                        <Button  ToolTip="Novi tip spomenika" Click="Button_NoviTip">
+                            <StackPanel Orientation="Horizontal">
+                                <Image Source="resources/Plus_50 blue.png"/>
+                                <TextBlock VerticalAlignment="Center">Novi tip spomenika</TextBlock>
+                            </StackPanel>
+
+                        </Button>
+                        <Button  ToolTip="Nova etiketa" Click="Button_NovaEtiketa">
+                            <StackPanel Orientation="Horizontal">
+                                <Image Source="resources/Plus_50 light green.png"/>
+                                <TextBlock VerticalAlignment="Center">Nova etiketa</TextBlock>
+                            </StackPanel>
+
+                        </Button>
+                    </ToolBar>
+                    <ToolBar>
+                        <Button  ToolTip="TODO" >
+                            <Image Source="resources/Save-48.png"></Image>
+                        </Button>
+                    </ToolBar>
+                </ToolBarTray>
+            </StackPanel>
+            <TabControl TabStripPlacement="Top" >
+                <TabItem>
+                    <TabItem.Header>
+                        <StackPanel Orientation="Horizontal">
+                            <BulletDecorator>
+                                <BulletDecorator.Bullet>
+                                    <Ellipse Fill="LimeGreen" Width="16" Height="16"/>
+                                </BulletDecorator.Bullet>
+                            </BulletDecorator>
+                            <TextBlock Text="Spomenici" />
+                        </StackPanel>
+                    </TabItem.Header>
+                    <ListView Name="SpomenikLista" MouseDoubleClick="SpomeniciLista_OnMouseDoubleClick" ItemsSource="{Binding GetSpomenikLista}" DockPanel.Dock="Left" Width="200px">
+                        <ListView.ItemTemplate>
+                            <DataTemplate>
+                                <StackPanel>
+                                    <TextBlock Text="{Binding Ime}" FontWeight="Bold" />
+                                    <Image MaxWidth="190px" MaxHeight="80px" Source="{Binding IkonicaPath}" />
+                                </StackPanel>
+                            </DataTemplate>
+                        </ListView.ItemTemplate>
+                    </ListView>
+                </TabItem>
+                <TabItem>
+                    <TabItem.Header>
+                        <StackPanel Orientation="Horizontal">
+                            <BulletDecorator>
+                                <BulletDecorator.Bullet>
+                                    <Ellipse Width="16" Height="16" Fill="#FF9A8FF2"/>
+                                </BulletDecorator.Bullet>
+                            </BulletDecorator>
+                            <TextBlock Text="Tipovi" />
+                        </StackPanel>
+                    </TabItem.Header>
+                    <ListView Name="TipLista" MouseDoubleClick="TipLista_OnMouseDoubleClick" ItemsSource="{Binding TipspomenikaLista}" DockPanel.Dock="Left" Width="200px">
+                        <ListView.ItemTemplate>
+                            <DataTemplate>
+                                <StackPanel>
+                                    <TextBlock Text="{Binding Ime}" FontWeight="Bold" />
+                                    <Image MaxWidth="190px" MaxHeight="80px" Source="{Binding IkonicaPath}" />
+                                </StackPanel>
+                            </DataTemplate>
+                        </ListView.ItemTemplate>
+                    </ListView>
+                </TabItem>
+                <TabItem>
+                    <TabItem.Header>
+                        <StackPanel Orientation="Horizontal">
+                            <BulletDecorator>
+                                <BulletDecorator.Bullet>
+                                    <Ellipse Width="16" Height="16" Fill="#FF9BA9"/>
+                                </BulletDecorator.Bullet>
+                            </BulletDecorator>
+                            <TextBlock Text="Etikete"  />
+                        </StackPanel>
+                    </TabItem.Header>
+                    <ListView Name="EtiketaLista" MouseDoubleClick="EtiketaLista_OnMouseDoubleClick" ItemsSource="{Binding EtiketaLista}" DockPanel.Dock="Left" Width="200px">
+                        <ListView.ItemTemplate>
+                            <DataTemplate>
+                                <StackPanel Orientation="Horizontal" >
+                                    <Rectangle Width="40" Height="40" Fill="{Binding BojaKod}"/>
+                                    <TextBlock Text="{Binding Oznaka}" FontWeight="Bold" VerticalAlignment="Center" Margin="5,0,0,0"/>
+                                </StackPanel>
+                            </DataTemplate>
+                        </ListView.ItemTemplate>
+                    </ListView>
+                </TabItem>
+            </TabControl>
+
+            <StackPanel Margin="0">
+                <StackPanel.Background>
+                    <ImageBrush ImageSource="resources/worldmap-worldmap2.jpg"></ImageBrush>
+                </StackPanel.Background>
+
+
+            </StackPanel>
+        </DockPanel>
+
+    </Grid>
+</Window>

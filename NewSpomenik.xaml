@@ -1,0 +1,164 @@
+﻿<Window x:Class="HCIProjekat.NewSpomenik"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:proj="clr-namespace:HCIProjekat"
+        x:Name="NewSpomenikWindow"
+        xmlns:sys="clr-namespace:System;assembly=mscorlib"
+        Title="Novi spomenik" Height="620" Width="500" WindowStartupLocation="CenterOwner">
+    
+    <Window.Resources>
+        <Style TargetType="TextBox">
+            <Setter Property="Foreground" Value="Gray" />
+            <Setter Property="Margin" Value="0,15,0,0"></Setter>
+            <Setter Property="MinHeight" Value="30px"></Setter>
+            <Setter Property="FontSize" Value="24" />
+            <!--<Style.Triggers>
+                <Trigger Property="Validation.HasError" Value="true">
+                    <Setter Property="ToolTip"
+                Value="{Binding RelativeSource={RelativeSource Self},
+            Path=(Validation.Errors)[0].ErrorContent}"/>
+                </Trigger>
+            </Style.Triggers>
+            -->
+        </Style>
+        <ObjectDataProvider x:Key="SingletonMain" ObjectType="{x:Type proj:Main}" MethodName="GetInstance" />
+
+        <ControlTemplate x:Key="ValidationErrorTemplate">
+            <DockPanel>
+                <StackPanel Orientation="Horizontal" DockPanel.Dock="Top">
+                    <Grid Width="12" Height="12">
+                        <Ellipse Width="12" Height="12" Fill="Red" HorizontalAlignment="Center" VerticalAlignment="Center"></Ellipse>
+                        <TextBlock Foreground="White" FontWeight="Heavy" FontSize="8" HorizontalAlignment="Center" VerticalAlignment="Center" TextAlignment="Center"
+                            ToolTip="{Binding ElementName=ErrorAdorner, 
+                            Path=AdornedElement.(Validation.Errors)[0].ErrorContent}">X</TextBlock>
+                    </Grid>
+                    <TextBlock Foreground="Red" FontWeight="12" Margin="2,0,0,0" Text="{Binding ElementName=ErrorAdorner, Path=AdornedElement.(Validation.Errors)[0].ErrorContent}"></TextBlock>
+                </StackPanel>
+                <AdornedElementPlaceholder x:Name="ErrorAdorner"></AdornedElementPlaceholder>
+            </DockPanel>
+        </ControlTemplate>
+
+    </Window.Resources>
+    
+
+
+
+    <Grid Margin="5">
+    
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="1*" />
+            <ColumnDefinition Width="2*" />
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="auto" />
+            <RowDefinition Height="auto" />
+            <RowDefinition Height="auto" />
+            <RowDefinition Height="auto" />
+            <RowDefinition Height="auto" />
+            <RowDefinition Height="auto" />
+            <RowDefinition Height="auto" />
+            <RowDefinition Height="auto" />
+            <RowDefinition Height="auto" />
+            <RowDefinition Height="1*" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+
+        <Label VerticalAlignment="Center" Grid.Column="0" Grid.Row="0" Content="Oznaka*:"></Label>
+        <TextBox x:Name="OznakaBox" Grid.Column="1" Grid.Row="0" Validation.ErrorTemplate="{StaticResource ValidationErrorTemplate}" >
+            <TextBox.Text>
+                <Binding Path="Oznaka" UpdateSourceTrigger="PropertyChanged">
+                    <Binding.ValidationRules>
+                        <proj:EmptyStringValidation ValidationStep="RawProposedValue"></proj:EmptyStringValidation>
+                        <proj:NumberCharValidation ValidationStep="RawProposedValue"></proj:NumberCharValidation>
+                    </Binding.ValidationRules>
+                </Binding>
+                
+            </TextBox.Text>
+        </TextBox>
+
+
+        <Label VerticalAlignment="Center"  Grid.Column="0" Grid.Row="1"  Content="Ime*:"></Label>
+        <TextBox x:Name="ImeBox" Grid.Column="1" Grid.Row="1" Validation.ErrorTemplate="{StaticResource ValidationErrorTemplate}" >
+            <TextBox.Text>
+                <Binding Path="Ime" UpdateSourceTrigger="PropertyChanged">
+                    <Binding.ValidationRules>
+                        <proj:EmptyStringValidation ValidationStep="RawProposedValue"></proj:EmptyStringValidation>
+                    </Binding.ValidationRules>
+                </Binding>
+
+            </TextBox.Text>
+        </TextBox>
+
+        <Label VerticalAlignment="Top" Grid.Column="0" Grid.Row="2"  Content="Opis: "></Label>
+        <TextBox TextWrapping="Wrap" VerticalScrollBarVisibility="Auto" x:Name="OpisBox" Text ="{Binding Path=Opis}"  Grid.Column="1" Grid.Row="2" Height="100px" MinHeight="30px" BorderBrush="Black" VerticalAlignment="Top"/>
+
+        <Label Grid.Column="0" Grid.Row="3" Content="UNESCO zasticen?*:" />
+        <StackPanel Orientation="Horizontal" Grid.Column="1" Grid.Row="3">
+            <CheckBox IsChecked="{Binding UnescoChecked}" Margin="0, 0 ,5px, 0"  VerticalAlignment="Center"/>
+            
+        </StackPanel>
+
+        <Label Grid.Column="0" Grid.Row="4" Content="Arheološki obrađen? *:" />
+        <StackPanel Orientation="Horizontal" Grid.Column="1" Grid.Row="4">
+            <CheckBox IsChecked="{Binding AreheoChecked}" Margin="0, 0 ,5px, 0"  VerticalAlignment="Center"/>
+        </StackPanel>
+
+        <Label Grid.Column="0" Grid.Row="5" Content="U naseljenom mestu? *:"/>
+        <StackPanel Orientation="Horizontal" Grid.Column="1" Grid.Row="5">
+            <CheckBox IsChecked="{Binding NaseljeChecked}" Margin="0, 0 ,5px, 0"  VerticalAlignment="Center"/>
+        </StackPanel>
+
+        <Label Grid.Column="0" Grid.Row="6" Content="Era porekla:"/>
+        <ComboBox x:Name="EraBox"  ItemsSource="{Binding EraPorekla}" SelectedItem="{Binding Era}" Grid.Column="1" Grid.Row="6" >
+        </ComboBox>
+
+        <Label Grid.Column="0" Grid.Row="7" Content="Turistički status:"/>
+        <ComboBox x:Name="StatusBox" ItemsSource="{Binding TuristickiStatus}" SelectedItem="{Binding Turizam}"  Grid.Column="1" Grid.Row="7">
+        </ComboBox>
+
+        <Label VerticalAlignment="Center" Grid.Column="0" Grid.Row="8" Content="Godišnji prihod ($)*:"/>
+        <TextBox x:Name="PrihodBox" Grid.Column="1" Grid.Row="8" Validation.ErrorTemplate="{StaticResource ValidationErrorTemplate}" >
+            <TextBox.Text>
+                <Binding Path="Prihod" UpdateSourceTrigger="PropertyChanged">
+                    <Binding.ValidationRules>
+                        <proj:ZaradaVal ValidationStep="ConvertedProposedValue"></proj:ZaradaVal>
+                        <proj:StringDoubleValidation ValidationStep="RawProposedValue"></proj:StringDoubleValidation>
+                    </Binding.ValidationRules>
+                </Binding>
+                
+            </TextBox.Text>
+            
+            
+        </TextBox>
+
+        <Label Grid.Column="0" Grid.Row="9" Content="Tip spomenika*:"/>
+        <ComboBox x:Name="TipBox" Grid.Column="1" Grid.Row="9"  ItemsSource="{Binding Source={StaticResource SingletonMain}, Path=TipspomenikaLista}" SelectedItem="{Binding Spomenika}"/>
+
+        <Label Grid.Column="0" Grid.Row="10" Content="Etiketa:"/>
+        <ComboBox x:Name="EtiketaBox"  Grid.Column="1" Grid.Row="10" ItemsSource="{Binding Source={StaticResource SingletonMain}, Path=EtiketaLista}"/>
+
+        <Label Grid.Column="0" Grid.Row="11" VerticalAlignment="Center">Ikonica:</Label>
+        <StackPanel Orientation="Horizontal" Grid.Column="1" Grid.Row="11">
+            <TextBox x:Name="FileBox" Text="{Binding ImagePath}" IsEnabled="false" HorizontalAlignment="Left" Width="200px"></TextBox>
+            <Button HorizontalAlignment="Right" Margin="15,15,0,0" Width="100px" Content="Odaberi" Click="DialogButton_Click"/>
+        </StackPanel>
+
+        <DatePicker x:Name="Kalendar" Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="12" Height="30px" SelectedDate="{x:Static sys:DateTime.Now}">
+            <DatePicker.SelectedDateFormat>
+                <DatePickerFormat>Short</DatePickerFormat>
+            </DatePicker.SelectedDateFormat>
+        </DatePicker>
+
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,15,0,0" Grid.Column="1" Grid.Row="13">
+            <Button HorizontalAlignment="Left" MinWidth="80px" MinHeight="30px" Click="SaveButton_Click" >Snimi</Button>
+            <Button HorizontalAlignment="Right" MinWidth="80px" MinHeight="30px" Click="CloseButton_Click" Margin="15,0,0,0">Odustani</Button>
+        </StackPanel>
+
+
+
+
+    </Grid>
+</Window>
