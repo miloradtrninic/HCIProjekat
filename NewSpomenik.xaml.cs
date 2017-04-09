@@ -32,7 +32,7 @@ namespace HCIProjekat
                 PropertyChanged(this, new PropertyChangedEventArgs(name));
             }
         }
-
+        //TODO DUGME ZA UKLANJANJE SLIKE
         private List<string> _eraPorekla;
         private List<string> _turistickiStatus;
 
@@ -334,8 +334,8 @@ namespace HCIProjekat
                         }
                         Main.GetInstance().GetSpomenikLista.Add(newSpomenik);
                         // Console.WriteLine(Main.GetInstance().GetSpomenikLista.Count);
-                        MessageBox.Show("Uspesno ste dodali novi spomenika.", "Dodat novi spomenik.",
-                            MessageBoxButton.OK, MessageBoxImage.Asterisk);
+                       // MessageBox.Show("Uspesno ste dodali novi spomenika.", "Dodat novi spomenik.",
+                           // MessageBoxButton.OK, MessageBoxImage.Asterisk);
                     }
                     NewSpomenikWindow.Close();
                 }
