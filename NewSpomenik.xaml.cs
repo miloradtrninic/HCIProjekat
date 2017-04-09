@@ -50,6 +50,7 @@ namespace HCIProjekat
         private bool _areheoChecked;
 
         private TipSpomenika _tipSpomenika;
+        private List<Etiketa> _etikete;
 
         public NewSpomenik(Spomenik spomenik)
         {
@@ -62,11 +63,11 @@ namespace HCIProjekat
                 _prihod = 0.0;
                 _oznaka = "";
                 _ime = "";
-                _imagePath = "";
+                _imagePath = @"resources\NoImg300x225.jpg";
                 _opis = "";
-                _unescoChecked = true;
-                _naseljeChecked = true;
-                _areheoChecked = true;
+                _unescoChecked = false;
+                _naseljeChecked = false;
+                _areheoChecked = false;
                 _tipSpomenika = new TipSpomenika();
                 _era = "Paleolit";
                 _turizam = "Dostupan";
@@ -84,6 +85,7 @@ namespace HCIProjekat
                 _tipSpomenika = spomenik.Tip;
                 _era = spomenik.EraPorekla;
                 _turizam = spomenik.TuristickiStatus;
+                _etikete = spomenik.Etikete;
 
             }
             this.DataContext = this;
@@ -132,7 +134,14 @@ namespace HCIProjekat
         public string ImagePath
         {
             get { return _imagePath; }
-            set { _imagePath = value; }
+            set
+            {
+                if (!value.Equals(_imagePath))
+                {
+                    _imagePath = value;
+                    OnPropertyChanged("ImagePath");
+                }
+            }
         }
 
         public TipSpomenika Spomenika
@@ -196,6 +205,12 @@ namespace HCIProjekat
             set { _turistickiStatus = value; }
         }
 
+        public List<Etiketa> Etikete
+        {
+            get { return _etikete; }
+            set { _etikete = value; }
+        }
+
 
         /*  public void IsCheckedUnesco(object sender, RoutedEventArgs eventArgs)
         {
@@ -235,7 +250,8 @@ namespace HCIProjekat
             // Process open file dialog box results
             if (result == true)
             {
-                FileBox.Text = fileDialog.FileName;
+                ImagePath = fileDialog.FileName;
+                //FileBox.Text = fileDialog.FileName;
             }
         }
        
@@ -270,7 +286,7 @@ namespace HCIProjekat
                     bool arheo = _areheoChecked;
                     Spomenik newSpomenik = new Spomenik(_oznaka, _ime, _opis, _era,
                         _turizam, _imagePath, unseco, naselje, arheo, _prihod.ToString(), 
-                        Kalendar.SelectedDate.Value, _tipSpomenika);
+                        Kalendar.SelectedDate.Value, _tipSpomenika, _etikete);
                     if (Main.GetInstance().HasSpomenik(newSpomenik))
                     {
                         Main.GetInstance().GetSpomenikLista.Single(x => x.Oznaka.Equals(newSpomenik.Oznaka)).Oznaka =
@@ -305,16 +321,15 @@ namespace HCIProjekat
                             newSpomenik.Naselje;
                         Main.GetInstance().GetSpomenikLista.Single(x => x.Oznaka.Equals(newSpomenik.Oznaka)).Arheo =
                             newSpomenik.Arheo;
-                        MessageBox.Show("Uspesno ste izmenili spomenik.", "Izmenjen spomenik.",
-                            MessageBoxButton.OK, MessageBoxImage.Asterisk);
+                      //  MessageBox.Show("Uspesno ste izmenili spomenik.", "Izmenjen spomenik.",
+                            //MessageBoxButton.OK, MessageBoxImage.Asterisk);
 
                     }
                     else
                     {
                         newSpomenik.Tip = _tipSpomenika;
-                        if (FileBox.Text.Equals(""))
+                        if (ImagePath.Equals(@"resources\NoImg300x225.jpg"))
                         {
-                            ;
                             newSpomenik.IkonicaPath = _tipSpomenika.IkonicaPath;
                         }
                         Main.GetInstance().GetSpomenikLista.Add(newSpomenik);
@@ -337,8 +352,17 @@ namespace HCIProjekat
             NewSpomenikWindow.Close();
         }
 
-       
 
-       
+        private void ButtonNoviTip_OnClick(object sender, RoutedEventArgs e)
+        {
+            NewTip tipDialog = new NewTip(null);
+            tipDialog.Show();
+        }
+
+        private void ButtonNovaEtiketa_OnClick(object sender, RoutedEventArgs e)
+        {
+            NewEtiketa etiketaDialog = new NewEtiketa(null);
+            etiketaDialog.ShowDialog();
+        }
     }
 }

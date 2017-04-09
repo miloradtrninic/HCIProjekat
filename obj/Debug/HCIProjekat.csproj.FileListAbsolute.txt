@@ -35,3 +35,9 @@ D:\mono\E2\HCI\HCIProjekat\HCIProjekat\obj\Debug\HCIProjekat.csproj.GenerateReso
 D:\mono\E2\HCI\HCIProjekat\HCIProjekat\obj\Debug\HCIProjekat.exe
 D:\mono\E2\HCI\HCIProjekat\HCIProjekat\obj\Debug\HCIProjekat.pdb
 D:\mono\E2\HCI\HCIProjekat\HCIProjekat\obj\Debug\HCIProjekat.csprojResolveAssemblyReference.cache
+D:\mono\E2\HCI\HCIProjekat\HCIProjekat\obj\Debug\Tabele\TipoviTabela.g.cs
+D:\mono\E2\HCI\HCIProjekat\HCIProjekat\obj\Debug\Tabele\TipoviTabela.baml
+D:\mono\E2\HCI\HCIProjekat\HCIProjekat\obj\Debug\Tabele\SpomeniciTabela.g.cs
+D:\mono\E2\HCI\HCIProjekat\HCIProjekat\obj\Debug\Tabele\SpomeniciTabela.baml
+D:\mono\E2\HCI\HCIProjekat\HCIProjekat\obj\Debug\Tabele\EtiketeTabela.baml
+D:\mono\E2\HCI\HCIProjekat\HCIProjekat\obj\Debug\Tabele\EtiketeTabela.g.cs

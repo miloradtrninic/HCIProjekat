@@ -21,7 +21,7 @@ namespace HCIProjekat
         private TipSpomenika tip;
         private List<Etiketa> etikete;
 
-        public string eraPorekla ;
+        public string eraPorekla;
         public string turistickiStatus;
 
         public event NotifyCollectionChangedEventHandler CollectionChanged;
@@ -150,7 +150,7 @@ namespace HCIProjekat
             }
         }
 
-        public Spomenik(string oznaka, string ime, string opis, string eraPorekla, string turistickiStatus, string ikonicaPath, bool unesco, bool naselje, bool arheo,string godisnjiPrihod, DateTime datumOtkrivanja, TipSpomenika tipSpomenika)
+        public Spomenik(string oznaka, string ime, string opis, string eraPorekla, string turistickiStatus, string ikonicaPath, bool unesco, bool naselje, bool arheo,string godisnjiPrihod, DateTime datumOtkrivanja, TipSpomenika tipSpomenika, List<Etiketa> etiketeList)
         {
             this.oznaka = oznaka;
             this.ime = ime;
@@ -164,6 +164,7 @@ namespace HCIProjekat
             this.naselje = naselje;
             this.godisnjiPrihod = godisnjiPrihod;
             this.datumOtkrivanja = datumOtkrivanja;
+            this.Etikete = etiketeList;
 
         }
 

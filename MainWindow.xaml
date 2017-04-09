@@ -20,9 +20,21 @@
                         <MenuItem.Header>
                             <TextBlock VerticalAlignment="Center" >Fajl</TextBlock>
                         </MenuItem.Header>
-                        <MenuItem Header="Novi spomenik"></MenuItem>
-                        <MenuItem Header="Nova etiketa"></MenuItem>
-                        <MenuItem Header="Novi tip"></MenuItem>
+                        <MenuItem Header="Novi spomenik" Click="Button_NoviSpomenik">
+                            <MenuItem.Icon>
+                                <Ellipse Fill="LimeGreen" Width="16" Height="16"/>
+                            </MenuItem.Icon>
+                        </MenuItem>
+                        <MenuItem Header="Novi tip" Click="Button_NoviTip">
+                            <MenuItem.Icon>
+                                <Ellipse Fill="#FF9A8FF2" Width="16" Height="16"/>
+                            </MenuItem.Icon>
+                        </MenuItem>
+                        <MenuItem Header="Nova etiketa" Click="Button_NovaEtiketa">
+                            <MenuItem.Icon>
+                                <Ellipse Fill="#FF9BA9" Width="16" Height="16"/>
+                            </MenuItem.Icon>
+                        </MenuItem>
                         <Separator></Separator>
 
                     </MenuItem>
@@ -30,6 +42,27 @@
                         <MenuItem.Header>
                             <TextBlock VerticalAlignment="Center">Izmeni</TextBlock>
                         </MenuItem.Header>
+                    </MenuItem>
+                    <MenuItem Height="35px">
+                        <MenuItem.Header>
+                            <TextBlock VerticalAlignment="Center">Pregled</TextBlock>
+                        </MenuItem.Header>
+                        <MenuItem Header="Spomenici" Click="SpomeniciLista_OnClick">
+                            <MenuItem.Icon>
+                                <Ellipse Fill="LimeGreen" Width="16" Height="16"/>
+                            </MenuItem.Icon>
+                        </MenuItem>
+
+                        <MenuItem Header="Tipovi" Click="TipoviLista_OnClick" >
+                            <MenuItem.Icon>
+                                <Ellipse Fill="#FF9A8FF2" Width="16" Height="16"/>
+                            </MenuItem.Icon>
+                        </MenuItem>
+                        <MenuItem Header="Etikete" Click="EtiketeLista_OnClick" >
+                            <MenuItem.Icon>
+                                <Ellipse Fill="#FF9BA9" Width="16" Height="16"/>
+                            </MenuItem.Icon>
+                        </MenuItem>
                     </MenuItem>
                     <MenuItem Height="35px">
                         <MenuItem.Header>

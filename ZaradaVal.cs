@@ -16,9 +16,8 @@ namespace HCIProjekat
             if (value is double)
             {
                 double d = (double)value;
-                double maxDouble = double.MaxValue; 
-                if (d < 0) return new ValidationResult(false, "Godisnji prihod mora biti pozitvna.");
-                if (d > maxDouble) return new ValidationResult(false, "Godisnji prihod je prevelika cifra. Kontaktirajte administratora.");
+                if (d < -2147483648) return new ValidationResult(false, "Godisnji prihod je prevelika cifra.");
+                if (d > 2147483648) return new ValidationResult(false, "Godisnji prihod je prevelika cifra.");
                 return new ValidationResult(true, null);
             }
             else

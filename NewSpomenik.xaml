@@ -4,7 +4,7 @@
         xmlns:proj="clr-namespace:HCIProjekat"
         x:Name="NewSpomenikWindow"
         xmlns:sys="clr-namespace:System;assembly=mscorlib"
-        Title="Novi spomenik" Height="620" Width="500" WindowStartupLocation="CenterOwner">
+        Title="Novi spomenik" Height="620" Width="650" WindowStartupLocation="CenterOwner">
     
     <Window.Resources>
         <Style TargetType="TextBox">
@@ -20,6 +20,9 @@
                 </Trigger>
             </Style.Triggers>
             -->
+        </Style>
+        <Style TargetType="ComboBox">
+            <Setter Property="Margin" Value="0,5,0,5"></Setter>
         </Style>
         <ObjectDataProvider x:Key="SingletonMain" ObjectType="{x:Type proj:Main}" MethodName="GetInstance" />
 
@@ -46,8 +49,9 @@
     <Grid Margin="5">
     
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="1*" />
+            <ColumnDefinition Width="0.8*" />
             <ColumnDefinition Width="2*" />
+            <ColumnDefinition Width="1.05*" />
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition Height="auto"/>
@@ -58,11 +62,10 @@
             <RowDefinition Height="auto" />
             <RowDefinition Height="auto" />
             <RowDefinition Height="auto" />
-            <RowDefinition Height="auto" />
-            <RowDefinition Height="auto" />
-            <RowDefinition Height="auto" />
-            <RowDefinition Height="auto" />
             <RowDefinition Height="1*" />
+            <RowDefinition Height="auto" />
+            <RowDefinition Height="auto" />
+            <RowDefinition Height="auto" />
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
 
@@ -92,8 +95,8 @@
             </TextBox.Text>
         </TextBox>
 
-        <Label VerticalAlignment="Top" Grid.Column="0" Grid.Row="2"  Content="Opis: "></Label>
-        <TextBox TextWrapping="Wrap" VerticalScrollBarVisibility="Auto" x:Name="OpisBox" Text ="{Binding Path=Opis}"  Grid.Column="1" Grid.Row="2" Height="100px" MinHeight="30px" BorderBrush="Black" VerticalAlignment="Top"/>
+        <Label VerticalAlignment="Top" Grid.Column="0" Grid.Row="8"  Content="Opis: "></Label>
+        <TextBox TextWrapping="Wrap" VerticalScrollBarVisibility="Auto" x:Name="OpisBox" Text ="{Binding Path=Opis}"  Grid.Column="1" Grid.Row="8"  MinHeight="120px" BorderBrush="Black" VerticalAlignment="Top"/>
 
         <Label Grid.Column="0" Grid.Row="3" Content="UNESCO zasticen?*:" />
         <StackPanel Orientation="Horizontal" Grid.Column="1" Grid.Row="3">
@@ -110,17 +113,24 @@
         <StackPanel Orientation="Horizontal" Grid.Column="1" Grid.Row="5">
             <CheckBox IsChecked="{Binding NaseljeChecked}" Margin="0, 0 ,5px, 0"  VerticalAlignment="Center"/>
         </StackPanel>
-
-        <Label Grid.Column="0" Grid.Row="6" Content="Era porekla:"/>
-        <ComboBox x:Name="EraBox"  ItemsSource="{Binding EraPorekla}" SelectedItem="{Binding Era}" Grid.Column="1" Grid.Row="6" >
-        </ComboBox>
-
-        <Label Grid.Column="0" Grid.Row="7" Content="Turistički status:"/>
-        <ComboBox x:Name="StatusBox" ItemsSource="{Binding TuristickiStatus}" SelectedItem="{Binding Turizam}"  Grid.Column="1" Grid.Row="7">
-        </ComboBox>
-
-        <Label VerticalAlignment="Center" Grid.Column="0" Grid.Row="8" Content="Godišnji prihod ($)*:"/>
-        <TextBox x:Name="PrihodBox" Grid.Column="1" Grid.Row="8" Validation.ErrorTemplate="{StaticResource ValidationErrorTemplate}" >
+        <Label Grid.Column="0" Grid.Row="6" Content="Tip spomenika*:"/>
+        <ComboBox x:Name="TipBox" Grid.Column="1" Grid.Row="6"  ItemsSource="{Binding Source={StaticResource SingletonMain}, Path=TipspomenikaLista}" SelectedItem="{Binding Spomenika}"/>
+        <Button Grid.Column="2" Grid.Row="6" Click="ButtonNoviTip_OnClick" Margin="5">Novi tip</Button>
+        
+        <Label Grid.Column="0" Grid.Row="7" Content="Etiketa*:"/>
+        <ListView x:Name="EtiketaBox"  Grid.Column="1" Grid.Row="7" ItemsSource="{Binding Source={StaticResource SingletonMain}, Path=EtiketaLista}" SelectedItem="{Binding Etikete}" SelectionMode="Multiple">
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <StackPanel Orientation="Horizontal">
+                        <Rectangle Width="20" Height="20" Fill="{Binding BojaKod}"/>
+                        <TextBlock Text="{Binding Oznaka}" FontWeight="Bold" VerticalAlignment="Center" Margin="5,0,0,0"/>
+                    </StackPanel>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+        <Button VerticalAlignment="Top" Grid.Column="2" Grid.Row="7" MaxHeight="20" Margin="5" Click="ButtonNovaEtiketa_OnClick">Nova etiketa</Button>
+        <Label VerticalAlignment="Center" Grid.Column="0" Grid.Row="2" Content="Godišnji prihod ($)*:"/>
+        <TextBox x:Name="PrihodBox" Grid.Column="1" Grid.Row="2" Validation.ErrorTemplate="{StaticResource ValidationErrorTemplate}" >
             <TextBox.Text>
                 <Binding Path="Prihod" UpdateSourceTrigger="PropertyChanged">
                     <Binding.ValidationRules>
@@ -134,30 +144,39 @@
             
         </TextBox>
 
-        <Label Grid.Column="0" Grid.Row="9" Content="Tip spomenika*:"/>
-        <ComboBox x:Name="TipBox" Grid.Column="1" Grid.Row="9"  ItemsSource="{Binding Source={StaticResource SingletonMain}, Path=TipspomenikaLista}" SelectedItem="{Binding Spomenika}"/>
 
-        <Label Grid.Column="0" Grid.Row="10" Content="Etiketa:"/>
-        <ComboBox x:Name="EtiketaBox"  Grid.Column="1" Grid.Row="10" ItemsSource="{Binding Source={StaticResource SingletonMain}, Path=EtiketaLista}"/>
 
-        <Label Grid.Column="0" Grid.Row="11" VerticalAlignment="Center">Ikonica:</Label>
+
+        <Label Grid.Column="0" Grid.Row="9" Content="Era porekla:"/>
+        <ComboBox x:Name="EraBox"  ItemsSource="{Binding EraPorekla}" SelectedItem="{Binding Era}" Grid.Column="1" Grid.Row="9" >
+        </ComboBox>
+
+        <Label Grid.Column="0" Grid.Row="10" Content="Turistički status:"/>
+        <ComboBox x:Name="StatusBox" ItemsSource="{Binding TuristickiStatus}" SelectedItem="{Binding Turizam}"  Grid.Column="1" Grid.Row="10"></ComboBox>
+
+
+        <!-- <Label Grid.Column="0" Grid.Row="11" VerticalAlignment="Center">Ikonica:</Label>
         <StackPanel Orientation="Horizontal" Grid.Column="1" Grid.Row="11">
             <TextBox x:Name="FileBox" Text="{Binding ImagePath}" IsEnabled="false" HorizontalAlignment="Left" Width="200px"></TextBox>
             <Button HorizontalAlignment="Right" Margin="15,15,0,0" Width="100px" Content="Odaberi" Click="DialogButton_Click"/>
-        </StackPanel>
-
-        <DatePicker x:Name="Kalendar" Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="12" Height="30px" SelectedDate="{x:Static sys:DateTime.Now}">
+        </StackPanel>-->
+        
+        <Label Grid.Column="0" Grid.Row="11" VerticalAlignment="Center">Datum otkrivanja:</Label>
+        <DatePicker x:Name="Kalendar" Grid.Column="1" Grid.Row="11" Height="30px" SelectedDate="{x:Static sys:DateTime.Now}">
             <DatePicker.SelectedDateFormat>
                 <DatePickerFormat>Short</DatePickerFormat>
             </DatePicker.SelectedDateFormat>
         </DatePicker>
 
-        <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,15,0,0" Grid.Column="1" Grid.Row="13">
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,5,0,0" Grid.Column="2" Grid.Row="12">
             <Button HorizontalAlignment="Left" MinWidth="80px" MinHeight="30px" Click="SaveButton_Click" >Snimi</Button>
-            <Button HorizontalAlignment="Right" MinWidth="80px" MinHeight="30px" Click="CloseButton_Click" Margin="15,0,0,0">Odustani</Button>
+            <Button HorizontalAlignment="Right" MinWidth="80px" MinHeight="30px" Click="CloseButton_Click" Margin="5,0,0,0" Height="30" VerticalAlignment="Bottom">Odustani</Button>
         </StackPanel>
 
-
+        <StackPanel Grid.Column="2" Grid.Row="0" Grid.RowSpan="3" Orientation="Vertical">
+            <Image VerticalAlignment="Top" Source="{Binding ImagePath}"  Margin="5"></Image>
+            <Button VerticalAlignment="Bottom" Margin="5" Content="Odaberi" Click="DialogButton_Click"/>
+        </StackPanel>
 
 
     </Grid>

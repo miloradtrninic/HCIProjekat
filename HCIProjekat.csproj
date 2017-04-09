@@ -72,6 +72,9 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Etiketa.cs" />
+    <Compile Include="Tabele\EtiketeTabela.xaml.cs">
+      <DependentUpon>EtiketeTabela.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Main.cs" />
     <Compile Include="NewEtiketa.xaml.cs">
       <DependentUpon>NewEtiketa.xaml</DependentUpon>
@@ -82,9 +85,19 @@
     <Compile Include="NewTip.xaml.cs">
       <DependentUpon>NewTip.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Tabele\SpomeniciTabela.xaml.cs">
+      <DependentUpon>SpomeniciTabela.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Spomenik.cs" />
+    <Compile Include="Tabele\TipoviTabela.xaml.cs">
+      <DependentUpon>TipoviTabela.xaml</DependentUpon>
+    </Compile>
     <Compile Include="TipSpomenika.cs" />
     <Compile Include="ZaradaVal.cs" />
+    <Page Include="Tabele\EtiketeTabela.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -106,6 +119,14 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="NewTip.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Tabele\SpomeniciTabela.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Tabele\TipoviTabela.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -163,6 +184,18 @@
     <Resource Include="resources\Bullet-Point-light-blue.png" />
     <Resource Include="resources\Green-Point-light-blue.png" />
     <Resource Include="resources\Red-Point-light-blue.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="resources\NoImg300x225.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="resources\Search-48.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="resources\Search-30.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="resources\Search-30white.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

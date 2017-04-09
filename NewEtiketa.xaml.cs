@@ -101,14 +101,14 @@ namespace HCIProjekat
                         Main.GetInstance().EtiketaLista.Single(x => x.Oznaka.Equals(novaEtiketa.Oznaka)).Opis = novaEtiketa.Opis;
                         Main.GetInstance().EtiketaLista.Single(x => x.Oznaka.Equals(novaEtiketa.Oznaka)).Boja = novaEtiketa.Boja;
 
-                        MessageBox.Show("Uspesno ste izmenili etiketu.", "Izmenjena etiketa.", MessageBoxButton.OK,
-                        MessageBoxImage.Asterisk);
+                        //MessageBox.Show("Uspesno ste izmenili etiketu.", "Izmenjena etiketa.", MessageBoxButton.OK,
+                       // MessageBoxImage.Asterisk);
                     }
                     else
                     {
                         Main.GetInstance().EtiketaLista.Add(novaEtiketa);
-                        MessageBox.Show("Uspesno ste snimili novu etiketu.", "Dodata nova etiketa.", MessageBoxButton.OK,
-                        MessageBoxImage.Asterisk);
+                       // MessageBox.Show("Uspesno ste snimili novu etiketu.", "Dodata nova etiketa.", MessageBoxButton.OK,
+                       // MessageBoxImage.Asterisk);
                     }
                     
                     NovaEtiketaDialog.Close();

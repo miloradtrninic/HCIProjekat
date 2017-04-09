@@ -181,5 +181,20 @@ namespace HCIProjekat
         }
 
 
+        private void SpomeniciLista_OnClick(object sender, RoutedEventArgs e)
+        {
+            SpomeniciTabela tabela = new SpomeniciTabela();
+            tabela.ShowDialog();
+        }
+        private void TipoviLista_OnClick(object sender, RoutedEventArgs e)
+        {
+            TipoviTabela tabela = new TipoviTabela();
+            tabela.ShowDialog();
+        }
+        private void EtiketeLista_OnClick(object sender, RoutedEventArgs e)
+        {
+            EtiketeTabela tabela = new EtiketeTabela();
+            tabela.ShowDialog();
+        }
     }
 } 

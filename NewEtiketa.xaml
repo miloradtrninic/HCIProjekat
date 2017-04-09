@@ -51,19 +51,20 @@
                 </Binding>
             </TextBox.Text>
         </TextBox>
-
-        <Label VerticalAlignment="Top" Grid.Column="0" Grid.Row="1"  Content="Opis: "></Label>
-        <TextBox TextWrapping="Wrap" VerticalScrollBarVisibility="Auto" x:Name="OpisBox" Text="{Binding Opis}"  Grid.Column="1" Grid.Row="1" Height="100px" MinHeight="30px" BorderBrush="Black" VerticalAlignment="Top"/>
-
-        <Label VerticalAlignment="Top" Grid.Column="0" Grid.Row="2" Margin="0,10,0,0" Content="Izabeite boju*: "></Label>
+        <Label VerticalAlignment="Top" Grid.Column="0" Grid.Row="1" Margin="0,10,0,0" Content="Izabeite boju*: "></Label>
         <!-- Name="ClrPcker_Background"SelectedColorChanged="ClrPcker_Background_SelectedColorChanged" -->
         <!--{Binding Path=Test1,UpdateSourceTrigger=PropertyChanged} -->
-        <xctk:ColorPicker SelectedColor="{Binding Boja}" x:Name="ColorBox" Grid.Column="1" Grid.Row="2" Margin="0,10,0,0" ></xctk:ColorPicker>
+        <xctk:ColorPicker SelectedColor="{Binding Boja}" x:Name="ColorBox" Grid.Column="1" Grid.Row="1" Margin="0,10,0,0" ></xctk:ColorPicker>
 
         <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,15,0,0" Grid.Column="1" Grid.Row="3">
             <Button HorizontalAlignment="Left" MinWidth="80px" MinHeight="30px" Click="SaveButton_Click" >Snimi</Button>
             <Button HorizontalAlignment="Right" MinWidth="80px" MinHeight="30px" Margin="15,0,0,0" Click="CloseButton_Click">Odustani</Button>
         </StackPanel>
+        
+        <Label VerticalAlignment="Top" Grid.Column="0" Grid.Row="2"  Content="Opis: "></Label>
+        <TextBox TextWrapping="Wrap" VerticalScrollBarVisibility="Auto" x:Name="OpisBox" Text="{Binding Opis}"  Grid.Column="1" Grid.Row="2" Height="100px" MinHeight="30px" BorderBrush="Black" VerticalAlignment="Top"/>
+
+        
 
 
     </Grid>

@@ -3,7 +3,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:projek="clr-namespace:HCIProjekat"
         x:Name="NewTipWindow"
-        Title="Novi tip" Height="360" Width="500" WindowStartupLocation="CenterOwner">
+        Title="Novi tip" Height="360" Width="610" WindowStartupLocation="CenterOwner">
     <Window.Resources>
         <Style TargetType="TextBox">
             <Setter Property="Foreground" Value="Gray" />
@@ -32,14 +32,14 @@
     <Grid Margin="5">
 
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="1*" />
+            <ColumnDefinition Width="0.5*" />
             <ColumnDefinition Width="2*" />
+            <ColumnDefinition Width="1*" />
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
-            <RowDefinition Height="auto"/>
+            <RowDefinition Height="1*"/>
             <RowDefinition Height="1*" />
-            <RowDefinition Height="Auto" />
-            <RowDefinition Height="auto" />
+            <RowDefinition Height="3*" />
             <RowDefinition Height="auto" />
         </Grid.RowDefinitions>
 
@@ -68,8 +68,8 @@
         </TextBox>
 
         <Label VerticalAlignment="Top" Grid.Column="0" Grid.Row="2"  Content="Opis: "></Label>
-        <TextBox TextWrapping="Wrap" VerticalScrollBarVisibility="Auto" Grid.Column="1" x:Name="OpisBox" Text="{Binding Path=Opis}" Grid.Row="2" Height="100px" MinHeight="30px" BorderBrush="Black" VerticalAlignment="Top"/>
-
+        <TextBox TextWrapping="Wrap" VerticalScrollBarVisibility="Auto" Grid.Column="1" x:Name="OpisBox" Text="{Binding Path=Opis}" Grid.Row="2" MinHeight="140px" BorderBrush="Black" VerticalAlignment="Top"/>
+        <!--
         <Label Grid.Column="0" Grid.Row="3" VerticalAlignment="Center" Content="Ikonica*:"/>
         <StackPanel Orientation="Horizontal" Grid.Column="1" Grid.Row="3">
             <TextBox x:Name="FileBox" HorizontalAlignment="Left" Width="200px" IsEnabled="False" Validation.ErrorTemplate="{StaticResource ValidationErrorTemplate}" >
@@ -81,13 +81,18 @@
                     </Binding>
                 </TextBox.Text>
             </TextBox>
-            <Button HorizontalAlignment="Right" Margin="15,15,0,0" Width="100px" Content="Odaberi" Click="DialogButton_Click"/>
+            <Button VerticalAlignment="Bottom" Margin="15,15,0,0" Width="100px" Content="Odaberi" Click="DialogButton_Click"/>
+        </StackPanel>
+        -->
+        <StackPanel Grid.Column="2" Grid.RowSpan="3" Orientation="Vertical">
+            <Image VerticalAlignment="Top" Source="{Binding FilePathTip}" Margin="5"></Image>
+            <Button VerticalAlignment="Bottom" Margin="5" Content="Odaberi" Click="DialogButton_Click"/>
         </StackPanel>
 
 
-        <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,15,0,0" Grid.Column="1" Grid.Row="4">
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,15,0,0" Grid.Column="2" Grid.Row="3">
             <Button HorizontalAlignment="Left" MinWidth="80px" MinHeight="30px" Click="SaveButton_Click" >Snimi</Button>
-            <Button HorizontalAlignment="Right" MinWidth="80px" MinHeight="30px" Margin="15,0,0,0" Click="CloseButton_Click">Odustani</Button>
+            <Button HorizontalAlignment="Right" MinWidth="80px" MinHeight="30px" Margin="5,0,0,0" Click="CloseButton_Click">Odustani</Button>
         </StackPanel>
 
 

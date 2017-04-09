@@ -33,7 +33,7 @@ namespace HCIProjekat
             if (tipSpomenika == null)
             {
                 _oznaka = "";
-                _filePath = "";
+                _filePath = @"resources\NoImg300x225.jpg";
                 _ime = "";
                 _opis = "";
             }
@@ -114,17 +114,21 @@ namespace HCIProjekat
             {
                 OznakaBox.GetBindingExpression(TextBox.TextProperty).UpdateSource();
                 ImeBox.GetBindingExpression(TextBox.TextProperty).UpdateSource();
-                FileBox.GetBindingExpression(TextBox.TextProperty).UpdateSource();
-                if (Validation.GetHasError(OznakaBox) || Validation.GetHasError(ImeBox) ||
-                    Validation.GetHasError(FileBox))
+                //FileBox.GetBindingExpression(TextBox.TextProperty).UpdateSource();
+                if (Validation.GetHasError(OznakaBox) || Validation.GetHasError(ImeBox) /*|| Validation.GetHasError(FileBox)*/)
                 {
                     MessageBox.Show("Molimo Vas da popunite polja oznacena sa *.", "Nepotpun unos.",
+                        MessageBoxButton.OK, MessageBoxImage.Warning);
+                }
+                else if (FilePathTip.Equals(@"resources\NoImg300x225.jpg"))
+                {
+                    MessageBox.Show("Molimo Vas da odaberete sliku tipa", "Nepotpun unos.",
                         MessageBoxButton.OK, MessageBoxImage.Warning);
                 }
                 else
                 {
                     //TODO Proveri da li fajl postoji
-                    TipSpomenika newTipSpomenika = new TipSpomenika(OznakaBox.Text, ImeBox.Text, FileBox.Text,
+                    TipSpomenika newTipSpomenika = new TipSpomenika(OznakaBox.Text, ImeBox.Text, _filePath,
                         OpisBox.Text);
                     if (Main.GetInstance().HasTipSpomenika(newTipSpomenika))
                     {
@@ -137,14 +141,16 @@ namespace HCIProjekat
                             newTipSpomenika.Ime;
                         Main.GetInstance().TipspomenikaLista.Single(x => x.Oznaka.Equals(newTipSpomenika.Oznaka)).Oznaka
                             = newTipSpomenika.Oznaka;
-                        MessageBox.Show("Uspesno ste izmenili tip spomenika.", "Izmenjen tip spomenika.", MessageBoxButton.OK,
-                            MessageBoxImage.Asterisk);
+                       /* MessageBox.Show("Uspesno ste izmenili tip spomenika.", "Izmenjen tip spomenika.",
+                            MessageBoxButton.OK,
+                            MessageBoxImage.Asterisk);*/
                     }
                     else
                     {
                         Main.GetInstance().TipspomenikaLista.Add(newTipSpomenika);
-                        MessageBox.Show("Uspesno ste dodali novi tip spomenika.", "Dodat novi tip spomenika.", MessageBoxButton.OK,
-                            MessageBoxImage.Asterisk);
+                       /* MessageBox.Show("Uspesno ste dodali novi tip spomenika.", "Dodat novi tip spomenika.",
+                            MessageBoxButton.OK,
+                            MessageBoxImage.Asterisk);*/
                     }
                     NewTipWindow.Close();
                 }
@@ -175,10 +181,11 @@ namespace HCIProjekat
 
             var result = fileDialog.ShowDialog();
 
-            // Process open file dialog box results
+             //Process open file dialog box results
             if (result == true)
             {
-                FileBox.Text = fileDialog.FileName;
+                FilePathTip = fileDialog.FileName;
+                //FileBox.Text = fileDialog.FileName;
             }
         }
 
