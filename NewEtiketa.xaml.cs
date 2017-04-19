@@ -13,6 +13,8 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using Xceed.Wpf.Toolkit;
+using MessageBox = System.Windows.MessageBox;
 
 namespace HCIProjekat
 {
@@ -30,7 +32,7 @@ namespace HCIProjekat
         
         public NewEtiketa(Etiketa trenutnaEtiketa)
         {
-            
+            InitializeComponent();
             if (trenutnaEtiketa == null)
             {
                 trenutnaEtiketa = new Etiketa();
@@ -40,13 +42,14 @@ namespace HCIProjekat
             }
             else
             {
+                OznakaBox.IsEnabled = false;
                 this.trenutnaEtiketa = trenutnaEtiketa;
                 _oznaka = trenutnaEtiketa.Oznaka;
                 _opis = trenutnaEtiketa.Opis;
                 _boja = trenutnaEtiketa.Boja;
             }
             
-            InitializeComponent();
+            
             this.DataContext = this;
 
         }
@@ -90,14 +93,22 @@ namespace HCIProjekat
             Button okButton = (Button) sender;
             try
             {
-                OznakaBox.GetBindingExpression(TextBox.TextProperty).UpdateSource();
+                if (OznakaBox.IsEnabled)
+                    OznakaBox.GetBindingExpression(TextBox.TextProperty).UpdateSource();
 
-                if (ColorBox.SelectedColor != null && !Validation.GetHasError(OznakaBox))
+                ColorBox.GetBindingExpression(ColorPicker.SelectedColorProperty).UpdateSource();
+                bool oznakaValidation = true;
+                //nova etiketa
+                if (OznakaBox.IsEnabled)
+                {
+                    oznakaValidation = !Validation.GetHasError(OznakaBox);
+                }
+                if (!Validation.GetHasError(ColorBox) && oznakaValidation)
                 {
                     Etiketa novaEtiketa = new Etiketa(OznakaBox.Text, ColorBox.SelectedColor.Value, OpisBox.Text);
                     if (Main.GetInstance().HasEtiketa(novaEtiketa))
                     {
-                        //replace nema?
+                        
                         Main.GetInstance().EtiketaLista.Single(x => x.Oznaka.Equals(novaEtiketa.Oznaka)).Opis = novaEtiketa.Opis;
                         Main.GetInstance().EtiketaLista.Single(x => x.Oznaka.Equals(novaEtiketa.Oznaka)).Boja = novaEtiketa.Boja;
 
@@ -113,13 +124,13 @@ namespace HCIProjekat
                     
                     NovaEtiketaDialog.Close();
 
-                }
+                }/*
                 else
                 {
                     MessageBox.Show("Molimo Vas da popunite polja oznacena sa *.", "Nepotpun unos.",
                         MessageBoxButton.OK, MessageBoxImage.Warning);
 
-                }
+                }*/
             }
             catch (Exception exception)
             {

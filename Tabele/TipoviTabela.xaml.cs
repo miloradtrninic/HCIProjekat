@@ -1,6 +1,7 @@
 ﻿using System;
 using System.ComponentModel;
 using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Data;
 
 namespace HCIProjekat
@@ -8,7 +9,7 @@ namespace HCIProjekat
     /// <summary>
     /// Interaction logic for TipoviTabela.xaml
     /// </summary>
-    public partial class TipoviTabela : Window, INotifyPropertyChanged
+    public partial class TipoviTabela : Page, INotifyPropertyChanged
     {
 
         private ICollectionView _tipoviView;

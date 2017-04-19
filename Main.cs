@@ -2,18 +2,26 @@
 using System.CodeDom;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
+using System.IO;
 using System.Linq;
+using System.Runtime.Serialization;
+using System.Runtime.Serialization.Formatters.Binary;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace HCIProjekat
 {
+    [Serializable]  
     public class Main
     {
         private ObservableCollection<Spomenik> spomeniciLista;
         private ObservableCollection<TipSpomenika> _tipspomenikaLista;
 
         private ObservableCollection<Etiketa> _etiketaLista;
+        private ObservableCollection<SpomenikMapa> _spomenikMapas;
+
+       
         private static Main instance = null;
 
         private Main()
@@ -21,10 +29,8 @@ namespace HCIProjekat
             spomeniciLista = new ObservableCollection<Spomenik>();
             _tipspomenikaLista = new ObservableCollection<TipSpomenika>();
             _etiketaLista = new ObservableCollection<Etiketa>();
+            _spomenikMapas = new ObservableCollection<SpomenikMapa>();
         }
-
-        
-
         public static Main GetInstance()
         {
             if (instance == null)
@@ -53,6 +59,35 @@ namespace HCIProjekat
         public ObservableCollection<Spomenik> GetSpomenikLista
         {
             get { return spomeniciLista; }
+        }
+
+        public ObservableCollection<SpomenikMapa> SpomenikMapas
+        {
+            get { return _spomenikMapas; }
+            set { _spomenikMapas = value; }
+        }
+
+        public void Snimi(string filePath)
+        {
+            IFormatter formatter = new BinaryFormatter();
+            Stream stream = new FileStream(filePath, FileMode.Create, FileAccess.Write, FileShare.None);
+            formatter.Serialize(stream, instance);
+            stream.Close();  
+        }
+
+        public bool Load(string filePath)
+        {
+            IFormatter formatter = new BinaryFormatter();
+            Stream stream = new FileStream(filePath, FileMode.Open, FileAccess.Read, FileShare.None);
+
+            instance = formatter.Deserialize(stream) as Main;
+            if (instance != null)
+            {
+                return true;
+            }
+           
+            return true;
+            
         }
 
         public bool HasSpomenik(Spomenik spomenik)
@@ -93,4 +128,6 @@ namespace HCIProjekat
         }
 
     }
+
+    
 }

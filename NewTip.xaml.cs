@@ -30,6 +30,7 @@ namespace HCIProjekat
 
         public NewTip(TipSpomenika tipSpomenika)
         {
+            InitializeComponent();
             if (tipSpomenika == null)
             {
                 _oznaka = "";
@@ -39,12 +40,13 @@ namespace HCIProjekat
             }
             else
             {
+                OznakaBox.IsEnabled = false;
                 _oznaka = tipSpomenika.Oznaka;
                 _filePath = tipSpomenika.IkonicaPath;
                 _ime = tipSpomenika.Ime;
                 _opis = tipSpomenika.Opis;
             }
-            InitializeComponent();
+            
             this.DataContext = this;
             
         }
@@ -112,13 +114,20 @@ namespace HCIProjekat
         {
             try
             {
-                OznakaBox.GetBindingExpression(TextBox.TextProperty).UpdateSource();
+                if (OznakaBox.IsEnabled)
+                    OznakaBox.GetBindingExpression(TextBox.TextProperty).UpdateSource();
+
                 ImeBox.GetBindingExpression(TextBox.TextProperty).UpdateSource();
+
                 //FileBox.GetBindingExpression(TextBox.TextProperty).UpdateSource();
-                if (Validation.GetHasError(OznakaBox) || Validation.GetHasError(ImeBox) /*|| Validation.GetHasError(FileBox)*/)
+                if (Validation.GetHasError(ImeBox) /*|| Validation.GetHasError(FileBox)*/)
                 {
-                    MessageBox.Show("Molimo Vas da popunite polja oznacena sa *.", "Nepotpun unos.",
-                        MessageBoxButton.OK, MessageBoxImage.Warning);
+                   /* MessageBox.Show("Molimo Vas da popunite polja oznacena sa *.", "Nepotpun unos.",
+                        MessageBoxButton.OK, MessageBoxImage.Warning);*/
+                }
+                else if (Validation.GetHasError(OznakaBox) && OznakaBox.IsEnabled)
+                {
+
                 }
                 else if (FilePathTip.Equals(@"resources\NoImg300x225.jpg"))
                 {

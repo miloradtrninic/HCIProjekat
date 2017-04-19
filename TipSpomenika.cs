@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 
 namespace HCIProjekat 
 {
+    [Serializable]  
     public class TipSpomenika : INotifyPropertyChanged
     {
         //Tip spomenika je opisan preko svoje jedinstvene ljudski-čitljive oznake koju unosi korisnik, imena, ikonice, i opisa. Ikonica je sličica koja se učitava i koja se koristi da se taj tip spomenika označi na mapi.
@@ -78,7 +79,7 @@ namespace HCIProjekat
         {
             return ime;
         }
-
+        [field:NonSerialized]
         public event PropertyChangedEventHandler PropertyChanged;
 
         public void OnPropertyChanged(String propertyName)

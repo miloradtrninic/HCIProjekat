@@ -44,10 +44,16 @@ namespace HCIProjekat
         private string _opis;
         private string _era;
         private string _turizam;
+        private DateTime _datumOtkrivanja;
+
 
         private bool _unescoChecked;
         private bool _naseljeChecked;
         private bool _areheoChecked;
+
+        //TODO 2. BIND ZA LISTU SELEKTOVANIH ETIKETA
+        //TODO 3. AKO POSTOJI VEC SPOMENIK, TIP, ETIKETA SA ISTOM OZNAKOM PRI DODAVANJU OZNACITI VALIDACIJOM
+
 
         private TipSpomenika _tipSpomenika;
         private List<Etiketa> _etikete;
@@ -55,9 +61,10 @@ namespace HCIProjekat
         public NewSpomenik(Spomenik spomenik)
         {
             InitializeComponent();
-                     
+            _etikete = new List<Etiketa>();         
             _eraPorekla = new List<string>(new string[] { "Paleolit", "Neolit", "Stari vek","Srednji vek","Renesansa","Moderno doba" });
             _turistickiStatus = new List<string>(new string[] { "Dostupan", "Nedostupan", "Eksploatisan" });
+
             if (spomenik == null)
             {
                 _prihod = 0.0;
@@ -71,9 +78,11 @@ namespace HCIProjekat
                 _tipSpomenika = new TipSpomenika();
                 _era = "Paleolit";
                 _turizam = "Dostupan";
+                _datumOtkrivanja = DateTime.Today.Date;
             }
             else
             {
+                OznakaBox.IsEnabled = false;
                 _prihod = Double.Parse(spomenik.GodisnjiPrihod);
                 _oznaka = spomenik.Oznaka;
                 _imagePath = spomenik.IkonicaPath;
@@ -86,9 +95,11 @@ namespace HCIProjekat
                 _era = spomenik.EraPorekla;
                 _turizam = spomenik.TuristickiStatus;
                 _etikete = spomenik.Etikete;
+                _datumOtkrivanja = spomenik.DatumOtkrivanja.Date;
 
             }
             this.DataContext = this;
+            Kalendar.DisplayDateEnd = Convert.ToDateTime(DateTime.Now.ToShortTimeString()).Date;
         }
 
       
@@ -208,7 +219,21 @@ namespace HCIProjekat
         public List<Etiketa> Etikete
         {
             get { return _etikete; }
-            set { _etikete = value; }
+            set
+            {
+                _etikete = value;
+                OnPropertyChanged("Etikete");
+            }
+        }
+
+        public DateTime DatumOtkrivanja
+        {
+            get { return _datumOtkrivanja; }
+            set
+            {
+                _datumOtkrivanja = value;
+                OnPropertyChanged("DatumOtkiravanja");
+            }
         }
 
 
@@ -265,27 +290,49 @@ namespace HCIProjekat
             try
             {
                 //ispaljuje event na silu, jer bi inace mogao da prodje bez provere
-                OznakaBox.GetBindingExpression(TextBox.TextProperty).UpdateSource();
+                if(OznakaBox.IsEnabled)
+                    OznakaBox.GetBindingExpression(TextBox.TextProperty).UpdateSource();
+
                 ImeBox.GetBindingExpression(TextBox.TextProperty).UpdateSource();
                 PrihodBox.GetBindingExpression(TextBox.TextProperty).UpdateSource();
                 
-                if (Validation.GetHasError(OznakaBox) || Validation.GetHasError(ImeBox) ||
+
+
+                if (Validation.GetHasError(ImeBox) ||
                     Validation.GetHasError(PrihodBox) || Kalendar.SelectedDate == null)
+                { 
+
+                   /* MessageBox.Show("Postoje greske u unosu. Molimo ispravite i pokusajte ponovo", "Unos neispravan",
+                        MessageBoxButton.OK, MessageBoxImage.Warning);*/
+                } 
+                else if (Validation.GetHasError(OznakaBox) && OznakaBox.IsEnabled)
                 {
-                    MessageBox.Show("Postoje greske u unosu. Molimo ispravite i pokusajte ponovo", "Unos neispravan",
-                        MessageBoxButton.OK, MessageBoxImage.Warning);
-                } else if (TipBox.SelectedIndex == -1)
+
+                }
+                else if (TipBox.SelectedIndex == -1)
                 {
                     MessageBox.Show("Postoje greske u unosu. Molimo izaberite tip spomenika", "Unos neispravan",
                         MessageBoxButton.OK, MessageBoxImage.Warning);
-                } 
+                }
+                else if (EtiketaBox.SelectedIndex == -1)
+                {
+                    MessageBox.Show("Postoje greske u unosu. Molimo izaberite bar jednu etiketu", "Unos neispravan",
+                        MessageBoxButton.OK, MessageBoxImage.Warning);
+                }
                 else
                 {
                     bool unseco = _unescoChecked;
                     bool naselje = _naseljeChecked;
                     bool arheo = _areheoChecked;
+                    var selectedItems = EtiketaBox.SelectedItems;
+                    foreach (var item in selectedItems)
+                    {
+                        _etikete.Add((Etiketa) item);
+                    }
+
+
                     Spomenik newSpomenik = new Spomenik(_oznaka, _ime, _opis, _era,
-                        _turizam, _imagePath, unseco, naselje, arheo, _prihod.ToString(), 
+                        _turizam, _imagePath, unseco, naselje, arheo, _prihod.ToString(),
                         Kalendar.SelectedDate.Value, _tipSpomenika, _etikete);
                     if (Main.GetInstance().HasSpomenik(newSpomenik))
                     {
@@ -321,8 +368,8 @@ namespace HCIProjekat
                             newSpomenik.Naselje;
                         Main.GetInstance().GetSpomenikLista.Single(x => x.Oznaka.Equals(newSpomenik.Oznaka)).Arheo =
                             newSpomenik.Arheo;
-                      //  MessageBox.Show("Uspesno ste izmenili spomenik.", "Izmenjen spomenik.",
-                            //MessageBoxButton.OK, MessageBoxImage.Asterisk);
+                        //  MessageBox.Show("Uspesno ste izmenili spomenik.", "Izmenjen spomenik.",
+                        //MessageBoxButton.OK, MessageBoxImage.Asterisk);
 
                     }
                     else
@@ -334,8 +381,8 @@ namespace HCIProjekat
                         }
                         Main.GetInstance().GetSpomenikLista.Add(newSpomenik);
                         // Console.WriteLine(Main.GetInstance().GetSpomenikLista.Count);
-                       // MessageBox.Show("Uspesno ste dodali novi spomenika.", "Dodat novi spomenik.",
-                           // MessageBoxButton.OK, MessageBoxImage.Asterisk);
+                        // MessageBox.Show("Uspesno ste dodali novi spomenika.", "Dodat novi spomenik.",
+                        // MessageBoxButton.OK, MessageBoxImage.Asterisk);
                     }
                     NewSpomenikWindow.Close();
                 }

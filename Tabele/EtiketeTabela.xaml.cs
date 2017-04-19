@@ -1,5 +1,6 @@
 using System.ComponentModel;
 using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Data;
 
 namespace HCIProjekat
@@ -8,7 +9,7 @@ namespace HCIProjekat
     /// Interaction logic for EtiketeLista.xaml
     /// </summary>
     /// 
-    public partial class EtiketeTabela : Window, INotifyPropertyChanged
+    public partial class EtiketeTabela : Page, INotifyPropertyChanged
     {
         private ICollectionView _etiketeView;
         private bool _enableSearch;
@@ -84,5 +85,7 @@ namespace HCIProjekat
             }
             _etiketeView.Refresh();
         }
+
+       
     }
 }

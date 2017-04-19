@@ -50,6 +50,7 @@
                     <Binding.ValidationRules>
                         <projek:EmptyStringValidation ValidationStep="RawProposedValue"></projek:EmptyStringValidation>
                         <projek:NumberCharValidation ValidationStep="RawProposedValue"></projek:NumberCharValidation>
+                        <projek:OznakaTipUnique ValidationStep="RawProposedValue"></projek:OznakaTipUnique>
                     </Binding.ValidationRules>
                 </Binding>
             </TextBox.Text>
@@ -84,8 +85,8 @@
             <Button VerticalAlignment="Bottom" Margin="15,15,0,0" Width="100px" Content="Odaberi" Click="DialogButton_Click"/>
         </StackPanel>
         -->
-        <StackPanel Grid.Column="2" Grid.RowSpan="3" Orientation="Vertical">
-            <Image VerticalAlignment="Top" Source="{Binding FilePathTip}" Margin="5"></Image>
+        <StackPanel Grid.Column="2" Grid.Row="0" Grid.RowSpan="3" Orientation="Vertical">
+            <Image VerticalAlignment="Top" Source="{Binding FilePathTip}" MaxHeight="100" Margin="5"></Image>
             <Button VerticalAlignment="Bottom" Margin="5" Content="Odaberi" Click="DialogButton_Click"/>
         </StackPanel>
 

@@ -3,17 +3,21 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using System.Runtime.CompilerServices;
+using System.Runtime.Serialization;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Media;
 
 namespace HCIProjekat
 {
+    [Serializable]  
     public class Etiketa : INotifyPropertyChanged
     {
         
         private string oznaka;
+        [NonSerialized]
         private Color boja;
+
         private string bojaKod;
         private string opis;
 
@@ -27,7 +31,7 @@ namespace HCIProjekat
                 OnPropertyChanged("Oznaka");
             }
         }
-
+        
         public Color Boja
         {
             get { return boja; }
@@ -55,9 +59,12 @@ namespace HCIProjekat
             get { return bojaKod; }
             set
             {
-                bojaKod = value; 
+                bojaKod = value;
+                var convertFromString = ColorConverter.ConvertFromString(bojaKod);
+                if (convertFromString != null)
+                    boja = (Color)convertFromString;
                 OnPropertyChanged("BojaKod");
-
+                OnPropertyChanged("Boja");
             }
         }
 
@@ -82,7 +89,7 @@ namespace HCIProjekat
         {
             return oznaka + boja.ToString();
         }
-
+        [field:NonSerialized]
         public event PropertyChangedEventHandler PropertyChanged;
 
         public void OnPropertyChanged(String propertyName)

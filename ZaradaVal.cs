@@ -6,6 +6,8 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Controls;
+using System.Windows.Media;
+using Xceed.Wpf.Toolkit;
 
 namespace HCIProjekat
 {
@@ -16,8 +18,8 @@ namespace HCIProjekat
             if (value is double)
             {
                 double d = (double)value;
-                if (d < -2147483648) return new ValidationResult(false, "Godisnji prihod je prevelika cifra.");
-                if (d > 2147483648) return new ValidationResult(false, "Godisnji prihod je prevelika cifra.");
+                if (d < -2147483648) return new ValidationResult(false, "Godišnji prihod je prevelika cifra.");
+                if (d > 2147483648) return new ValidationResult(false, "Godišnji prihod je prevelika cifra.");
                 return new ValidationResult(true, null);
             }
             else
@@ -27,6 +29,69 @@ namespace HCIProjekat
         }
 
             
+    }
+
+
+
+    public class OznakaSpomenikUnique : ValidationRule
+    {
+        public override ValidationResult Validate(object value, CultureInfo cultureInfo)
+        {
+            var oznaka = value as string;
+            foreach (Spomenik spomenik in Main.GetInstance().GetSpomenikLista)
+            {
+                if (spomenik.Oznaka.Equals(oznaka))
+                {
+                    return new ValidationResult(false, "Već postoji spomenik sa upisanom oznakom.");
+                }
+            }
+            return new ValidationResult(true, null);
+        }
+    }
+
+    public class OznakaEtiketaUnique : ValidationRule
+    {
+        public override ValidationResult Validate(object value, CultureInfo cultureInfo)
+        {
+            var oznaka = value as string;
+            foreach (Etiketa etiketa in Main.GetInstance().EtiketaLista)
+            {
+                if (etiketa.Oznaka.Equals(oznaka))
+                {
+                    return new ValidationResult(false, "Već postoji etiketa sa upisanom oznakom.");
+                }
+            }
+            return new ValidationResult(true, null);
+        }
+    }
+
+    public class ColorValidation : ValidationRule
+    {
+        public override ValidationResult Validate(object value, CultureInfo cultureInfo)
+        {
+            var color = value as Color?;
+            if (color != null)
+            {
+                return new ValidationResult(true, null);
+            }
+            return new ValidationResult(false, "Molimo Vas da izaberete boju.");
+        }
+    }
+
+    public class OznakaTipUnique : ValidationRule
+    {
+        public override ValidationResult Validate(object value, CultureInfo cultureInfo)
+        {
+            var oznaka = value as string;
+            foreach (TipSpomenika tipSpomenika in Main.GetInstance().TipspomenikaLista)
+            {
+                if (tipSpomenika.Oznaka.Equals(oznaka))
+                {
+                    return new ValidationResult(false, "Već postoji tip spomenika sa upisanom oznakom.");
+                }
+            }
+            return new ValidationResult(true, null);
+        }
     }
 
     public class StringDoubleValidation:ValidationRule

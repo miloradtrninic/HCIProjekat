@@ -2,13 +2,13 @@
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:proj="clr-namespace:HCIProjekat"
-        Title="MainWindow" Height="700" Width="900">
+        Title="MainWindow" Height="700" Width="900" WindowStartupLocation="CenterScreen">
     <Window.Resources>
 
         <ObjectDataProvider x:Key="SingletoneMain" ObjectType="{x:Type proj:Main}" MethodName="GetInstance" />
 
     </Window.Resources>
-    <Grid DataContext="{Binding Source={StaticResource SingletoneMain}}">
+    <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="101*"/>
             <ColumnDefinition Width="791*"/>
@@ -36,17 +36,29 @@
                             </MenuItem.Icon>
                         </MenuItem>
                         <Separator></Separator>
-
+                        <MenuItem Header="Učitaj podatke" Click="MenuItemOpen_OnClick">
+                            <MenuItem.Icon>
+                                <Image Source="resources/OpenFolder-48.png"></Image>
+                            </MenuItem.Icon>
+                        </MenuItem>
+                        <MenuItem Header="Snimi podatke" Click="MenuItemSave_OnClick">
+                            <MenuItem.Icon>
+                                <Image Source="resources/Save-48.png"></Image>
+                            </MenuItem.Icon>
+                        </MenuItem>
                     </MenuItem>
                     <MenuItem Height="35px">
                         <MenuItem.Header>
                             <TextBlock VerticalAlignment="Center">Izmeni</TextBlock>
                         </MenuItem.Header>
                     </MenuItem>
+                    <!--
                     <MenuItem Height="35px">
+                       
                         <MenuItem.Header>
-                            <TextBlock VerticalAlignment="Center">Pregled</TextBlock>
+                            <TextBlock VerticalAlignment="Center" Click="" >Pregled</TextBlock>
                         </MenuItem.Header>
+                       
                         <MenuItem Header="Spomenici" Click="SpomeniciLista_OnClick">
                             <MenuItem.Icon>
                                 <Ellipse Fill="LimeGreen" Width="16" Height="16"/>
@@ -63,7 +75,9 @@
                                 <Ellipse Fill="#FF9BA9" Width="16" Height="16"/>
                             </MenuItem.Icon>
                         </MenuItem>
+                        
                     </MenuItem>
+                    -->
                     <MenuItem Height="35px">
                         <MenuItem.Header>
                             <TextBlock VerticalAlignment="Center">Pomoc</TextBlock>
@@ -74,30 +88,32 @@
                     <ToolBar>
                         <Button ToolTip="Novi spomenik" Click="Button_NoviSpomenik">
                             <StackPanel Orientation="Horizontal">
-                                <Image Source="resources/Plus_50.png"/>
+                                <Image Width="50" Height="50" Source="resources/Plus_50.png"/>
                                 <TextBlock VerticalAlignment="Center">Novi spomenik</TextBlock>
                             </StackPanel>
                         </Button>
                         <Button  ToolTip="Novi tip spomenika" Click="Button_NoviTip">
                             <StackPanel Orientation="Horizontal">
-                                <Image Source="resources/Plus_50 blue.png"/>
+                                <Image Width="50" Height="50" Source="resources/Plus_50 blue.png"/>
                                 <TextBlock VerticalAlignment="Center">Novi tip spomenika</TextBlock>
                             </StackPanel>
 
                         </Button>
                         <Button  ToolTip="Nova etiketa" Click="Button_NovaEtiketa">
                             <StackPanel Orientation="Horizontal">
-                                <Image Source="resources/Plus_50 light green.png"/>
+                                <Image Width="50" Height="50" Source="resources/Plus_50 light green.png"/>
                                 <TextBlock VerticalAlignment="Center">Nova etiketa</TextBlock>
                             </StackPanel>
 
                         </Button>
-                    </ToolBar>
-                    <ToolBar>
-                        <Button  ToolTip="TODO" >
-                            <Image Source="resources/Save-48.png"></Image>
+                        <Button Click="ButtonTabele_OnClick">
+                            <StackPanel Orientation="Horizontal">
+                                <Image Width="50" Height="50" Source="resources/Select All-40.png"/>
+                                <TextBlock VerticalAlignment="Center">Pregled podataka</TextBlock>
+                            </StackPanel>
                         </Button>
                     </ToolBar>
+                    
                 </ToolBarTray>
             </StackPanel>
             <TabControl TabStripPlacement="Top" >
@@ -112,12 +128,12 @@
                             <TextBlock Text="Spomenici" />
                         </StackPanel>
                     </TabItem.Header>
-                    <ListView Name="SpomenikLista" PreviewMouseLeftButtonDown="List_PreviewMouseLeftButtonDown" PreviewMouseMove="List_MouseMove" MouseDoubleClick="SpomeniciLista_OnMouseDoubleClick" ItemsSource="{Binding GetSpomenikLista}" DockPanel.Dock="Left" Width="200px">
+                    <ListView Name="SpomenikLista" PreviewMouseLeftButtonDown="ListView_PreviewMouseLeftButtonDown" PreviewMouseMove="ListView_MouseMove" MouseDoubleClick="SpomeniciLista_OnMouseDoubleClick" ItemsSource="{Binding SpomeniciView}" DockPanel.Dock="Left" Width="205px">
                         <ListView.ItemTemplate>
                             <DataTemplate>
-                                <StackPanel>
-                                    <TextBlock Text="{Binding Ime}" FontWeight="Bold" />
-                                    <Image MaxWidth="190px" MaxHeight="80px" Source="{Binding IkonicaPath}" />
+                                <StackPanel HorizontalAlignment="Center" Background="DarkBlue" Opacity="0.9" Height="120">
+                                    <TextBlock TextAlignment="Center" Text="{Binding Ime}" FontStyle="Italic" Foreground="White" FontWeight="Bold" Margin="5"  />
+                                    <Image Width="180" Height="70" Stretch="Fill" Source="{Binding IkonicaPath}" Margin="5" />
                                 </StackPanel>
                             </DataTemplate>
                         </ListView.ItemTemplate>
@@ -134,7 +150,7 @@
                             <TextBlock Text="Tipovi" />
                         </StackPanel>
                     </TabItem.Header>
-                    <ListView Name="TipLista" MouseDoubleClick="TipLista_OnMouseDoubleClick" ItemsSource="{Binding TipspomenikaLista}" DockPanel.Dock="Left" Width="200px">
+                    <ListView Name="TipLista" MouseDoubleClick="TipLista_OnMouseDoubleClick" ItemsSource="{Binding TipoviView}" DockPanel.Dock="Left" Width="200px">
                         <ListView.ItemTemplate>
                             <DataTemplate>
                                 <StackPanel>
@@ -156,7 +172,7 @@
                             <TextBlock Text="Etikete"  />
                         </StackPanel>
                     </TabItem.Header>
-                    <ListView Name="EtiketaLista" MouseDoubleClick="EtiketaLista_OnMouseDoubleClick" ItemsSource="{Binding EtiketaLista}" DockPanel.Dock="Left" Width="200px">
+                    <ListView Name="EtiketaLista" MouseDoubleClick="EtiketaLista_OnMouseDoubleClick" ItemsSource="{Binding EtiketeView}" DockPanel.Dock="Left" Width="200px">
                         <ListView.ItemTemplate>
                             <DataTemplate>
                                 <StackPanel Orientation="Horizontal" >
@@ -169,13 +185,32 @@
                 </TabItem>
             </TabControl>
 
-            <StackPanel Margin="0" Drop="DropMapa_Drop" DragEnter="DropMapa_DragEnter" AllowDrop="True">
-                <StackPanel.Background>
-                    <ImageBrush ImageSource="resources/worldmap-worldmap2.jpg"></ImageBrush>
-                </StackPanel.Background>
+            <ItemsControl x:Name="MapCanvas" Margin="0" ItemsSource="{Binding SpomeniciMapaView}" Drop="DropMapa_Drop" DragEnter="DropMapa_DragEnter" AllowDrop="True">
+                <ItemsControl.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <Canvas>
+                            <Canvas.Background>
+                                <ImageBrush ImageSource="resources/worldmap-worldmap2.jpg"></ImageBrush>
+                            </Canvas.Background>
+                        </Canvas>
+                    </ItemsPanelTemplate>
+                </ItemsControl.ItemsPanel>
+                <ItemsControl.ItemContainerStyle>
+                    <Style TargetType="ContentPresenter">
+                        <Setter Property="Canvas.Left" Value="{Binding KoordinatePoint.X}" />
+                        <Setter Property="Canvas.Top" Value="{Binding KoordinatePoint.Y}" />
+                    </Style>
+                </ItemsControl.ItemContainerStyle>
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate DataType="{x:Type proj:SpomenikMapa}">
+                        <StackPanel HorizontalAlignment="Center" Background="DarkBlue" Opacity="0.9" Height="90">
+                            <TextBlock TextAlignment="Center" Text="{Binding SpomenikNaMapi.Ime}" FontStyle="Italic" Foreground="White" FontWeight="Bold" Margin="5"  />
+                            <Image Width="70" Height="70" Stretch="Fill" Source="{Binding SpomenikNaMapi.IkonicaPath}" Margin="5" />
+                        </StackPanel>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
 
-
-            </StackPanel>
         </DockPanel>
 
     </Grid>

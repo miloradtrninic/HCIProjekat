@@ -6,7 +6,8 @@ using System.Runtime.CompilerServices;
 
 namespace HCIProjekat
 {
-    public class Spomenik : INotifyCollectionChanged, INotifyPropertyChanged
+    [Serializable]  
+    public class Spomenik :  INotifyPropertyChanged
     {
 
         private string oznaka;
@@ -23,8 +24,6 @@ namespace HCIProjekat
 
         public string eraPorekla;
         public string turistickiStatus;
-
-        public event NotifyCollectionChangedEventHandler CollectionChanged;
 
         public DateTime DatumOtkrivanja
         {
@@ -191,7 +190,7 @@ namespace HCIProjekat
             return Ime;
         }
 
-
+        [field: NonSerialized]
         public event PropertyChangedEventHandler PropertyChanged;
 
         public void OnPropertyChanged(String propertyName)

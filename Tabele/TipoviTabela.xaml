@@ -1,14 +1,8 @@
-﻿<Window x:Class="HCIProjekat.TipoviTabela"
+﻿<Page x:Class="HCIProjekat.TipoviTabela"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:proj="clr-namespace:HCIProjekat"
-        Title="Pregled svih tipova spomenika" Height="500" Width="500" ResizeMode="NoResize">
-    <Window.Icon>
-        <ImageSource>../resources/Bullet-Point-light-blue.png</ImageSource>
-    </Window.Icon>
-    <Window.Resources>
-        
-    </Window.Resources>
+        Title="Pregled svih tipova spomenika">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"></RowDefinition>
@@ -18,7 +12,7 @@
             <ColumnDefinition Width="7*"></ColumnDefinition>
             <ColumnDefinition Width="1*"></ColumnDefinition>
         </Grid.ColumnDefinitions>
-        <DataGrid Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="1" HorizontalAlignment="Stretch" VerticalContentAlignment="Stretch" VerticalAlignment="Stretch"
+        <DataGrid x:Name="TabelaTipova" Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="1" HorizontalAlignment="Stretch" VerticalContentAlignment="Stretch" VerticalAlignment="Stretch"
                   HorizontalContentAlignment="Stretch" ColumnWidth="*"
                   CanUserReorderColumns="True" CanUserResizeColumns="False" 
                   CanUserResizeRows="False" CanUserSortColumns="True"
@@ -63,4 +57,4 @@
             <Image Source="../resources/Search-30.png" Height="30"/>
         </Button>
     </Grid>  
-</Window>
+</Page>

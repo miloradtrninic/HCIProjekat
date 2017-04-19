@@ -36,6 +36,7 @@
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Xml" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Core" />
@@ -72,6 +73,13 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Etiketa.cs" />
+    <Compile Include="Login.xaml.cs">
+      <DependentUpon>Login.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="SpomenikMapa.cs" />
+    <Compile Include="Tabele.xaml.cs">
+      <DependentUpon>Tabele.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Tabele\EtiketeTabela.xaml.cs">
       <DependentUpon>EtiketeTabela.xaml</DependentUpon>
     </Compile>
@@ -94,6 +102,14 @@
     </Compile>
     <Compile Include="TipSpomenika.cs" />
     <Compile Include="ZaradaVal.cs" />
+    <Page Include="Login.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Tabele.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Tabele\EtiketeTabela.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -196,6 +212,34 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="resources\Search-30white.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="resources\Select All-40.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="resources\FilterGreen-48.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="resources\AddGreen-50.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="resources\Edit FilledGreen-50.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="resources\DeleteFilledGreen-50.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="resources\AddBlue-50.png" />
+    <Resource Include="resources\DeleteFilledBlue-50.png" />
+    <Resource Include="resources\Edit FilledBlue-50.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="resources\AddRed-50.png" />
+    <Resource Include="resources\DeleteFilledRed-50.png" />
+    <Resource Include="resources\Edit FilledRed-50.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="resources\OpenFolder-48.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

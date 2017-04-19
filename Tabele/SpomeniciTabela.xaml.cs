@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel;
 using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Data;
 
 namespace HCIProjekat
@@ -7,7 +8,7 @@ namespace HCIProjekat
     /// <summary>
     /// Interaction logic for SpomeniciTabela.xaml
     /// </summary>
-    public partial class SpomeniciTabela : Window,INotifyPropertyChanged
+    public partial class SpomeniciTabela : Page,INotifyPropertyChanged
     {
         private ICollectionView _listView;
         private bool _searchEnable;
@@ -16,7 +17,6 @@ namespace HCIProjekat
         {
             InitializeComponent();
             _searchEnable = false;
-            //view 2 nad getspomeniklista.  CollectionViewSource.Default vracao uvek isti view i menjao se na nivou celog programa
             _listView = new CollectionViewSource { Source = Main.GetInstance().GetSpomenikLista }.View;
             DataContext = this;
             _listView.Filter += Filter;

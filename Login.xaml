@@ -1,0 +1,40 @@
+﻿<Window x:Class="HCIProjekat.Login"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:proj="clr-namespace:HCIProjekat"
+        Title="Login" Height="300" Width="500" WindowStartupLocation="CenterScreen" ResizeMode="NoResize" >
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="1*"></ColumnDefinition>
+            <ColumnDefinition Width="2*"></ColumnDefinition>
+            <ColumnDefinition Width="6*"></ColumnDefinition>
+            <ColumnDefinition Width="1*"></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="1*"></RowDefinition>
+            <RowDefinition Height="2*"></RowDefinition>
+            <RowDefinition Height="2*"></RowDefinition>
+            <RowDefinition Height="1*"></RowDefinition>
+        </Grid.RowDefinitions>
+        <StackPanel HorizontalAlignment="Center" Orientation="Horizontal" Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="2">
+            <Ellipse Margin="5" Width="30" Height="30" Fill="LimeGreen"></Ellipse>
+            <Ellipse Margin="5" Width="30" Height="30"  Fill="#FF9A8FF2"></Ellipse>
+            <Ellipse Margin="5" Width="30" Height="30"  Fill="#FF9BA9"></Ellipse>
+        </StackPanel>
+        <Label Grid.Column="1" Grid.Row="1" VerticalAlignment="Center" FontSize="13">Korisničko ime:</Label>
+        <StackPanel Grid.Column="2" Grid.Row="1">
+            <Label x:Name="UserBoxError" Visibility="Hidden" Foreground="Red">Korisničko ime ne postoji.</Label>
+            <TextBox x:Name="UserBox" MaxHeight="50" FontSize="30" MaxLength="18" GotKeyboardFocus="UserBox_OnGotKeyboardFocus"></TextBox>
+        </StackPanel>
+
+        <Label Grid.Column="1" Grid.Row="2" VerticalAlignment="Center" FontSize="13">Lozinka:</Label>
+        <StackPanel Grid.Column="2" Grid.Row="2">
+            <Label x:Name="PassBoxError"  Visibility="Hidden" Foreground="Red">Lozinka neispravna.</Label>
+            <PasswordBox MaxHeight="50" FontSize="30" MaxLength="15" x:Name="PasswordBox" GotKeyboardFocus="PasswordBox_OnGotKeyboardFocus" ></PasswordBox>
+        </StackPanel>
+       
+        
+
+        <Button Grid.Column="0" Grid.Row="3" Width="100" Grid.ColumnSpan="4"  HorizontalAlignment="Center" FontSize="16" Margin="5" Click="Button_Click">Login</Button>
+    </Grid>
+</Window>
