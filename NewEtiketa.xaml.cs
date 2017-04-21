@@ -90,7 +90,6 @@ namespace HCIProjekat
 
         private void SaveButton_Click(object sender, RoutedEventArgs e)
         {
-            Button okButton = (Button) sender;
             try
             {
                 if (OznakaBox.IsEnabled)
@@ -145,7 +144,14 @@ namespace HCIProjekat
             //TODO DA LI STE SIGURNI MESSAGE BOX
             NovaEtiketaDialog.Close();
         }
-
+        private void Accept_OnCanExecute(object sender, CanExecuteRoutedEventArgs e)
+        {
+            e.CanExecute = true;
+        }
+        private void Escape_OnCanExecute(object sender, CanExecuteRoutedEventArgs e)
+        {
+            e.CanExecute = true;
+        }
 
         
     }

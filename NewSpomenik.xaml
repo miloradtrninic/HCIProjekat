@@ -42,7 +42,10 @@
         </ControlTemplate>
 
     </Window.Resources>
-    
+    <Window.CommandBindings>
+        <CommandBinding Command="proj:RoutedCommands.Accept" CanExecute="Accept_OnCanExecute" Executed="SaveButton_Click"></CommandBinding>
+        <CommandBinding Command="proj:RoutedCommands.Escape" CanExecute="Escape_OnCanExecute" Executed="CloseButton_Click"></CommandBinding>
+    </Window.CommandBindings>
 
 
 
@@ -170,8 +173,8 @@
         </DatePicker>
 
         <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,5,0,0" Grid.Column="2" Grid.Row="12">
-            <Button HorizontalAlignment="Left" MinWidth="80px" MinHeight="30px" Click="SaveButton_Click" >Snimi</Button>
-            <Button HorizontalAlignment="Right" MinWidth="80px" MinHeight="30px" Click="CloseButton_Click" Margin="5,0,0,0" Height="30" VerticalAlignment="Bottom">Odustani</Button>
+            <Button HorizontalAlignment="Left" MinWidth="80px" MinHeight="30px" Command="proj:RoutedCommands.Accept" >Snimi</Button>
+            <Button HorizontalAlignment="Right" MinWidth="80px" MinHeight="30px" Command="proj:RoutedCommands.Escape" Margin="5,0,0,0" Height="30" VerticalAlignment="Bottom">Odustani</Button>
         </StackPanel>
 
         <StackPanel Grid.Column="2" Grid.Row="0" Grid.RowSpan="3" Orientation="Vertical">

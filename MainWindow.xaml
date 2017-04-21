@@ -6,8 +6,14 @@
     <Window.Resources>
 
         <ObjectDataProvider x:Key="SingletoneMain" ObjectType="{x:Type proj:Main}" MethodName="GetInstance" />
-
     </Window.Resources>
+    <Window.CommandBindings>
+        <CommandBinding Command="proj:RoutedCommands.NewSpomenikCmd" CanExecute="NewSpomenik_CanExecute" Executed="Button_NoviSpomenik"></CommandBinding>
+        <CommandBinding Command="proj:RoutedCommands.NewEtiketa" CanExecute="NewEtiketa_CanExecute" Executed="Button_NovaEtiketa"></CommandBinding>
+        <CommandBinding Command="proj:RoutedCommands.NewTip" CanExecute="NewTip_CanExecute" Executed="Button_NoviTip"></CommandBinding>
+        <CommandBinding Command="proj:RoutedCommands.OpenState" CanExecute="Open_CanExecute" Executed="MenuItemOpen_OnClick"></CommandBinding>
+        <CommandBinding Command="proj:RoutedCommands.SaveState" CanExecute="Save_CanExecute" Executed="MenuItemSave_OnClick"></CommandBinding>
+    </Window.CommandBindings>
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="101*"/>
@@ -16,41 +22,36 @@
         <DockPanel LastChildFill="true" Grid.ColumnSpan="2">
             <StackPanel Orientation="Vertical" DockPanel.Dock="Top">
                 <Menu  Height="35px">
-                    <MenuItem Height="35px">
+                    <MenuItem Height="35px" >
                         <MenuItem.Header>
                             <TextBlock VerticalAlignment="Center" >Fajl</TextBlock>
                         </MenuItem.Header>
-                        <MenuItem Header="Novi spomenik" Click="Button_NoviSpomenik">
+                        <MenuItem Header="Novi spomenik" Command="proj:RoutedCommands.NewSpomenikCmd">
                             <MenuItem.Icon>
                                 <Ellipse Fill="LimeGreen" Width="16" Height="16"/>
                             </MenuItem.Icon>
                         </MenuItem>
-                        <MenuItem Header="Novi tip" Click="Button_NoviTip">
+                        <MenuItem Header="Novi tip" Command="proj:RoutedCommands.NewTip">
                             <MenuItem.Icon>
                                 <Ellipse Fill="#FF9A8FF2" Width="16" Height="16"/>
                             </MenuItem.Icon>
                         </MenuItem>
-                        <MenuItem Header="Nova etiketa" Click="Button_NovaEtiketa">
+                        <MenuItem Header="Nova etiketa" Command="proj:RoutedCommands.NewEtiketa">
                             <MenuItem.Icon>
-                                <Ellipse Fill="#FF9BA9" Width="16" Height="16"/>
+                                <Ellipse Fill="#FF9BA9"  Width="16" Height="16"/>
                             </MenuItem.Icon>
                         </MenuItem>
                         <Separator></Separator>
-                        <MenuItem Header="Učitaj podatke" Click="MenuItemOpen_OnClick">
+                        <MenuItem Header="Učitaj podatke" Command="proj:RoutedCommands.OpenState">
                             <MenuItem.Icon>
                                 <Image Source="resources/OpenFolder-48.png"></Image>
                             </MenuItem.Icon>
                         </MenuItem>
-                        <MenuItem Header="Snimi podatke" Click="MenuItemSave_OnClick">
+                        <MenuItem Header="Snimi podatke" Command="proj:RoutedCommands.SaveState">
                             <MenuItem.Icon>
                                 <Image Source="resources/Save-48.png"></Image>
                             </MenuItem.Icon>
                         </MenuItem>
-                    </MenuItem>
-                    <MenuItem Height="35px">
-                        <MenuItem.Header>
-                            <TextBlock VerticalAlignment="Center">Izmeni</TextBlock>
-                        </MenuItem.Header>
                     </MenuItem>
                     <!--
                     <MenuItem Height="35px">

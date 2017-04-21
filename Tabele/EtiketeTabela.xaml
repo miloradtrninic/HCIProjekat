@@ -35,7 +35,7 @@
                   HorizontalContentAlignment="Stretch" ColumnWidth="*"
                   CanUserReorderColumns="True" CanUserResizeColumns="False" 
                   CanUserResizeRows="False" CanUserSortColumns="True"
-                  ItemsSource="{Binding EtiketeView}" AutoGenerateColumns="False">
+                  ItemsSource="{Binding EtiketeView}" AutoGenerateColumns="False" IsReadOnly="True">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Oznaka" Binding="{Binding Oznaka}" />
                 

@@ -411,5 +411,13 @@ namespace HCIProjekat
             NewEtiketa etiketaDialog = new NewEtiketa(null);
             etiketaDialog.ShowDialog();
         }
+        private void Accept_OnCanExecute(object sender, CanExecuteRoutedEventArgs e)
+        {
+            e.CanExecute = true;
+        }
+        private void Escape_OnCanExecute(object sender, CanExecuteRoutedEventArgs e)
+        {
+            e.CanExecute = true;
+        }
     }
 }

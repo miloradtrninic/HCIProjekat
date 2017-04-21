@@ -16,7 +16,7 @@
                   HorizontalContentAlignment="Stretch" ColumnWidth="*"
                   CanUserReorderColumns="True" CanUserResizeColumns="False" 
                   CanUserResizeRows="False" CanUserSortColumns="True"
-                  ItemsSource="{Binding TipoviView}" AutoGenerateColumns="False">
+                  ItemsSource="{Binding TipoviView}" AutoGenerateColumns="False" IsReadOnly="True">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Oznaka" Binding="{Binding Oznaka}" />
                 <DataGridTextColumn Header="Ime" Binding="{Binding Ime}" />

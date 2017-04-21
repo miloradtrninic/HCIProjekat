@@ -76,6 +76,7 @@
     <Compile Include="Login.xaml.cs">
       <DependentUpon>Login.xaml</DependentUpon>
     </Compile>
+    <Compile Include="RoutedCommands.cs" />
     <Compile Include="SpomenikMapa.cs" />
     <Compile Include="Tabele.xaml.cs">
       <DependentUpon>Tabele.xaml</DependentUpon>
@@ -193,9 +194,7 @@
   <ItemGroup>
     <Resource Include="resources\Save-48.png" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Validation\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <Resource Include="resources\Bullet-Point-light-blue.png" />
     <Resource Include="resources\Green-Point-light-blue.png" />

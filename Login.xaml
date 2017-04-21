@@ -3,6 +3,10 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:proj="clr-namespace:HCIProjekat"
         Title="Login" Height="300" Width="500" WindowStartupLocation="CenterScreen" ResizeMode="NoResize" >
+    <Window.CommandBindings>
+        <CommandBinding Command="proj:RoutedCommands.Accept" CanExecute="Accept_OnCanExecute" Executed="Button_Click"></CommandBinding>
+       
+    </Window.CommandBindings>
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="1*"></ColumnDefinition>

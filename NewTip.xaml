@@ -29,6 +29,11 @@
 
 
     </Window.Resources>
+    <Window.CommandBindings>
+        <CommandBinding Command="projek:RoutedCommands.Accept" CanExecute="Accept_OnCanExecute" Executed="SaveButton_Click"></CommandBinding>
+        <CommandBinding Command="projek:RoutedCommands.Escape" CanExecute="Escape_OnCanExecute" Executed="CloseButton_Click"></CommandBinding>
+    </Window.CommandBindings>
+
     <Grid Margin="5">
 
         <Grid.ColumnDefinitions>
@@ -92,8 +97,8 @@
 
 
         <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,15,0,0" Grid.Column="2" Grid.Row="3">
-            <Button HorizontalAlignment="Left" MinWidth="80px" MinHeight="30px" Click="SaveButton_Click" >Snimi</Button>
-            <Button HorizontalAlignment="Right" MinWidth="80px" MinHeight="30px" Margin="5,0,0,0" Click="CloseButton_Click">Odustani</Button>
+            <Button HorizontalAlignment="Left" MinWidth="80px" MinHeight="30px" Command="projek:RoutedCommands.Accept">Snimi</Button>
+            <Button HorizontalAlignment="Right" MinWidth="80px" MinHeight="30px" Margin="5,0,0,0" Command="projek:RoutedCommands.Escape">Odustani</Button>
         </StackPanel>
 
 

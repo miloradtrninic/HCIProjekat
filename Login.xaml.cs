@@ -76,5 +76,9 @@ namespace HCIProjekat
             PasswordBox.ClearValue(BorderBrushProperty);
             PassBoxError.Visibility = Visibility.Hidden;
         }
+        private void Accept_OnCanExecute(object sender, CanExecuteRoutedEventArgs e)
+        {
+            e.CanExecute = true;
+        }
     }
 }

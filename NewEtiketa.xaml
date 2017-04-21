@@ -27,6 +27,12 @@
             </DockPanel>
         </ControlTemplate>
     </Window.Resources>
+    <Window.CommandBindings>
+        <CommandBinding Command="projek:RoutedCommands.Accept" CanExecute="Accept_OnCanExecute" Executed="SaveButton_Click"></CommandBinding>
+        <CommandBinding Command="projek:RoutedCommands.Escape" CanExecute="Escape_OnCanExecute" Executed="CloseButton_Click"></CommandBinding>
+    </Window.CommandBindings>
+
+
     <Grid Margin="5">
 
         <Grid.ColumnDefinitions>

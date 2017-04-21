@@ -183,12 +183,23 @@ namespace HCIProjekat
                     FindAncestor<ListViewItem>((DependencyObject)e.OriginalSource);
 
                 // Find the data behind the ListViewItem
-                Spomenik spomenik = (Spomenik)listView.ItemContainerGenerator.
-                    ItemFromContainer(listViewItem);
+                if (listView != null)
+                {
+                    if (listViewItem == null)
+                    {
+                        return;
+                    }
+                    Spomenik spomenik = listView.ItemContainerGenerator.
+                        ItemFromContainer(listViewItem) as Spomenik;
 
-                // Initialize the drag & drop operation
-                DataObject dragData = new DataObject("myFormat", spomenik);
-                DragDrop.DoDragDrop(listViewItem, dragData, DragDropEffects.Move);
+
+                    if (spomenik == null)
+                        return;
+
+                    // Initialize the drag & drop operation
+                    DataObject dragData = new DataObject("myFormat", spomenik);
+                    DragDrop.DoDragDrop(listViewItem, dragData, DragDropEffects.Move);
+                }
             }
         }
 
@@ -309,5 +320,32 @@ namespace HCIProjekat
             Application.Current.Shutdown();
         }
 
+
+        private void NewEtiketa_CanExecute(object sender, CanExecuteRoutedEventArgs e)
+        {
+            e.CanExecute = true;
+        }
+
+        private void NewTip_CanExecute(object sender, CanExecuteRoutedEventArgs e)
+        {
+            e.CanExecute = true;
+        }
+       
+        private void NewSpomenik_CanExecute(object sender, CanExecuteRoutedEventArgs e)
+        {
+            e.CanExecute = true;
+        }
+
+
+        private void Open_CanExecute(object sender, CanExecuteRoutedEventArgs e)
+        {
+            e.CanExecute = true;
+        }
+
+        private void Save_CanExecute(object sender, CanExecuteRoutedEventArgs e)
+        {
+            e.CanExecute = true;
+        }
+        
     }
 } 

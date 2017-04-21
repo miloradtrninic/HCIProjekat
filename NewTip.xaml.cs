@@ -198,6 +198,14 @@ namespace HCIProjekat
             }
         }
 
-        
+
+        private void Accept_OnCanExecute(object sender, CanExecuteRoutedEventArgs e)
+        {
+            e.CanExecute = true;
+        }
+        private void Escape_OnCanExecute(object sender, CanExecuteRoutedEventArgs e)
+        {
+            e.CanExecute = true;
+        }
     }
 }
