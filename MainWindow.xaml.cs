@@ -163,10 +163,56 @@ namespace HCIProjekat
             editDialog.ShowDialog();
 
         }
+
+        private void OnMap_Preview_MouseLeft(object sender, MouseButtonEventArgs e)
+        {
+            startPoint = e.GetPosition(MapCanvas);
+        }
+
+
         private void ListView_PreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             startPoint = e.GetPosition(null);
         }
+
+
+        private void OnMap_Mouse_Move(object sender, MouseEventArgs e)
+        {
+            Point mousePos = e.GetPosition(null);
+            Vector diff = startPoint - mousePos;
+            if (e.LeftButton == MouseButtonState.Pressed &&
+                (Math.Abs(diff.X) > SystemParameters.MinimumHorizontalDragDistance ||
+                 Math.Abs(diff.Y) > SystemParameters.MinimumVerticalDragDistance))
+            {
+                ItemsControl itemsControl = sender as ItemsControl;
+                SpomenikMapa spomenikMapa = SearchPosition(startPoint);
+                if (spomenikMapa != null)
+                {
+
+                    // Initialize the drag & drop operation
+                    DataObject dragData = new DataObject("myFormat", spomenikMapa.SpomenikNaMapi);
+                    DragDrop.DoDragDrop(itemsControl, dragData, DragDropEffects.Move);
+                    // OBRISATI DA SE NE BI DUPLIRALI
+                    Main.GetInstance().SpomenikMapas.Remove(spomenikMapa);
+                }
+            }
+
+        }
+
+        private SpomenikMapa SearchPosition(Point point)
+        {
+            foreach (SpomenikMapa spomenikMapa in Main.GetInstance().SpomenikMapas)
+            {
+
+                if (Math.Abs(point.X - spomenikMapa.KoordinatePoint.X) <= 90 && Math.Abs(point.Y - spomenikMapa.KoordinatePoint.Y) <= 90)
+                {
+                    return spomenikMapa;
+                }
+            }
+            return null;
+        }
+
+
 
         private void ListView_MouseMove(object sender, MouseEventArgs e)
         {
@@ -250,10 +296,9 @@ namespace HCIProjekat
                 Canvas.SetTop(slikaImage, e.GetPosition(MapCanvas).Y + 20);*/
                 Point currentPoint = new Point(e.GetPosition(MapCanvas).X, e.GetPosition(MapCanvas).Y);
                 SpomenikMapa mapaSpom = new SpomenikMapa(spomenik, currentPoint);
+                
                 Main.GetInstance().SpomenikMapas.Add(mapaSpom);
                 SpomeniciMapaView.Refresh();
-               
-
             }
         }
 
@@ -346,6 +391,8 @@ namespace HCIProjekat
         {
             e.CanExecute = true;
         }
+
+
         
     }
 } 

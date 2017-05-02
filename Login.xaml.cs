@@ -43,11 +43,11 @@ namespace HCIProjekat
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            string pass = "ftn";
-            string user = "korisnik";
-            if (UserBox.Text.Equals(user))
+            List<User> sviKorisnici = Register.ListUsers();
+            User user = Register.HasUser(sviKorisnici, UserBox.Text);
+            if (user != null)
             {
-                if (PasswordBox.Password.Equals(pass))
+                if (PasswordBox.Password.Equals(user.Lozinka))
                 {
                     MainWindow main = new MainWindow();
                     this.Close();
@@ -79,6 +79,13 @@ namespace HCIProjekat
         private void Accept_OnCanExecute(object sender, CanExecuteRoutedEventArgs e)
         {
             e.CanExecute = true;
+        }
+
+        private void Register_OnClick(object sender, RoutedEventArgs e)
+        {
+            var regDialog = new Register();
+            regDialog.Show();
+            this.Close();
         }
     }
 }

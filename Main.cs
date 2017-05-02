@@ -21,7 +21,7 @@ namespace HCIProjekat
         private ObservableCollection<Etiketa> _etiketaLista;
         private ObservableCollection<SpomenikMapa> _spomenikMapas;
 
-       
+        
         private static Main instance = null;
 
         private Main()
