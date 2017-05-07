@@ -122,6 +122,7 @@ namespace HCIProjekat
             try
             {
                 var s = value as string;
+
                 if (s.Trim().Equals(""))
                 {
                     return new ValidationResult(false, "Polje ne sme biti prazno.");
