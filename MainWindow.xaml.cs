@@ -244,7 +244,18 @@ namespace HCIProjekat
 
                     // Initialize the drag & drop operation
                     DataObject dragData = new DataObject("myFormat", spomenik);
-                    DragDrop.DoDragDrop(listViewItem, dragData, DragDropEffects.Move);
+
+                    foreach (var trenutni in Main.GetInstance().SpomenikMapas)
+                    {
+                       if (trenutni.SpomenikNaMapi.Oznaka.Equals(spomenik.Oznaka))
+                       {
+                           DragDrop.DoDragDrop(listViewItem, dragData, DragDropEffects.None);
+                           return;
+                       }
+                    }
+
+
+                    DragDrop.DoDragDrop(listViewItem, dragData, DragDropEffects.Copy);
                 }
             }
         }
@@ -298,7 +309,7 @@ namespace HCIProjekat
                 SpomenikMapa mapaSpom = new SpomenikMapa(spomenik, currentPoint);
                 
                 Main.GetInstance().SpomenikMapas.Add(mapaSpom);
-                SpomeniciMapaView.Refresh();
+                //SpomeniciMapaView.Refresh();
             }
         }
 

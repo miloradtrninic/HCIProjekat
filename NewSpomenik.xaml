@@ -77,7 +77,7 @@
             <TextBox.Text>
                 <Binding Path="Oznaka" UpdateSourceTrigger="PropertyChanged">
                     <Binding.ValidationRules>
-                        <proj:EmptyStringValidation ValidationStep="UpdatedValue"></proj:EmptyStringValidation>
+                        <proj:EmptyStringValidation ValidationStep="RawProposedValue"></proj:EmptyStringValidation>
                         <proj:NumberCharValidation ValidationStep="RawProposedValue"></proj:NumberCharValidation>
                         <proj:OznakaSpomenikUnique ValidationStep="RawProposedValue"></proj:OznakaSpomenikUnique>
                     </Binding.ValidationRules>
