@@ -46,6 +46,8 @@ namespace HCIProjekat
         private string _turizam;
         private DateTime _datumOtkrivanja;
 
+        
+
 
         private bool _unescoChecked;
         private bool _naseljeChecked;
@@ -57,6 +59,7 @@ namespace HCIProjekat
 
         private TipSpomenika _tipSpomenika;
         private List<Etiketa> _etikete;
+        private Spomenik _toEdit;
 
         public NewSpomenik(Spomenik spomenik)
         {
@@ -64,7 +67,7 @@ namespace HCIProjekat
             _etikete = new List<Etiketa>();         
             _eraPorekla = new List<string>(new string[] { "Paleolit", "Neolit", "Stari vek","Srednji vek","Renesansa","Moderno doba" });
             _turistickiStatus = new List<string>(new string[] { "Dostupan", "Nedostupan", "Eksploatisan" });
-
+            _toEdit = spomenik;
             if (spomenik == null)
             {
                 _prihod = 0.0;
@@ -82,6 +85,8 @@ namespace HCIProjekat
             }
             else
             {
+                
+                
                 OznakaBox.IsEnabled = false;
                 _prihod = Double.Parse(spomenik.GodisnjiPrihod);
                 _oznaka = spomenik.Oznaka;
@@ -96,7 +101,11 @@ namespace HCIProjekat
                 _turizam = spomenik.TuristickiStatus;
                 _etikete = spomenik.Etikete;
                 _datumOtkrivanja = spomenik.DatumOtkrivanja.Date;
-
+                foreach (var etiketa in _etikete)
+                {
+                    EtiketaBox.SelectedItems.Add(etiketa);
+                }
+               
             }
             this.DataContext = this;
             Kalendar.DisplayDateEnd = Convert.ToDateTime(DateTime.Now.ToShortTimeString()).Date;
@@ -160,7 +169,14 @@ namespace HCIProjekat
             get { return _tipSpomenika; }
             set
             {
-                _tipSpomenika = value;
+                if (!value.Equals(_tipSpomenika))
+                {
+                    _tipSpomenika = value;
+                    if (_toEdit != null && _toEdit.SlikaTip)
+                    {
+                        ImagePath = _tipSpomenika.IkonicaPath;
+                    }
+                }
             }
         }
 
@@ -236,7 +252,6 @@ namespace HCIProjekat
             }
         }
 
-
         /*  public void IsCheckedUnesco(object sender, RoutedEventArgs eventArgs)
         {
             var radioButton = sender as RadioButton;
@@ -277,6 +292,10 @@ namespace HCIProjekat
             {
                 ImagePath = fileDialog.FileName;
                 //FileBox.Text = fileDialog.FileName;
+            }
+            if (_toEdit != null)
+            {
+                _toEdit.SlikaTip = false;
             }
         }
        
@@ -327,58 +346,45 @@ namespace HCIProjekat
                     var selectedItems = EtiketaBox.SelectedItems;
                     foreach (var item in selectedItems)
                     {
-                        _etikete.Add((Etiketa) item);
+                        Etikete.Add((Etiketa) item);
                     }
-
-
-                    Spomenik newSpomenik = new Spomenik(_oznaka, _ime, _opis, _era,
-                        _turizam, _imagePath, unseco, naselje, arheo, _prihod.ToString(),
-                        Kalendar.SelectedDate.Value, _tipSpomenika, _etikete);
-                    if (Main.GetInstance().HasSpomenik(newSpomenik))
+                    if (_toEdit !=null)
                     {
-                        Main.GetInstance().GetSpomenikLista.Single(x => x.Oznaka.Equals(newSpomenik.Oznaka)).Oznaka =
-                            newSpomenik.Oznaka;
-                        Main.GetInstance()
-                            .GetSpomenikLista.Single(x => x.Oznaka.Equals(newSpomenik.Oznaka))
-                            .GodisnjiPrihod = newSpomenik.GodisnjiPrihod;
-                        Main.GetInstance().GetSpomenikLista.Single(x => x.Oznaka.Equals(newSpomenik.Oznaka)).Ime =
-                            newSpomenik.Ime;
-                        Main.GetInstance().GetSpomenikLista.Single(x => x.Oznaka.Equals(newSpomenik.Oznaka)).EraPorekla
-                            = newSpomenik.EraPorekla;
-                        Main.GetInstance()
-                            .GetSpomenikLista.Single(x => x.Oznaka.Equals(newSpomenik.Oznaka))
-                            .TuristickiStatus = newSpomenik.TuristickiStatus;
-                        Main.GetInstance().GetSpomenikLista.Single(x => x.Oznaka.Equals(newSpomenik.Oznaka)).IkonicaPath
-                            = newSpomenik.IkonicaPath;
+                        _toEdit.Oznaka = Oznaka;
+                        _toEdit.GodisnjiPrihod = _prihod.ToString();
+                        _toEdit.Ime = Ime;
 
-                        Main.GetInstance().GetSpomenikLista.Single(x => x.Oznaka.Equals(newSpomenik.Oznaka)).Opis =
-                            newSpomenik.Opis;
-                        Main.GetInstance()
-                            .GetSpomenikLista.Single(x => x.Oznaka.Equals(newSpomenik.Oznaka))
-                            .DatumOtkrivanja = newSpomenik.DatumOtkrivanja;
+                        _toEdit.EraPorekla = Era;
+                        _toEdit.TuristickiStatus = Turizam;
 
-                        Main.GetInstance().GetSpomenikLista.Single(x => x.Oznaka.Equals(newSpomenik.Oznaka)).Tip =
-                            newSpomenik.Tip;
-                        Main.GetInstance().GetSpomenikLista.Single(x => x.Oznaka.Equals(newSpomenik.Oznaka)).Etikete =
-                            newSpomenik.Etikete;
+                        _toEdit.Opis = _opis;
+                        _toEdit.DatumOtkrivanja = DatumOtkrivanja;
 
-                        Main.GetInstance().GetSpomenikLista.Single(x => x.Oznaka.Equals(newSpomenik.Oznaka)).Unesco =
-                            newSpomenik.Unesco;
-                        Main.GetInstance().GetSpomenikLista.Single(x => x.Oznaka.Equals(newSpomenik.Oznaka)).Naselje =
-                            newSpomenik.Naselje;
-                        Main.GetInstance().GetSpomenikLista.Single(x => x.Oznaka.Equals(newSpomenik.Oznaka)).Arheo =
-                            newSpomenik.Arheo;
+                       
+                        _toEdit.Etikete = Etikete;
+
+                        _toEdit.Unesco = UnescoChecked ;
+                        _toEdit.Naselje = NaseljeChecked;
+
+                        _toEdit.Arheo = AreheoChecked;
+                        _toEdit.IkonicaPath = ImagePath;
+                        _toEdit.Tip = Spomenika;
+                        //promenio tip spomenika nakaci novi listener
+                        
                         //  MessageBox.Show("Uspesno ste izmenili spomenik.", "Izmenjen spomenik.",
                         //MessageBoxButton.OK, MessageBoxImage.Asterisk);
 
                     }
                     else
                     {
+                        Spomenik newSpomenik = new Spomenik(_oznaka, _ime, _opis, _era, _turizam, _imagePath, unseco, naselje, arheo, _prihod.ToString(),Kalendar.SelectedDate.Value, _tipSpomenika, _etikete);
                         newSpomenik.Tip = _tipSpomenika;
                         if (ImagePath.Equals(@"resources\NoImg300x225.jpg"))
                         {
+                            newSpomenik.SlikaTip = true;
                             newSpomenik.IkonicaPath = _tipSpomenika.IkonicaPath;
                         }
+
                         Main.GetInstance().GetSpomenikLista.Add(newSpomenik);
                         // Console.WriteLine(Main.GetInstance().GetSpomenikLista.Count);
                         // MessageBox.Show("Uspesno ste dodali novi spomenika.", "Dodat novi spomenik.",

@@ -27,7 +27,6 @@ namespace HCIProjekat
         private string _filePath;
         private string _opis;
         private string _ime;
-
         public NewTip(TipSpomenika tipSpomenika)
         {
             InitializeComponent();
@@ -137,25 +136,21 @@ namespace HCIProjekat
                 else
                 {
                     //TODO Proveri da li fajl postoji
-                    TipSpomenika newTipSpomenika = new TipSpomenika(OznakaBox.Text, ImeBox.Text, _filePath,
-                        OpisBox.Text);
-                    if (Main.GetInstance().HasTipSpomenika(newTipSpomenika))
+                    if (Main.GetInstance().HasTipSpomenika(OznakaTip))
                     {
-                        Main.GetInstance().TipspomenikaLista.Single(x => x.Oznaka.Equals(newTipSpomenika.Oznaka)).Opis =
-                            newTipSpomenika.Opis;
-                        Main.GetInstance()
-                            .TipspomenikaLista.Single(x => x.Oznaka.Equals(newTipSpomenika.Oznaka))
-                            .IkonicaPath = newTipSpomenika.IkonicaPath;
-                        Main.GetInstance().TipspomenikaLista.Single(x => x.Oznaka.Equals(newTipSpomenika.Oznaka)).Ime =
-                            newTipSpomenika.Ime;
-                        Main.GetInstance().TipspomenikaLista.Single(x => x.Oznaka.Equals(newTipSpomenika.Oznaka)).Oznaka
-                            = newTipSpomenika.Oznaka;
+                        TipSpomenika toEdit = Main.GetInstance().TipspomenikaLista.Single(x => x.Oznaka.Equals(OznakaTip));
+                        toEdit.Opis = Opis; 
+                        toEdit.IkonicaPath = FilePathTip;
+                        toEdit.Ime = ImeTip;
                        /* MessageBox.Show("Uspesno ste izmenili tip spomenika.", "Izmenjen tip spomenika.",
                             MessageBoxButton.OK,
                             MessageBoxImage.Asterisk);*/
                     }
                     else
                     {
+                        TipSpomenika newTipSpomenika = new TipSpomenika(OznakaBox.Text, ImeBox.Text, _filePath,
+                        OpisBox.Text);
+                       
                         Main.GetInstance().TipspomenikaLista.Add(newTipSpomenika);
                        /* MessageBox.Show("Uspesno ste dodali novi tip spomenika.", "Dodat novi tip spomenika.",
                             MessageBoxButton.OK,

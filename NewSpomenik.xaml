@@ -122,16 +122,16 @@
         <Button Grid.Column="2" Grid.Row="6" Click="ButtonNoviTip_OnClick" Margin="5">Novi tip</Button>
         
         <Label Grid.Column="0" Grid.Row="7" Content="Etiketa*:"/>
-        <ListView x:Name="EtiketaBox"  Grid.Column="1" Grid.Row="7" MaxHeight="80" MinHeight="80" ItemsSource="{Binding Source={StaticResource SingletonMain}, Path=EtiketaLista}" SelectedItem="{Binding Etikete, Mode=TwoWay}" SelectionMode="Multiple">
-            <ListView.ItemTemplate>
+        <ListBox x:Name="EtiketaBox"  Grid.Column="1" Grid.Row="7" MaxHeight="80" MinHeight="80" ItemsSource="{Binding Source={StaticResource SingletonMain}, Path=EtiketaLista}" SelectedItem="{Binding Etikete, Mode=TwoWay}" SelectionMode="Multiple">
+            <ListBox.ItemTemplate>
                 <DataTemplate>
                     <StackPanel Orientation="Horizontal">
                         <Rectangle Width="20" Height="20" Fill="{Binding BojaKod}"/>
                         <TextBlock Text="{Binding Oznaka}" FontWeight="Bold" VerticalAlignment="Center" Margin="5,0,0,0"/>
                     </StackPanel>
                 </DataTemplate>
-            </ListView.ItemTemplate>
-        </ListView>
+            </ListBox.ItemTemplate>
+        </ListBox>
         <Button VerticalAlignment="Top" Grid.Column="2" Grid.Row="7" MaxHeight="20" Margin="5" Click="ButtonNovaEtiketa_OnClick">Nova etiketa</Button>
         <Label VerticalAlignment="Center" Grid.Column="0" Grid.Row="2" Content="Godišnji prihod ($)*:"/>
         <TextBox x:Name="PrihodBox" Grid.Column="1" Grid.Row="2" Validation.ErrorTemplate="{StaticResource ValidationErrorTemplate}" >
@@ -167,6 +167,11 @@
         
         <Label Grid.Column="0" Grid.Row="11" VerticalAlignment="Center">Datum otkrivanja:</Label>
         <DatePicker  x:Name="Kalendar"  Grid.Column="1" Grid.Row="11" Height="30px" SelectedDate="{Binding DatumOtkrivanja}">
+            <DatePicker.Resources>
+                <Style TargetType="DatePickerTextBox">
+                    <Setter Property="IsReadOnly" Value="True"/>
+                </Style>
+            </DatePicker.Resources>
             <DatePicker.SelectedDateFormat>
                 <DatePickerFormat>Short</DatePickerFormat>
             </DatePicker.SelectedDateFormat>
@@ -178,7 +183,7 @@
         </StackPanel>
 
         <StackPanel Grid.Column="2" Grid.Row="0" Grid.RowSpan="3" Orientation="Vertical">
-            <Image VerticalAlignment="Top" Source="{Binding ImagePath}"  Margin="5"></Image>
+            <Image VerticalAlignment="Top" Source="{Binding ImagePath}" MaxHeight="150" Margin="5"></Image>
             <Button VerticalAlignment="Bottom" Margin="5" Content="Odaberi" Click="DialogButton_Click"/>
         </StackPanel>
 

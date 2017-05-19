@@ -2,6 +2,7 @@
 using System.CodeDom;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Collections.Specialized;
 using System.ComponentModel;
 using System.IO;
 using System.Linq;
@@ -12,8 +13,8 @@ using System.Threading.Tasks;
 
 namespace HCIProjekat
 {
-    [Serializable]  
-    public class Main
+    [Serializable]
+    public class Main : INotifyPropertyChanged
     {
         private ObservableCollection<Spomenik> spomeniciLista;
         private ObservableCollection<TipSpomenika> _tipspomenikaLista;
@@ -21,6 +22,16 @@ namespace HCIProjekat
         private ObservableCollection<Etiketa> _etiketaLista;
         private ObservableCollection<SpomenikMapa> _spomenikMapas;
 
+        [field: NonSerialized]
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        protected virtual void OnPropertyChanged(string name)
+        {
+            if (PropertyChanged != null)
+            {
+                PropertyChanged(this, new PropertyChangedEventArgs(name));
+            }
+        }
         
         private static Main instance = null;
 
@@ -47,10 +58,20 @@ namespace HCIProjekat
         public ObservableCollection<TipSpomenika> TipspomenikaLista
         {
             get { return _tipspomenikaLista; }
+            set
+            {
+                _tipspomenikaLista = value;
+                OnPropertyChanged("TipspomenikaLista");
+            }
         }
         public ObservableCollection<Etiketa> EtiketaLista
         {
             get { return _etiketaLista; }
+            set
+            {
+                _etiketaLista = value;
+                OnPropertyChanged("EtiketaLista");
+            }
         }
 
        
@@ -59,12 +80,21 @@ namespace HCIProjekat
         public ObservableCollection<Spomenik> GetSpomenikLista
         {
             get { return spomeniciLista; }
+            set
+            {
+                spomeniciLista = value;
+                OnPropertyChanged("GetSpomenikLista");
+            }
         }
 
         public ObservableCollection<SpomenikMapa> SpomenikMapas
         {
             get { return _spomenikMapas; }
-            set { _spomenikMapas = value; }
+            set
+            {
+                _spomenikMapas = value;
+                OnPropertyChanged("SpomenikMapas");
+            }
         }
 
         public void Snimi(string filePath)
@@ -79,14 +109,18 @@ namespace HCIProjekat
         {
             IFormatter formatter = new BinaryFormatter();
             Stream stream = new FileStream(filePath, FileMode.Open, FileAccess.Read, FileShare.None);
+            var deserialized = formatter.Deserialize(stream) as Main;
+            instance.GetSpomenikLista = deserialized.GetSpomenikLista;
+            instance.EtiketaLista = deserialized.EtiketaLista;
+            instance.SpomenikMapas = deserialized.SpomenikMapas;
+            instance.TipspomenikaLista = deserialized.TipspomenikaLista;
 
-            instance = formatter.Deserialize(stream) as Main;
             if (instance != null)
             {
                 return true;
             }
            
-            return true;
+            return false;
             
         }
 
@@ -102,12 +136,33 @@ namespace HCIProjekat
             return false;
         }
 
-
+        public bool HasSpomenik(string oznaka)
+        {
+            foreach (var spomenikTrenutni in spomeniciLista)
+            {
+                if (spomenikTrenutni.Oznaka.Equals(oznaka))
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
         public bool HasTipSpomenika(TipSpomenika tip)
         {
             foreach (var tipTrenutni in _tipspomenikaLista)
             {
                 if (tipTrenutni.Oznaka.Equals(tip.Oznaka))
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+        public bool HasTipSpomenika(string oznaka)
+        {
+            foreach (var tipTrenutni in _tipspomenikaLista)
+            {
+                if (tipTrenutni.Oznaka.Equals(oznaka))
                 {
                     return true;
                 }

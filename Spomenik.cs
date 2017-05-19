@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
+using System.Windows.Media;
+using System.Windows.Media.Imaging;
 
 namespace HCIProjekat
 {
@@ -19,7 +21,9 @@ namespace HCIProjekat
         private bool arheo;
         private string godisnjiPrihod;     
         private DateTime datumOtkrivanja;
+        private bool slikaTip;
         private TipSpomenika tip;
+       
         private List<Etiketa> etikete;
 
         public string eraPorekla;
@@ -149,6 +153,16 @@ namespace HCIProjekat
             }
         }
 
+        public bool SlikaTip
+        {
+            get { return slikaTip; }
+            set
+            {
+                slikaTip = value;
+                OnPropertyChanged("SlikaTip");
+            }
+        }
+
         public Spomenik(string oznaka, string ime, string opis, string eraPorekla, string turistickiStatus,
             string ikonicaPath, bool unesco, bool naselje, bool arheo,string godisnjiPrihod, DateTime datumOtkrivanja, TipSpomenika tipSpomenika, List<Etiketa> etiketeList)
         {
@@ -170,6 +184,7 @@ namespace HCIProjekat
 
         public Spomenik()
         {
+            this.slikaTip = false;
             this.oznaka = "prazno";
             this.ime = "prazno";
             this.opis = "prazno";
@@ -178,6 +193,7 @@ namespace HCIProjekat
             this.unesco = true;
             this.naselje = true;
             this.godisnjiPrihod = "prazno";
+            etikete = new List<Etiketa>();
           
         }
 

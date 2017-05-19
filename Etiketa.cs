@@ -20,7 +20,7 @@ namespace HCIProjekat
 
         private string bojaKod;
         private string opis;
-
+        
 
         public string Oznaka
         {
@@ -68,16 +68,21 @@ namespace HCIProjekat
             }
         }
 
+
+
         public Etiketa(string oznaka, Color boja, string opis)
         {
+
             this.oznaka = oznaka;
             this.bojaKod = boja.ToString();
             this.boja = boja;
             this.opis = opis;
+            
         }
 
         public Etiketa()
         {
+           
             oznaka = "";
             bojaKod = "";
             opis = "";

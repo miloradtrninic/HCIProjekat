@@ -83,7 +83,11 @@ namespace HCIProjekat
         public ICollectionView SpomeniciMapaView
         {
             get { return _spomeniciMapaView; }
-            set { _spomeniciMapaView = value; }
+            set
+            {
+                _spomeniciMapaView = value;
+                OnPropertyChanged("SpomeniciMapaView");
+            }
         }
 
 
@@ -244,7 +248,7 @@ namespace HCIProjekat
 
                     // Initialize the drag & drop operation
                     DataObject dragData = new DataObject("myFormat", spomenik);
-
+                    
                     foreach (var trenutni in Main.GetInstance().SpomenikMapas)
                     {
                        if (trenutni.SpomenikNaMapi.Oznaka.Equals(spomenik.Oznaka))
@@ -283,33 +287,22 @@ namespace HCIProjekat
         }
         private void DropMapa_Drop(object sender, DragEventArgs e)
         {
-            if (e.Data.GetDataPresent("myFormat"))
+            if (e.Data.GetDataPresent("myFormat") /*&& e.Effects != DragDropEffects.None*/)
             {
                 Spomenik spomenik = e.Data.GetData("myFormat") as Spomenik;
-                /*
-                 * TODO PRIPREMI STACK PANEL TAKO DA SE U NJEGA MOZE DODATI ELEMENT
-                ListView listView = sender as ListView;
-                listView.Items.Add(contact);*/
-                
-                Image slikaImage = new Image();
-                
-                /*Uri putanjaUri = new Uri(spomenik.IkonicaPath, UriKind.Absolute);
-                slikaImage.Source = new BitmapImage(putanjaUri);
-                slikaImage.Width = 50;
-                slikaImage.Height = 50;
-                TextBlock textIme = new TextBlock();
-                textIme.Text = spomenik.Ime;
-               
-                Canvas.SetLeft(textIme,e.GetPosition(MapCanvas).X);
-                Canvas.SetTop(textIme, e.GetPosition(MapCanvas).Y);
-
-                Canvas.SetLeft(slikaImage, e.GetPosition(MapCanvas).X);
-                Canvas.SetTop(slikaImage, e.GetPosition(MapCanvas).Y + 20);*/
                 Point currentPoint = new Point(e.GetPosition(MapCanvas).X, e.GetPosition(MapCanvas).Y);
                 SpomenikMapa mapaSpom = new SpomenikMapa(spomenik, currentPoint);
-                
                 Main.GetInstance().SpomenikMapas.Add(mapaSpom);
                 //SpomeniciMapaView.Refresh();
+            }
+        }
+
+        private void MapCanvas_OnDragOver(object sender, DragEventArgs e)
+        {
+            SpomenikMapa okolniSpomenik = SearchPosition(e.GetPosition(MapCanvas));
+            if (okolniSpomenik != null)
+            {
+                e.Effects = DragDropEffects.None;
             }
         }
 
@@ -339,8 +332,17 @@ namespace HCIProjekat
                 Main.GetInstance().Load(putanja);
             }
             //mora da se refresuje glavni prozor zbog bindinga na liste u centru
-            this.DataContext = null;
-            this.DataContext = new MainWindow();
+            _spomeniciView.Refresh();
+            EtiketeView = new CollectionViewSource {Source = Main.GetInstance().EtiketaLista}.View;
+            EtiketeView.Refresh();
+            TipoviView = new CollectionViewSource {Source = Main.GetInstance().TipspomenikaLista}.View;
+            TipoviView.Refresh();
+            SpomeniciMapaView = new CollectionViewSource { Source = Main.GetInstance().SpomenikMapas }.View;
+            SpomeniciMapaView.Refresh();
+            SpomeniciView = new CollectionViewSource { Source = Main.GetInstance().GetSpomenikLista }.View;
+            SpomeniciView.Refresh();
+            // this.DataContext = null;
+            //this.DataContext = new MainWindow();
             /* MainWindow main = new MainWindow();
              main.Show();
              this.Close();*/

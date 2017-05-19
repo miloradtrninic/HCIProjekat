@@ -105,7 +105,6 @@
                                 <Image Width="50" Height="50" Source="resources/Plus_50 light green.png"/>
                                 <TextBlock VerticalAlignment="Center">Nova etiketa</TextBlock>
                             </StackPanel>
-
                         </Button>
                         <Button Click="ButtonTabele_OnClick">
                             <StackPanel Orientation="Horizontal">
@@ -186,7 +185,7 @@
                 </TabItem>
             </TabControl>
 
-            <ItemsControl x:Name="MapCanvas" Margin="0" ItemsSource="{Binding SpomeniciMapaView}" Drop="DropMapa_Drop" PreviewMouseLeftButtonDown="OnMap_Preview_MouseLeft" PreviewMouseMove="OnMap_Mouse_Move" DragEnter="DropMapa_DragEnter" AllowDrop="True">
+            <ItemsControl x:Name="MapCanvas" Margin="0" ItemsSource="{Binding SpomeniciMapaView}" Drop="DropMapa_Drop" DragOver="MapCanvas_OnDragOver" PreviewMouseLeftButtonDown="OnMap_Preview_MouseLeft" PreviewMouseMove="OnMap_Mouse_Move" DragEnter="DropMapa_DragEnter" AllowDrop="True">
                 <ItemsControl.ItemsPanel>
                     <ItemsPanelTemplate>
                         <Canvas>

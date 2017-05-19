@@ -47,7 +47,7 @@ namespace HCIProjekat
         {
             var contentTabele = (SpomeniciTabela)SpomeniciFrame.Content;
             DataGrid tabelaSpomenika = (DataGrid)contentTabele.FindName("TabelaSpomenika");
-            if (tabelaSpomenika.SelectedItem != null && tabelaSpomenika.SelectedItem.GetType() == typeof(Spomenik))
+            if (tabelaSpomenika != null && (tabelaSpomenika.SelectedItem != null && tabelaSpomenika.SelectedItem.GetType() == typeof(Spomenik)))
             {
                 NewSpomenik newSpomenikDialog = new NewSpomenik((Spomenik)tabelaSpomenika.SelectedItem);
                 newSpomenikDialog.ShowDialog();
@@ -63,7 +63,7 @@ namespace HCIProjekat
         {
             var contentTabele = (SpomeniciTabela)SpomeniciFrame.Content;
             DataGrid tabelaSpomenika = (DataGrid)contentTabele.FindName("TabelaSpomenika");
-            if (tabelaSpomenika.SelectedItem != null && tabelaSpomenika.SelectedItem.GetType() == typeof(Spomenik))
+            if (tabelaSpomenika != null && (tabelaSpomenika.SelectedItem != null && tabelaSpomenika.SelectedItem.GetType() == typeof(Spomenik)))
             {
                 Main.GetInstance().GetSpomenikLista.Remove((Spomenik)tabelaSpomenika.SelectedItem);
             }
@@ -79,7 +79,7 @@ namespace HCIProjekat
             viewSpomenika.Filter += o =>
             {
                 Spomenik spomenik = o as Spomenik;
-                return spomenik.Tip.Oznaka.Equals(((TipSpomenika) TipoviFilter.SelectedItem).Oznaka);
+                return spomenik != null && spomenik.Tip.Oznaka.Equals(((TipSpomenika) TipoviFilter.SelectedItem).Oznaka);
             };
         }
 
@@ -101,14 +101,14 @@ namespace HCIProjekat
         {
             var contentTabele = (TipoviTabela)TipFrame.Content;
             DataGrid tabelaTipova = (DataGrid)contentTabele.FindName("TabelaTipova");
-            if (tabelaTipova.SelectedItem != null && tabelaTipova.SelectedItem.GetType() == typeof(TipSpomenika))
+            if (tabelaTipova != null && (tabelaTipova.SelectedItem != null && tabelaTipova.SelectedItem.GetType() == typeof(TipSpomenika)))
             {
                 NewTip newTip = new NewTip((TipSpomenika)tabelaTipova.SelectedItem);
                 newTip.ShowDialog();
             }
             else
             {
-                MessageBox.Show("Molimo Vas odaberite etiketu koju želite da izmenite!", "Izmena etikete", MessageBoxButton.OK, MessageBoxImage.Warning);
+                MessageBox.Show("Molimo Vas odaberite etiketu koju želite da izmenite!", "Izmena tipa", MessageBoxButton.OK, MessageBoxImage.Warning);
             }
 
         }
@@ -117,17 +117,23 @@ namespace HCIProjekat
         {
             var contentTabele = (TipoviTabela)TipFrame.Content;
             DataGrid tabelaTipova = (DataGrid)contentTabele.FindName("TabelaTipova");
-            if (tabelaTipova.SelectedItem != null && tabelaTipova.SelectedItem.GetType() == typeof(TipSpomenika))
+            if (tabelaTipova != null && (tabelaTipova.SelectedItem != null && tabelaTipova.SelectedItem.GetType() == typeof(TipSpomenika)))
             {
+                foreach (var spomenik in Main.GetInstance().GetSpomenikLista)
+                {
+                    if (spomenik.Tip.Equals((TipSpomenika) tabelaTipova.SelectedItem))
+                    {
+                        MessageBox.Show("Odabrani tip se koriti!", "Brisanje tipa", MessageBoxButton.OK, MessageBoxImage.Warning);
+                        return;
+                    }
+                }
                 Main.GetInstance().TipspomenikaLista.Remove((TipSpomenika)tabelaTipova.SelectedItem);
             }
             else
             {
-                MessageBox.Show("Molimo Vas odaberite etiketu koju želite da obrišete!", "Brisanje etikete", MessageBoxButton.OK, MessageBoxImage.Warning);
+                MessageBox.Show("Molimo Vas odaberite etiketu koju želite da obrišete!", "Brisanje tipa", MessageBoxButton.OK, MessageBoxImage.Warning);
             }
         }
-
-
 
         private void ButtonNewEtiketa_OnClick(object sender, RoutedEventArgs e)
         {
@@ -139,7 +145,7 @@ namespace HCIProjekat
         {
             var contentTabele = (EtiketeTabela)EtiketaFrame.Content;
             DataGrid tabelaEtiketa = (DataGrid) contentTabele.FindName("TabelaEtiketa");
-            if (tabelaEtiketa.SelectedItem != null && tabelaEtiketa.SelectedItem.GetType() == typeof(Etiketa))
+            if (tabelaEtiketa != null && (tabelaEtiketa.SelectedItem != null && tabelaEtiketa.SelectedItem.GetType() == typeof(Etiketa)))
             {
                 NewEtiketa newEtiketaDialog = new NewEtiketa((Etiketa) tabelaEtiketa.SelectedItem);
                 newEtiketaDialog.ShowDialog();
@@ -155,8 +161,16 @@ namespace HCIProjekat
         {
             var contentTabele = (EtiketeTabela)EtiketaFrame.Content;
             DataGrid tabelaEtiketa = (DataGrid)contentTabele.FindName("TabelaEtiketa");
-            if (tabelaEtiketa.SelectedItem != null && tabelaEtiketa.SelectedItem.GetType() == typeof(Etiketa))
+            if (tabelaEtiketa != null && (tabelaEtiketa.SelectedItem != null && tabelaEtiketa.SelectedItem.GetType() == typeof(Etiketa)))
             {
+                foreach (var spomenik in Main.GetInstance().GetSpomenikLista)
+                {
+                    if (spomenik.Etikete.Contains((Etiketa)tabelaEtiketa.SelectedItem))
+                    {
+                        MessageBox.Show("Odabrana etiketa se koriti!", "Brisanje etikete", MessageBoxButton.OK, MessageBoxImage.Warning);
+                        return;
+                    }
+                }
                 Main.GetInstance().EtiketaLista.Remove((Etiketa) tabelaEtiketa.SelectedItem);
             }
             else

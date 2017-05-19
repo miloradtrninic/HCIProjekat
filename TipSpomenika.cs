@@ -5,6 +5,8 @@ using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Media;
+using System.Windows.Media.Imaging;
 
 namespace HCIProjekat 
 {
@@ -17,7 +19,6 @@ namespace HCIProjekat
         private string ime;
         private string ikonicaPath;
         private string opis;
-
         public TipSpomenika()
         {
             oznaka = "";
@@ -61,6 +62,13 @@ namespace HCIProjekat
             set
             {
                 ikonicaPath = value;
+                foreach (var spomenik in Main.GetInstance().GetSpomenikLista)
+                {
+                    if (spomenik.Tip.Equals(this) && spomenik.SlikaTip)
+                    {
+                        spomenik.IkonicaPath = ikonicaPath;
+                    }
+                }
                 OnPropertyChanged("IkonicaPath");
             }
         }
@@ -74,6 +82,7 @@ namespace HCIProjekat
                 OnPropertyChanged("Opis");
             }
         }
+
 
         public override string ToString()
         {
