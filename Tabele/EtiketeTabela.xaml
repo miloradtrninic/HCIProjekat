@@ -13,7 +13,7 @@
             <ColumnDefinition Width="1*"></ColumnDefinition>
         </Grid.ColumnDefinitions>
 
-        <TextBox Grid.Row="0" Grid.Column="0" Text="{Binding SearchString}" x:Name="Pretraga" FontSize="24"></TextBox>
+        <TextBox Grid.Row="0" Grid.Column="0" Text="{Binding SearchString}" x:Name="Pretraga" FontSize="24" TextChanged="Pretraga_OnTextChanged"></TextBox>
         <TextBlock Grid.Row="0" Grid.Column="0" IsHitTestVisible="False" Text="Unesite oznaku etikete" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="5,0,0,0" Foreground="DarkGray">
             <TextBlock.Style>
                 <Style TargetType="{x:Type TextBlock}">
@@ -27,15 +27,15 @@
                 </Style>
             </TextBlock.Style>
         </TextBlock>
-        <Button Grid.Row="0" Grid.Column="1" Padding="5" Background="#FF9BA9" Click="SearchButton_Click">
+        <Button Grid.Row="0" Grid.Column="1" Padding="5" Background="#FF9BA9" Click="SearchButton_Click" >
             <Image Source="../resources/Search-30.png" Height="30"/>
         </Button>
-
-        <DataGrid x:Name="TabelaEtiketa" Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="1" HorizontalAlignment="Stretch" SelectionMode="Single" SelectedItem="-1" VerticalContentAlignment="Stretch" VerticalAlignment="Stretch"
+        <ScrollViewer  Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="1" VerticalScrollBarVisibility="Auto" >
+        <DataGrid x:Name="TabelaEtiketa" HorizontalAlignment="Stretch" SelectionMode="Single" SelectedItem="-1" VerticalContentAlignment="Stretch" VerticalAlignment="Stretch"
                   HorizontalContentAlignment="Stretch" ColumnWidth="*"
                   CanUserReorderColumns="True" CanUserResizeColumns="False" 
                   CanUserResizeRows="False" CanUserSortColumns="True"
-                  ItemsSource="{Binding EtiketeView}" AutoGenerateColumns="False" IsReadOnly="True">
+                  ItemsSource="{Binding EtiketeView}" AutoGenerateColumns="False" IsReadOnly="True" MaxHeight="320" FontSize="14" >
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Oznaka" Binding="{Binding Oznaka}" />
                 
@@ -55,5 +55,6 @@
                 </DataTemplate>
             </DataGrid.RowDetailsTemplate>
         </DataGrid>
+        </ScrollViewer>
     </Grid>
 </Page>

@@ -13,8 +13,8 @@
             <ColumnDefinition Width="7*"></ColumnDefinition>
             <ColumnDefinition Width="1*"></ColumnDefinition>
         </Grid.ColumnDefinitions>
-        
-        <TextBox Grid.Row="0" Grid.Column="0" Text="{Binding SearchString}" x:Name="Pretraga" FontSize="24"></TextBox>
+
+        <TextBox Grid.Row="0" Grid.Column="0" Text="{Binding SearchString}" x:Name="Pretraga" FontSize="24" TextChanged="Pretraga_OnTextChanged"></TextBox>
         <TextBlock Grid.Row="0" Grid.Column="0" IsHitTestVisible="False" Text="Unesite oznaku spomenika" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="5,0,0,0" Foreground="DarkGray">
             <TextBlock.Style>
                 <Style TargetType="{x:Type TextBlock}">
@@ -31,23 +31,22 @@
         <Button Grid.Row="0" Grid.Column="1" Padding="5" Background="LimeGreen" Click="SearchButton_Click">
             <Image Source="../resources/Search-30.png" Height="30"/>
         </Button>
-
-        <DataGrid Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" HorizontalAlignment="Stretch" x:Name="TabelaSpomenika" VerticalContentAlignment="Stretch" VerticalAlignment="Stretch"
+        <ScrollViewer  Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" VerticalScrollBarVisibility="Auto" >
+            <DataGrid HorizontalAlignment="Stretch" x:Name="TabelaSpomenika" VerticalContentAlignment="Stretch" VerticalAlignment="Stretch"
                   HorizontalContentAlignment="Stretch" ColumnWidth="*"
                   CanUserReorderColumns="True" CanUserResizeColumns="True" 
                   CanUserResizeRows="False" CanUserSortColumns="True"
-                  ItemsSource="{Binding View}" AutoGenerateColumns="False" IsReadOnly="True">
+                  ItemsSource="{Binding View}" AutoGenerateColumns="False" IsReadOnly="True" MaxHeight="320" FontSize="14">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Oznaka" Binding="{Binding Oznaka}"></DataGridTextColumn>
                 <DataGridTextColumn Header="Ime" Binding="{Binding Ime}"></DataGridTextColumn>
                 <DataGridTextColumn Header="Era porekla" Binding="{Binding EraPorekla}"></DataGridTextColumn>
-                <DataGridTextColumn Header="Godišnji prihod ($)" Binding="{Binding GodisnjiPrihod}"></DataGridTextColumn>
+                <DataGridTextColumn Header="Godišnji prihod ($)" Width="Auto" Binding="{Binding GodisnjiPrihod}"></DataGridTextColumn>
                 <DataGridTextColumn Header="Turistički status" Binding="{Binding TuristickiStatus}"></DataGridTextColumn>
                 <DataGridTextColumn Header="Tip spomenika" Binding="{Binding Tip}"></DataGridTextColumn>
                 <DataGridCheckBoxColumn Header="UNSECO" Binding="{Binding Unesco}"></DataGridCheckBoxColumn>
                 <DataGridCheckBoxColumn Header="U naselju" Binding="{Binding Naselje}"></DataGridCheckBoxColumn>
-                <DataGridCheckBoxColumn Header="Areheološki obrđen" Binding="{Binding Naselje}"></DataGridCheckBoxColumn>
-                <DataGridTextColumn Header="Datum otkrivanja" Binding="{Binding DatumOtkrivanja}"></DataGridTextColumn>
+                <DataGridCheckBoxColumn Header="Areheološki obrđen" Width="Auto" Binding="{Binding Naselje}"></DataGridCheckBoxColumn>
             </DataGrid.Columns>
             <DataGrid.RowDetailsTemplate>
                 <DataTemplate>
@@ -63,5 +62,6 @@
                 </DataTemplate>
             </DataGrid.RowDetailsTemplate>
         </DataGrid>
+        </ScrollViewer>
     </Grid>
 </Page>

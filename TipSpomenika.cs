@@ -42,6 +42,7 @@ namespace HCIProjekat
             set
             {
                 oznaka = value;
+                Main.GetInstance().Saved = false;
                 OnPropertyChanged("Oznaka");
             }
         }
@@ -52,6 +53,7 @@ namespace HCIProjekat
             set
             {
                 ime = value;
+                Main.GetInstance().Saved = false;
                 OnPropertyChanged("Ime");
             }
         }
@@ -69,6 +71,7 @@ namespace HCIProjekat
                         spomenik.IkonicaPath = ikonicaPath;
                     }
                 }
+                Main.GetInstance().Saved = false;
                 OnPropertyChanged("IkonicaPath");
             }
         }
@@ -79,6 +82,7 @@ namespace HCIProjekat
             set
             {
                 opis = value;
+                Main.GetInstance().Saved = false;
                 OnPropertyChanged("Opis");
             }
         }

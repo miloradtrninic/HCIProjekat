@@ -4,7 +4,7 @@
         xmlns:proj="clr-namespace:HCIProjekat"
         x:Name="NewSpomenikWindow"
         xmlns:sys="clr-namespace:System;assembly=mscorlib"
-        Title="Novi spomenik" Height="680" Width="650" WindowStartupLocation="CenterOwner">
+        Title="Novi spomenik" Height="700" Width="750" WindowStartupLocation="CenterOwner" FontSize="16">
     
     <Window.Resources>
         <Style TargetType="TextBox">
@@ -35,7 +35,7 @@
                             ToolTip="{Binding ElementName=ErrorAdorner, 
                             Path=AdornedElement.(Validation.Errors)[0].ErrorContent}">X</TextBlock>
                     </Grid>
-                    <TextBlock Foreground="Red" FontWeight="12" Margin="2,0,0,0" Text="{Binding ElementName=ErrorAdorner, Path=AdornedElement.(Validation.Errors)[0].ErrorContent}"></TextBlock>
+                    <TextBlock Foreground="Red" FontWeight="12" FontSize="12" Margin="2,0,0,0" Text="{Binding ElementName=ErrorAdorner, Path=AdornedElement.(Validation.Errors)[0].ErrorContent}"></TextBlock>
                 </StackPanel>
                 <AdornedElementPlaceholder x:Name="ErrorAdorner"></AdornedElementPlaceholder>
             </DockPanel>
@@ -52,9 +52,9 @@
     <Grid Margin="5">
     
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="0.8*" />
+            <ColumnDefinition Width="1*" />
             <ColumnDefinition Width="2*" />
-            <ColumnDefinition Width="1.05*" />
+            <ColumnDefinition Width="1*" />
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition Height="auto"/>
@@ -99,40 +99,6 @@
             </TextBox.Text>
         </TextBox>
 
-        <Label VerticalAlignment="Top" Grid.Column="0" Grid.Row="8"  Content="Opis: "></Label>
-        <TextBox TextWrapping="Wrap" VerticalScrollBarVisibility="Auto" x:Name="OpisBox" Text ="{Binding Path=Opis}"  Grid.Column="1" Grid.Row="8"  Height="120" BorderBrush="Black" VerticalAlignment="Top"/>
-
-        <Label Grid.Column="0" Grid.Row="3" Content="UNESCO zasticen?*:" />
-        <StackPanel Orientation="Horizontal" Grid.Column="1" Grid.Row="3">
-            <CheckBox IsChecked="{Binding UnescoChecked}" Margin="0, 0 ,5px, 0"  VerticalAlignment="Center"/>
-            
-        </StackPanel>
-
-        <Label Grid.Column="0" Grid.Row="4" Content="Arheološki obrađen? *:" />
-        <StackPanel Orientation="Horizontal" Grid.Column="1" Grid.Row="4">
-            <CheckBox IsChecked="{Binding AreheoChecked}" Margin="0, 0 ,5px, 0"  VerticalAlignment="Center"/>
-        </StackPanel>
-
-        <Label Grid.Column="0" Grid.Row="5" Content="U naseljenom mestu? *:"/>
-        <StackPanel Orientation="Horizontal" Grid.Column="1" Grid.Row="5">
-            <CheckBox IsChecked="{Binding NaseljeChecked}" Margin="0, 0 ,5px, 0"  VerticalAlignment="Center"/>
-        </StackPanel>
-        <Label Grid.Column="0" Grid.Row="6" Content="Tip spomenika*:"/>
-        <ComboBox x:Name="TipBox" Grid.Column="1" Grid.Row="6"  ItemsSource="{Binding Source={StaticResource SingletonMain}, Path=TipspomenikaLista}" SelectedItem="{Binding Spomenika}"/>
-        <Button Grid.Column="2" Grid.Row="6" Click="ButtonNoviTip_OnClick" Margin="5">Novi tip</Button>
-        
-        <Label Grid.Column="0" Grid.Row="7" Content="Etiketa*:"/>
-        <ListBox x:Name="EtiketaBox"  Grid.Column="1" Grid.Row="7" MaxHeight="80" MinHeight="80" ItemsSource="{Binding Source={StaticResource SingletonMain}, Path=EtiketaLista}" SelectedItem="{Binding Etikete, Mode=TwoWay}" SelectionMode="Multiple">
-            <ListBox.ItemTemplate>
-                <DataTemplate>
-                    <StackPanel Orientation="Horizontal">
-                        <Rectangle Width="20" Height="20" Fill="{Binding BojaKod}"/>
-                        <TextBlock Text="{Binding Oznaka}" FontWeight="Bold" VerticalAlignment="Center" Margin="5,0,0,0"/>
-                    </StackPanel>
-                </DataTemplate>
-            </ListBox.ItemTemplate>
-        </ListBox>
-        <Button VerticalAlignment="Top" Grid.Column="2" Grid.Row="7" MaxHeight="20" Margin="5" Click="ButtonNovaEtiketa_OnClick">Nova etiketa</Button>
         <Label VerticalAlignment="Center" Grid.Column="0" Grid.Row="2" Content="Godišnji prihod ($)*:"/>
         <TextBox x:Name="PrihodBox" Grid.Column="1" Grid.Row="2" Validation.ErrorTemplate="{StaticResource ValidationErrorTemplate}" >
             <TextBox.Text>
@@ -142,14 +108,47 @@
                         <proj:StringDoubleValidation ValidationStep="RawProposedValue"></proj:StringDoubleValidation>
                     </Binding.ValidationRules>
                 </Binding>
-                
+
             </TextBox.Text>
-            
-            
+
+
         </TextBox>
 
+        <Label Grid.Column="0" Grid.Row="3" Content="Etiketa*:"/>
+        <ListBox x:Name="EtiketaBox"  Grid.Column="1" Grid.Row="3" MaxHeight="80" MinHeight="20" ItemsSource="{Binding Source={StaticResource SingletonMain}, Path=EtiketaLista}" SelectionMode="Multiple" Margin="0,5,0,0">
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <StackPanel Orientation="Horizontal">
+                        <Rectangle Width="20" Height="20" Fill="{Binding BojaKod}"/>
+                        <TextBlock Text="{Binding Oznaka}" FontWeight="Bold" VerticalAlignment="Center" Margin="5,0,0,0"/>
+                    </StackPanel>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
+        <Button VerticalAlignment="Top" Grid.Column="2" Grid.Row="3" MaxHeight="30" Margin="5" Click="ButtonNovaEtiketa_OnClick">Nova etiketa</Button>
 
+        <Label Grid.Column="0" Grid.Row="4" Content="Tip spomenika*:"/>
+        <ComboBox x:Name="TipBox" Grid.Column="1" Grid.Row="4"  ItemsSource="{Binding Source={StaticResource SingletonMain}, Path=TipspomenikaLista}" SelectedItem="{Binding Spomenika}"/>
+        <Button Grid.Column="2" Grid.Row="4" Click="ButtonNoviTip_OnClick" Margin="5">Novi tip</Button>
 
+        <Label Grid.Column="0" Grid.Row="5" Content="U naseljenom mestu? *:"/>
+        <StackPanel Orientation="Horizontal" Grid.Column="1" Grid.Row="5">
+            <CheckBox IsChecked="{Binding NaseljeChecked}" Margin="0, 0 ,5px, 0"  VerticalAlignment="Center"/>
+        </StackPanel>
+        
+        <Label Grid.Column="0" Grid.Row="6" Content="Arheološki obrađen? *:" />
+        <StackPanel Orientation="Horizontal" Grid.Column="1" Grid.Row="6">
+            <CheckBox IsChecked="{Binding AreheoChecked}" Margin="0, 0 ,5px, 0"  VerticalAlignment="Center"/>
+        </StackPanel>
+
+        <Label Grid.Column="0" Grid.Row="7" Content="UNESCO zasticen?*:" />
+        <StackPanel Orientation="Horizontal" Grid.Column="1" Grid.Row="7">
+            <CheckBox IsChecked="{Binding UnescoChecked}" Margin="0, 0 ,5px, 0"  VerticalAlignment="Center"/>
+
+        </StackPanel>
+
+        <Label VerticalAlignment="Top" Grid.Column="0" Grid.Row="8"  Content="Opis: "></Label>
+        <TextBox TextWrapping="Wrap" VerticalScrollBarVisibility="Auto" x:Name="OpisBox" Text ="{Binding Path=Opis}"  Grid.Column="1" Grid.Row="8" MaxHeight="100" MinHeight="100" FontSize="14" BorderBrush="Black" VerticalAlignment="Top"/>
 
         <Label Grid.Column="0" Grid.Row="9" Content="Era porekla:"/>
         <ComboBox x:Name="EraBox"  ItemsSource="{Binding EraPorekla}" SelectedItem="{Binding Era}" Grid.Column="1" Grid.Row="9" >

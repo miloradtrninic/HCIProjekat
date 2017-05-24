@@ -1,17 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.ComponentModel;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 
 namespace HCIProjekat
 {
@@ -21,11 +11,16 @@ namespace HCIProjekat
     public partial class Tabele : Window
     {
         private ICollectionView _tipoView;
+        private ICollectionView _etiketeView;
         private bool pressed;
         public Tabele()
         {
             _tipoView = new CollectionViewSource {Source = Main.GetInstance().TipspomenikaLista}.View;
+            _etiketeView = new CollectionViewSource { Source = Main.GetInstance().EtiketaLista }.View;
+
             InitializeComponent();
+            EtiketeFilter.SelectedIndex = -1;
+            TipoviFilter.SelectedIndex = -1;
             this.DataContext = this;
            
             
@@ -37,6 +32,11 @@ namespace HCIProjekat
             set { _tipoView = value; }
         }
 
+        public ICollectionView EtiketeView
+        {
+            get { return _etiketeView; }
+            set { _etiketeView = value; }
+        }
 
         private void ButtonNewSpomenik_OnClick(object sender, RoutedEventArgs e)
         {
@@ -79,7 +79,26 @@ namespace HCIProjekat
             viewSpomenika.Filter += o =>
             {
                 Spomenik spomenik = o as Spomenik;
-                return spomenik != null && spomenik.Tip.Oznaka.Equals(((TipSpomenika) TipoviFilter.SelectedItem).Oznaka);
+                bool filterTip = TipoviFilter.SelectedItem != null;
+                bool filterEtiketa = EtiketeFilter.SelectedItem != null;
+
+                if (filterTip && !filterEtiketa)
+                {
+                    return spomenik != null &&
+                           spomenik.Tip.Oznaka.Equals(((TipSpomenika) TipoviFilter.SelectedItem).Oznaka);
+                }
+                if (!filterTip && filterEtiketa)
+                {
+                    return spomenik != null &&
+                           spomenik.Etikete.Contains((Etiketa) EtiketeFilter.SelectedItem);
+                }
+                if (filterTip && filterEtiketa)
+                {
+                    return spomenik != null && spomenik.Etikete.Contains((Etiketa) EtiketeFilter.SelectedItem) &&
+                           spomenik.Tip.Oznaka.Equals(((TipSpomenika) TipoviFilter.SelectedItem).Oznaka);
+                }
+
+                return false;
             };
         }
 

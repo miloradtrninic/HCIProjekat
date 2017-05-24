@@ -22,6 +22,9 @@ namespace HCIProjekat
         private ObservableCollection<Etiketa> _etiketaLista;
         private ObservableCollection<SpomenikMapa> _spomenikMapas;
 
+        private bool _saved = false;
+        private string _savepath = null;
+
         [field: NonSerialized]
         public event PropertyChangedEventHandler PropertyChanged;
 
@@ -38,9 +41,14 @@ namespace HCIProjekat
         private Main()
         {
             spomeniciLista = new ObservableCollection<Spomenik>();
+            spomeniciLista.CollectionChanged += list_changed;
             _tipspomenikaLista = new ObservableCollection<TipSpomenika>();
+            _tipspomenikaLista.CollectionChanged += list_changed;
             _etiketaLista = new ObservableCollection<Etiketa>();
+            _etiketaLista.CollectionChanged += list_changed;
             _spomenikMapas = new ObservableCollection<SpomenikMapa>();
+            _spomenikMapas.CollectionChanged += list_changed;
+
         }
         public static Main GetInstance()
         {
@@ -55,6 +63,8 @@ namespace HCIProjekat
             }
         }
 
+     
+
         public ObservableCollection<TipSpomenika> TipspomenikaLista
         {
             get { return _tipspomenikaLista; }
@@ -62,6 +72,7 @@ namespace HCIProjekat
             {
                 _tipspomenikaLista = value;
                 OnPropertyChanged("TipspomenikaLista");
+                
             }
         }
         public ObservableCollection<Etiketa> EtiketaLista
@@ -97,12 +108,37 @@ namespace HCIProjekat
             }
         }
 
+        public bool Saved
+        {
+            get { return _saved; }
+            set { _saved = value; }
+        }
+
+        public string Savepath
+        {
+            get { return _savepath; }
+            set { _savepath = value; }
+        }
+
+        public void list_changed(object sender, NotifyCollectionChangedEventArgs eventArgs)
+        {
+            if (sender != null)
+            {
+                Saved = false;
+            }
+        }
+
         public void Snimi(string filePath)
         {
             IFormatter formatter = new BinaryFormatter();
             Stream stream = new FileStream(filePath, FileMode.Create, FileAccess.Write, FileShare.None);
+            Savepath = filePath;
+            Saved = true;
             formatter.Serialize(stream, instance);
-            stream.Close();  
+            stream.Close();
+            
+         
+
         }
 
         public bool Load(string filePath)
@@ -111,17 +147,25 @@ namespace HCIProjekat
             Stream stream = new FileStream(filePath, FileMode.Open, FileAccess.Read, FileShare.None);
             var deserialized = formatter.Deserialize(stream) as Main;
             instance.GetSpomenikLista = deserialized.GetSpomenikLista;
-            instance.EtiketaLista = deserialized.EtiketaLista;
-            instance.SpomenikMapas = deserialized.SpomenikMapas;
-            instance.TipspomenikaLista = deserialized.TipspomenikaLista;
+            instance.GetSpomenikLista.CollectionChanged += list_changed;
 
+            instance.EtiketaLista = deserialized.EtiketaLista;
+            instance.EtiketaLista.CollectionChanged += list_changed;
+
+            instance.SpomenikMapas = deserialized.SpomenikMapas;
+            instance.SpomenikMapas.CollectionChanged += list_changed;
+
+            instance.TipspomenikaLista = deserialized.TipspomenikaLista;
+            instance.TipspomenikaLista.CollectionChanged += list_changed;
+            instance.Saved = deserialized.Saved;
+            instance.Savepath = deserialized.Savepath;
             if (instance != null)
             {
+                Saved = true;
                 return true;
+
             }
-           
             return false;
-            
         }
 
         public bool HasSpomenik(Spomenik spomenik)

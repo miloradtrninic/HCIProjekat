@@ -44,9 +44,11 @@ namespace HCIProjekat
             {
                 OznakaBox.IsEnabled = false;
                 this.trenutnaEtiketa = trenutnaEtiketa;
-                _oznaka = trenutnaEtiketa.Oznaka;
-                _opis = trenutnaEtiketa.Opis;
-                _boja = trenutnaEtiketa.Boja;
+                Oznaka = trenutnaEtiketa.Oznaka;
+                Opis = trenutnaEtiketa.Opis;
+                var convertFromString = ColorConverter.ConvertFromString(trenutnaEtiketa.BojaKod);
+                if (convertFromString != null)
+                    Boja = (Color)convertFromString;
             }
             
             

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Globalization;
 using System.Linq;
@@ -58,13 +59,12 @@ namespace HCIProjekat
 
 
         private TipSpomenika _tipSpomenika;
-        private List<Etiketa> _etikete;
         private Spomenik _toEdit;
 
         public NewSpomenik(Spomenik spomenik)
         {
             InitializeComponent();
-            _etikete = new List<Etiketa>();         
+          
             _eraPorekla = new List<string>(new string[] { "Paleolit", "Neolit", "Stari vek","Srednji vek","Renesansa","Moderno doba" });
             _turistickiStatus = new List<string>(new string[] { "Dostupan", "Nedostupan", "Eksploatisan" });
             _toEdit = spomenik;
@@ -99,9 +99,8 @@ namespace HCIProjekat
                 _tipSpomenika = spomenik.Tip;
                 _era = spomenik.EraPorekla;
                 _turizam = spomenik.TuristickiStatus;
-                _etikete = spomenik.Etikete;
                 _datumOtkrivanja = spomenik.DatumOtkrivanja.Date;
-                foreach (var etiketa in _etikete)
+                foreach (var etiketa in spomenik.Etikete)
                 {
                     EtiketaBox.SelectedItems.Add(etiketa);
                 }
@@ -232,16 +231,6 @@ namespace HCIProjekat
             set { _turistickiStatus = value; }
         }
 
-        public List<Etiketa> Etikete
-        {
-            get { return _etikete; }
-            set
-            {
-                _etikete = value;
-                OnPropertyChanged("Etikete");
-            }
-        }
-
         public DateTime DatumOtkrivanja
         {
             get { return _datumOtkrivanja; }
@@ -344,12 +333,14 @@ namespace HCIProjekat
                     bool naselje = _naseljeChecked;
                     bool arheo = _areheoChecked;
                     var selectedItems = EtiketaBox.SelectedItems;
-                    foreach (var item in selectedItems)
-                    {
-                        Etikete.Add((Etiketa) item);
-                    }
+                   
                     if (_toEdit !=null)
                     {
+                        _toEdit.Etikete.Clear();
+                        foreach (var item in selectedItems)
+                        {
+                            _toEdit.Etikete.Add((Etiketa)item);
+                        }
                         _toEdit.Oznaka = Oznaka;
                         _toEdit.GodisnjiPrihod = _prihod.ToString();
                         _toEdit.Ime = Ime;
@@ -359,9 +350,6 @@ namespace HCIProjekat
 
                         _toEdit.Opis = _opis;
                         _toEdit.DatumOtkrivanja = DatumOtkrivanja;
-
-                       
-                        _toEdit.Etikete = Etikete;
 
                         _toEdit.Unesco = UnescoChecked ;
                         _toEdit.Naselje = NaseljeChecked;
@@ -377,7 +365,11 @@ namespace HCIProjekat
                     }
                     else
                     {
-                        Spomenik newSpomenik = new Spomenik(_oznaka, _ime, _opis, _era, _turizam, _imagePath, unseco, naselje, arheo, _prihod.ToString(),Kalendar.SelectedDate.Value, _tipSpomenika, _etikete);
+                        Spomenik newSpomenik = new Spomenik(_oznaka, _ime, _opis, _era, _turizam, _imagePath, unseco, naselje, arheo, _prihod.ToString(),Kalendar.SelectedDate.Value, _tipSpomenika);
+                        foreach (var item in selectedItems)
+                        {
+                            newSpomenik.Etikete.Add((Etiketa)item);
+                        }
                         newSpomenik.Tip = _tipSpomenika;
                         if (ImagePath.Equals(@"resources\NoImg300x225.jpg"))
                         {

@@ -41,7 +41,7 @@ namespace HCIProjekat
             Etiketa etiketa = o as Etiketa;
             if (_enableSearch)
             {
-                if (etiketa != null && etiketa.Oznaka.Equals(_searchString))
+                if (etiketa != null && etiketa.Oznaka.StartsWith(Pretraga.Text))
                 {
                     return true;
                 }
@@ -75,7 +75,7 @@ namespace HCIProjekat
 
         private void SearchButton_Click(object sender, RoutedEventArgs e)
         {
-            if (SearchString.Equals(""))
+            if (Pretraga.Text.Trim().Equals(""))
             {
                 _enableSearch = false;
             }
@@ -85,7 +85,11 @@ namespace HCIProjekat
             }
             _etiketeView.Refresh();
         }
-
-       
+        private void Pretraga_OnTextChanged(object sender, TextChangedEventArgs e)
+        {
+            _enableSearch = true;
+            _etiketeView.Refresh();
+            
+        }
     }
 }

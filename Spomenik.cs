@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
@@ -24,7 +25,7 @@ namespace HCIProjekat
         private bool slikaTip;
         private TipSpomenika tip;
        
-        private List<Etiketa> etikete;
+        private ObservableCollection<Etiketa> etikete;
 
         public string eraPorekla;
         public string turistickiStatus;
@@ -35,6 +36,7 @@ namespace HCIProjekat
             set
             {
                 datumOtkrivanja = value;
+                Main.GetInstance().Saved = false;
                 OnPropertyChanged("DatumOtkrivanja");
             }
         }
@@ -44,6 +46,7 @@ namespace HCIProjekat
             set
             {
                 opis = value;
+                Main.GetInstance().Saved = false;
                 OnPropertyChanged("Opis");
             }
         }
@@ -53,6 +56,7 @@ namespace HCIProjekat
             set
             {
                 eraPorekla = value;
+                Main.GetInstance().Saved = false;
                 OnPropertyChanged("EraPorekla");
             }
         }
@@ -62,6 +66,7 @@ namespace HCIProjekat
             set
             {
                 oznaka = value;
+                Main.GetInstance().Saved = false;
                 OnPropertyChanged("Oznaka");
             }
         }
@@ -72,6 +77,7 @@ namespace HCIProjekat
             set
             {
                 godisnjiPrihod = value;
+                Main.GetInstance().Saved = false;
                 OnPropertyChanged("GodisnjiPrihod");
             }
         }
@@ -82,6 +88,7 @@ namespace HCIProjekat
             set
             {
                 ikonicaPath = value;
+                Main.GetInstance().Saved = false;
                 OnPropertyChanged("IkonicaPath");
             }
         }
@@ -92,6 +99,7 @@ namespace HCIProjekat
             set
             {
                 naselje = value;
+                Main.GetInstance().Saved = false;
                 OnPropertyChanged("Naselje");
             }
         }
@@ -101,6 +109,7 @@ namespace HCIProjekat
             set
             {
                 turistickiStatus = value;
+                Main.GetInstance().Saved = false;
                 OnPropertyChanged("TuristickiStatus");
             }
         }
@@ -110,6 +119,7 @@ namespace HCIProjekat
             set
             {
                 ime = value;
+                Main.GetInstance().Saved = false;
                 OnPropertyChanged("Ime");
             }
         }
@@ -119,6 +129,7 @@ namespace HCIProjekat
             set
             {
                 unesco = value;
+                Main.GetInstance().Saved = false;
                 OnPropertyChanged("Unesco");
             }
         }
@@ -129,16 +140,18 @@ namespace HCIProjekat
             set
             {
                 tip = value;
+                Main.GetInstance().Saved = false;
                 OnPropertyChanged("Tip");
             }
         }
 
-        public List<Etiketa> Etikete
+        public ObservableCollection<Etiketa> Etikete
         {
             get { return etikete; }
             set
             {
                 etikete = value;
+                Main.GetInstance().Saved = false;
                 OnPropertyChanged("Etikete");
             }
         }
@@ -149,6 +162,7 @@ namespace HCIProjekat
             set
             {
                 arheo = value;
+                Main.GetInstance().Saved = false;
                 OnPropertyChanged("Arheo");
             }
         }
@@ -159,12 +173,13 @@ namespace HCIProjekat
             set
             {
                 slikaTip = value;
+                Main.GetInstance().Saved = false;
                 OnPropertyChanged("SlikaTip");
             }
         }
 
         public Spomenik(string oznaka, string ime, string opis, string eraPorekla, string turistickiStatus,
-            string ikonicaPath, bool unesco, bool naselje, bool arheo,string godisnjiPrihod, DateTime datumOtkrivanja, TipSpomenika tipSpomenika, List<Etiketa> etiketeList)
+            string ikonicaPath, bool unesco, bool naselje, bool arheo, string godisnjiPrihod, DateTime datumOtkrivanja, TipSpomenika tipSpomenika)
         {
             this.oznaka = oznaka;
             this.ime = ime;
@@ -178,7 +193,7 @@ namespace HCIProjekat
             this.naselje = naselje;
             this.godisnjiPrihod = godisnjiPrihod;
             this.datumOtkrivanja = datumOtkrivanja;
-            this.Etikete = etiketeList;
+            Etikete = new ObservableCollection<Etiketa>();
 
         }
 
@@ -193,7 +208,7 @@ namespace HCIProjekat
             this.unesco = true;
             this.naselje = true;
             this.godisnjiPrihod = "prazno";
-            etikete = new List<Etiketa>();
+            Etikete = new ObservableCollection<Etiketa>();
           
         }
 

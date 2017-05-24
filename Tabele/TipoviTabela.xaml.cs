@@ -13,6 +13,7 @@ namespace HCIProjekat
     {
 
         private ICollectionView _tipoviView;
+
         private string _searchString;
         private bool enableSearch;
 
@@ -47,9 +48,8 @@ namespace HCIProjekat
             {
                 if (enableSearch)
                 {
-                    if (obj.Oznaka.Equals(_searchString))
+                    if (obj.Oznaka.StartsWith(Pretraga.Text.Trim()))
                     {
-                        Console.WriteLine(_searchString);
                         return true;
                     }
                     else
@@ -105,7 +105,7 @@ namespace HCIProjekat
 
         private void ButtonBase_OnClick(object sender, RoutedEventArgs e)
         {
-            if (SearchString.Equals(""))
+            if (Pretraga.Text.Equals(""))
             {
                 enableSearch = false;
             }
@@ -116,6 +116,11 @@ namespace HCIProjekat
             _tipoviView.Refresh();
         }
 
-        
+
+        private void Pretraga_OnTextChanged(object sender, TextChangedEventArgs e)
+        {
+            _tipoviView.Refresh();
+            enableSearch = true;
+        }
     }
 }

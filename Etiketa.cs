@@ -28,7 +28,9 @@ namespace HCIProjekat
             set
             {
                 oznaka = value;
+                Main.GetInstance().Saved = false;
                 OnPropertyChanged("Oznaka");
+                
             }
         }
         
@@ -37,10 +39,13 @@ namespace HCIProjekat
             get { return boja; }
             set
             {
-                boja = value;
-                bojaKod = boja.ToString();
-                OnPropertyChanged("BojaKod");
-                OnPropertyChanged("Boja");
+                
+               boja = value;
+               bojaKod = boja.ToString();
+               Main.GetInstance().Saved = false;
+               OnPropertyChanged("BojaKod");
+               OnPropertyChanged("Boja");
+                
             }
         }
 
@@ -49,7 +54,9 @@ namespace HCIProjekat
             get { return opis; }
             set
             {
+                
                 opis = value;
+
                 OnPropertyChanged("Opis");
             }
         }
@@ -60,9 +67,11 @@ namespace HCIProjekat
             set
             {
                 bojaKod = value;
+                Main.GetInstance().Saved = false;
                 var convertFromString = ColorConverter.ConvertFromString(bojaKod);
                 if (convertFromString != null)
                     boja = (Color)convertFromString;
+                
                 OnPropertyChanged("BojaKod");
                 OnPropertyChanged("Boja");
             }
@@ -82,11 +91,9 @@ namespace HCIProjekat
 
         public Etiketa()
         {
-           
             oznaka = "";
             bojaKod = "";
             opis = "";
-
         }
 
 

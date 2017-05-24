@@ -54,7 +54,7 @@ namespace HCIProjekat
             Spomenik spomenik = o as Spomenik;
             if (_searchEnable)
             {
-                if (spomenik != null && spomenik.Oznaka.Equals(_searchString))
+                if (spomenik != null && spomenik.Oznaka.StartsWith(Pretraga.Text.Trim()))
                 {
                     return true;
                 }
@@ -68,7 +68,7 @@ namespace HCIProjekat
 
         private void SearchButton_Click(object sender, RoutedEventArgs e)
         {
-            if (SearchString.Equals(""))
+            if (Pretraga.Text.Trim().Equals(""))
             {
                 _searchEnable = false;
             }
@@ -78,7 +78,11 @@ namespace HCIProjekat
             }
             _listView.Refresh();
         }
-
-        
+        private void Pretraga_OnTextChanged(object sender, TextChangedEventArgs e)
+        {
+            _searchEnable = true;
+            _listView.Refresh();
+        }
+   
     }
 }

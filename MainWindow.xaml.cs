@@ -22,7 +22,7 @@ namespace HCIProjekat
         private ICollectionView _etiketeView;
         private ICollectionView _tipoviView;
         private ICollectionView _spomeniciMapaView;
-
+        private bool _canFilter;
         public event PropertyChangedEventHandler PropertyChanged;
 
         protected virtual void OnPropertyChanged(string name)
@@ -38,6 +38,7 @@ namespace HCIProjekat
         { 
             
             _spomeniciView = new CollectionViewSource{Source = Main.GetInstance().GetSpomenikLista}.View;
+            _spomeniciView.Filter += Filter;
             _etiketeView = new CollectionViewSource { Source = Main.GetInstance().EtiketaLista }.View;
             _tipoviView = new CollectionViewSource { Source = Main.GetInstance().TipspomenikaLista }.View;
             _spomeniciMapaView = new CollectionViewSource { Source = Main.GetInstance().SpomenikMapas }.View;
@@ -47,7 +48,22 @@ namespace HCIProjekat
            
         }
 
-        
+        private bool Filter(object o)
+        {
+            Spomenik spomenik = o as Spomenik;
+            if (_canFilter)
+            {
+                if (spomenik != null && spomenik.Ime.StartsWith(Pretraga.Text.Trim()))
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+            }
+            return true;
+        }
 
 
         public ICollectionView SpomeniciView
@@ -329,18 +345,23 @@ namespace HCIProjekat
             if (result == true)
             {
                 putanja = fileDialog.FileName;
-                Main.GetInstance().Load(putanja);
+                //putanja
+                if (Main.GetInstance().Load(putanja))
+                {
+                    _spomeniciView.Refresh();
+                    EtiketeView = new CollectionViewSource {Source = Main.GetInstance().EtiketaLista}.View;
+                    EtiketeView.Refresh();
+                    TipoviView = new CollectionViewSource {Source = Main.GetInstance().TipspomenikaLista}.View;
+                    TipoviView.Refresh();
+                    SpomeniciMapaView = new CollectionViewSource { Source = Main.GetInstance().SpomenikMapas }.View;
+                    SpomeniciMapaView.Refresh();
+                    SpomeniciView = new CollectionViewSource { Source = Main.GetInstance().GetSpomenikLista }.View;
+                    SpomeniciView.Filter += Filter;
+                    SpomeniciView.Refresh();
+                }
             }
             //mora da se refresuje glavni prozor zbog bindinga na liste u centru
-            _spomeniciView.Refresh();
-            EtiketeView = new CollectionViewSource {Source = Main.GetInstance().EtiketaLista}.View;
-            EtiketeView.Refresh();
-            TipoviView = new CollectionViewSource {Source = Main.GetInstance().TipspomenikaLista}.View;
-            TipoviView.Refresh();
-            SpomeniciMapaView = new CollectionViewSource { Source = Main.GetInstance().SpomenikMapas }.View;
-            SpomeniciMapaView.Refresh();
-            SpomeniciView = new CollectionViewSource { Source = Main.GetInstance().GetSpomenikLista }.View;
-            SpomeniciView.Refresh();
+            
             // this.DataContext = null;
             //this.DataContext = new MainWindow();
             /* MainWindow main = new MainWindow();
@@ -353,30 +374,66 @@ namespace HCIProjekat
         {
             OpenFileDialog fileDialog = new OpenFileDialog();
             string putanja;
-            
-            fileDialog.Filter = "Spomenici (*.mon) | *.mon";
-            fileDialog.Multiselect = false;
 
-            fileDialog.CheckFileExists = false;
-            fileDialog.CheckPathExists = false;
-
-            var result = fileDialog.ShowDialog();
-
-            // Process open file dialog box results
-            if (result == true)
+            if (Main.GetInstance().Savepath == null)
             {
-                putanja = fileDialog.FileName;
-                Main.GetInstance().Snimi(putanja);
-            }
-            
 
+                fileDialog.Filter = "Spomenici (*.mon) | *.mon";
+                fileDialog.Multiselect = false;
+
+                fileDialog.CheckFileExists = false;
+                fileDialog.CheckPathExists = false;
+
+                var result = fileDialog.ShowDialog();
+
+                // Process open file dialog box results
+                if (result == true)
+                {
+                    putanja = fileDialog.FileName;
+                    Main.GetInstance().Snimi(putanja);
+                }
+            }
+            else
+            {
+                Main.GetInstance().Snimi(Main.GetInstance().Savepath);
+            }
         }
+
+        private void Pretraga_OnTextChanged(object sender, TextChangedEventArgs e)
+        {
+            _canFilter = true;
+            _spomeniciView.Refresh();
+        }
+
+        private void SearchButton_OnClick(object sender, RoutedEventArgs e)
+        {
+            if (Pretraga.Text.Trim().Equals(""))
+            {
+                _canFilter = false;
+            }
+            else
+            {
+                _canFilter = true;
+            }
+            _spomeniciView.Refresh();
+        }
+
         protected override void OnClosed(EventArgs e)
         {
+            if (!Main.GetInstance().Saved)
+            {
+                if (
+                    MessageBox.Show("Postoje nesačuvane promene. Da li želite da ih sačuvate?", "Snimanje promena",
+                        MessageBoxButton.YesNo, MessageBoxImage.Information, MessageBoxResult.No) ==
+                    MessageBoxResult.Yes)
+                {
+                    MenuItemSave_OnClick(this,new AccessKeyPressedEventArgs());
+                }
+            }
+            
             base.OnClosed(e);
-
-            Application.Current.Shutdown();
         }
+
 
 
         private void NewEtiketa_CanExecute(object sender, CanExecuteRoutedEventArgs e)
@@ -406,6 +463,6 @@ namespace HCIProjekat
         }
 
 
-        
+       
     }
 } 

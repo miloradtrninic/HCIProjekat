@@ -4,7 +4,7 @@
         xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:projek = "clr-namespace:HCIProjekat"
-        Title="Dodaj etiketu" Height="300" Width="500" WindowStartupLocation="CenterOwner">
+        Title="Dodaj etiketu" Height="300" Width="500" WindowStartupLocation="CenterOwner" FontSize="16">
     <Window.Resources>
         <Style TargetType="TextBox">
             <Setter Property="Foreground" Value="Gray" />
@@ -17,11 +17,11 @@
                 <StackPanel Orientation="Horizontal" DockPanel.Dock="Top">
                     <Grid Width="12" Height="12">
                         <Ellipse Width="12" Height="12" Fill="Red" HorizontalAlignment="Center" VerticalAlignment="Center"></Ellipse>
-                        <TextBlock Foreground="White" FontWeight="Heavy" FontSize="8" HorizontalAlignment="Center" VerticalAlignment="Center" TextAlignment="Center"
+                        <TextBlock Foreground="White" FontWeight="Heavy" FontSize="12" HorizontalAlignment="Center" VerticalAlignment="Center" TextAlignment="Center"
                             ToolTip="{Binding ElementName=ErrorAdorner, 
                             Path=AdornedElement.(Validation.Errors)[0].ErrorContent}">X</TextBlock>
                     </Grid>
-                    <TextBlock Foreground="Red" FontWeight="12" Margin="2,0,0,0" Text="{Binding ElementName=ErrorAdorner, Path=AdornedElement.(Validation.Errors)[0].ErrorContent}"></TextBlock>
+                    <TextBlock Foreground="Red" FontWeight="12" FontSize="12" Margin="2,0,0,0" Text="{Binding ElementName=ErrorAdorner, Path=AdornedElement.(Validation.Errors)[0].ErrorContent}"></TextBlock>
                 </StackPanel>
                 <AdornedElementPlaceholder x:Name="ErrorAdorner"></AdornedElementPlaceholder>
             </DockPanel>
