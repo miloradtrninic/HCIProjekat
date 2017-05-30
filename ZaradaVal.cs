@@ -18,13 +18,13 @@ namespace HCIProjekat
             if (value is double)
             {
                 double d = (double)value;
-                if (d < -2147483648) return new ValidationResult(false, "Godišnji prihod je prevelika cifra.");
-                if (d > 2147483648) return new ValidationResult(false, "Godišnji prihod je prevelika cifra.");
+                if (d < -2100000000) return new ValidationResult(false, "Godišnji prihod je prevelika cifra.");
+                if (d > 2100000000) return new ValidationResult(false, "Godišnji prihod je prevelika cifra.");
                 return new ValidationResult(true, null);
             }
             else
             {
-               return new ValidationResult(false, "Nepoznata greska. Kontaktirajte administratora.");
+                return new ValidationResult(false, "Godišnji prihod nije cifra.");
             }
         }
 

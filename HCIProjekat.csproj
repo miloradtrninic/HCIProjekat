@@ -74,6 +74,11 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Etiketa.cs" />
+    <Compile Include="Help\HelpProvider.cs" />
+    <Compile Include="Help\HelpViewer.xaml.cs">
+      <DependentUpon>HelpViewer.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Help\JavaScriptControlHelper.cs" />
     <Compile Include="Login.xaml.cs">
       <DependentUpon>Login.xaml</DependentUpon>
     </Compile>
@@ -108,6 +113,10 @@
     <Compile Include="TipSpomenika.cs" />
     <Compile Include="User.cs" />
     <Compile Include="ZaradaVal.cs" />
+    <Page Include="Help\HelpViewer.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Login.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -248,6 +257,44 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="resources\OpenFolder-48.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Help\error.htm" />
+    <Content Include="Help\etiketaDialog.html" />
+    <Content Include="Help\etiketaDialog_boja.html" />
+    <Content Include="Help\etiketaDialog_opis.html" />
+    <Content Include="Help\etiketaDialog_oznaka.html" />
+    <Content Include="Help\index_help.html" />
+    <Content Include="Help\mainWindow.html" />
+    <Content Include="Help\spomenikDialog.html" />
+    <Content Include="Help\spomenikDialog_arheo.html" />
+    <Content Include="Help\spomenikDialog_datum.html" />
+    <Content Include="Help\spomenikDialog_era.html" />
+    <Content Include="Help\spomenikDialog_etiketa.html" />
+    <Content Include="Help\spomenikDialog_ikonica.html" />
+    <Content Include="Help\spomenikDialog_ime.html" />
+    <Content Include="Help\spomenikDialog_naselje.html" />
+    <Content Include="Help\spomenikDialog_opis.html" />
+    <Content Include="Help\spomenikDialog_oznaka.html" />
+    <Content Include="Help\spomenikDialog_prihod.html" />
+    <Content Include="Help\spomenikDialog_tip.html" />
+    <Content Include="Help\spomenikDialog_turizam.html" />
+    <Content Include="Help\spomenikDialog_unesco.html" />
+    <Content Include="Help\tipDialog.html" />
+    <Content Include="Help\tipDialog_ikonica.html" />
+    <Content Include="Help\tipDialog_ime.html" />
+    <Content Include="Help\tipDialog_opis.html" />
+    <Content Include="Help\tipDialog_oznaka.html" />
+    <Resource Include="resources\WorldMap-Light.png" />
+    <Resource Include="resources\Zoom In-64.png" />
+    <Resource Include="resources\Zoom Out-64.png" />
+    <Resource Include="resources\ZoomActual-50.png" />
+    <Resource Include="resources\world-physical-map.jpg" />
+    <Resource Include="Help\graph2.png" />
+    <Content Include="Help\Ime.htm" />
+    <Content Include="Help\Indeks.htm" />
+    <Content Include="Help\index.htm" />
+    <Content Include="Help\Prezime.htm" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

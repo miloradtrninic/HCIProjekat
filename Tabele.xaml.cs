@@ -2,6 +2,7 @@
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
+using System.Windows.Input;
 
 namespace HCIProjekat
 {
@@ -25,7 +26,6 @@ namespace HCIProjekat
            
             
         }
-
         public ICollectionView TipoView
         {
             get { return _tipoView; }
@@ -58,7 +58,6 @@ namespace HCIProjekat
             }
 
         }
-
         private void ButtonObrisiSpomenik_OnClick(object sender, RoutedEventArgs e)
         {
             var contentTabele = (SpomeniciTabela)SpomeniciFrame.Content;
@@ -101,16 +100,12 @@ namespace HCIProjekat
                 return false;
             };
         }
-
         private void DeFiltriraj_Spomenike_OnClick(object sender, RoutedEventArgs e)
         {
             var contentTabele = (SpomeniciTabela)SpomeniciFrame.Content;
             ICollectionView viewSpomenika = contentTabele.View;
             viewSpomenika.Filter += o => { return true; };
         }
-
-
-
         private void ButtonNewTip_OnClick(object sender, RoutedEventArgs e)
         {
             NewTip newTipDialog = new NewTip(null);
@@ -173,7 +168,6 @@ namespace HCIProjekat
             {
                 MessageBox.Show("Molimo Vas odaberite etiketu koju želite da izmenite!", "Izmena etikete",MessageBoxButton.OK,MessageBoxImage.Warning);
             }
-
         }
 
         private void ButtonObrisiEtiketu_OnClick(object sender, RoutedEventArgs e)
@@ -203,6 +197,24 @@ namespace HCIProjekat
             this.Close();
         }
 
+        private void HelpCommand_Executed(object sender, ExecutedRoutedEventArgs e)
+        {
+            if (Application.Current != null)
+            {
+               // IInputElement focusedControl = FocusManager.GetFocusedElement(this);
+                TabItem ti = TabControl.SelectedItem as TabItem;
+                if (ti is DependencyObject)
+                {
+                    string str = HelpProvider.GetHelpKey((DependencyObject)ti);
+                    HelpProvider.ShowHelp(str, this);
+                }
+                if (ti == null)
+                {
+                    string str = HelpProvider.GetHelpKey(this);
+                    HelpProvider.ShowHelp(str, this);
+                }
+            }
+        }
 
     }
 }

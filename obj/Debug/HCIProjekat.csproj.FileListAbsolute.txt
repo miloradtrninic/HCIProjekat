@@ -17,7 +17,10 @@ D:\mono\E2\HCI\HCIProjekat\HCIProjekat\bin\Debug\ro\Xceed.Wpf.AvalonDock.resourc
 D:\mono\E2\HCI\HCIProjekat\HCIProjekat\bin\Debug\ru\Xceed.Wpf.AvalonDock.resources.dll
 D:\mono\E2\HCI\HCIProjekat\HCIProjekat\bin\Debug\sv\Xceed.Wpf.AvalonDock.resources.dll
 D:\mono\E2\HCI\HCIProjekat\HCIProjekat\bin\Debug\zh-Hans\Xceed.Wpf.AvalonDock.resources.dll
+D:\mono\E2\HCI\HCIProjekat\HCIProjekat\obj\Debug\HCIProjekat.csprojResolveAssemblyReference.cache
+D:\mono\E2\HCI\HCIProjekat\HCIProjekat\obj\Debug\Help\HelpViewer.baml
 D:\mono\E2\HCI\HCIProjekat\HCIProjekat\obj\Debug\Tabele\EtiketeTabela.baml
+D:\mono\E2\HCI\HCIProjekat\HCIProjekat\obj\Debug\Help\HelpViewer.g.cs
 D:\mono\E2\HCI\HCIProjekat\HCIProjekat\obj\Debug\Login.g.cs
 D:\mono\E2\HCI\HCIProjekat\HCIProjekat\obj\Debug\Register.g.cs
 D:\mono\E2\HCI\HCIProjekat\HCIProjekat\obj\Debug\Tabele.g.cs
@@ -29,6 +32,7 @@ D:\mono\E2\HCI\HCIProjekat\HCIProjekat\obj\Debug\NewTip.g.cs
 D:\mono\E2\HCI\HCIProjekat\HCIProjekat\obj\Debug\Tabele\SpomeniciTabela.g.cs
 D:\mono\E2\HCI\HCIProjekat\HCIProjekat\obj\Debug\Tabele\TipoviTabela.g.cs
 D:\mono\E2\HCI\HCIProjekat\HCIProjekat\obj\Debug\App.g.cs
+D:\mono\E2\HCI\HCIProjekat\HCIProjekat\obj\Debug\HCIProjekat_Content.g.cs
 D:\mono\E2\HCI\HCIProjekat\HCIProjekat\obj\Debug\GeneratedInternalTypeHelper.g.cs
 D:\mono\E2\HCI\HCIProjekat\HCIProjekat\obj\Debug\HCIProjekat_MarkupCompile.cache
 D:\mono\E2\HCI\HCIProjekat\HCIProjekat\obj\Debug\HCIProjekat_MarkupCompile.lref
@@ -46,4 +50,3 @@ D:\mono\E2\HCI\HCIProjekat\HCIProjekat\obj\Debug\HCIProjekat.Properties.Resource
 D:\mono\E2\HCI\HCIProjekat\HCIProjekat\obj\Debug\HCIProjekat.csproj.GenerateResource.Cache
 D:\mono\E2\HCI\HCIProjekat\HCIProjekat\obj\Debug\HCIProjekat.exe
 D:\mono\E2\HCI\HCIProjekat\HCIProjekat\obj\Debug\HCIProjekat.pdb
-D:\mono\E2\HCI\HCIProjekat\HCIProjekat\obj\Debug\HCIProjekat.csprojResolveAssemblyReference.cache

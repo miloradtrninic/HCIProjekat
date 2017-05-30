@@ -1,13 +1,13 @@
 ﻿using System;
-using System.Collections.ObjectModel;
+
 using System.ComponentModel;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
-using System.Windows.Documents;
+
 using System.Windows.Input;
 using System.Windows.Media;
-using System.Windows.Media.Imaging;
+
 using Microsoft.Win32;
 
 namespace HCIProjekat
@@ -25,6 +25,7 @@ namespace HCIProjekat
         private bool _canFilter;
         public event PropertyChangedEventHandler PropertyChanged;
 
+        private double _zoomValue = 1.0;
         protected virtual void OnPropertyChanged(string name)
         {
             if (PropertyChanged != null)
@@ -44,6 +45,10 @@ namespace HCIProjekat
             _spomeniciMapaView = new CollectionViewSource { Source = Main.GetInstance().SpomenikMapas }.View;
 
             InitializeComponent();
+            _zoomValue = 0.3;
+            ScaleTransform scale = new ScaleTransform(_zoomValue, _zoomValue);
+            MapViewbox.LayoutTransform = scale;
+
             DataContext = this;
            
         }
@@ -462,7 +467,53 @@ namespace HCIProjekat
             e.CanExecute = true;
         }
 
+        private void HelpCommand_Executed(object sender, ExecutedRoutedEventArgs e)
+        {
+            if (Application.Current != null)
+            {
+                string str = HelpProvider.GetHelpKey(this);
+                HelpProvider.ShowHelp(str, this);
+            }
+        }
+        private void UIElement_OnMouseWheel(object sender, MouseWheelEventArgs e)
+        {
+          //  var viewbox = sender as Viewbox;
+            if (e.Delta > 0)
+            {
+                _zoomValue += 0.1;
+            }
+            else if (_zoomValue > 0.3)
+            {
+                _zoomValue -= 0.1;
+            }
 
-       
+            ScaleTransform scale = new ScaleTransform(_zoomValue, _zoomValue);
+            MapViewbox.LayoutTransform = scale;
+            e.Handled = true;
+        }
+
+        private void Zoom_In_Click(object sender, RoutedEventArgs e)
+        {
+            _zoomValue += 0.1;
+            ScaleTransform scale = new ScaleTransform(_zoomValue, _zoomValue);
+            MapViewbox.LayoutTransform = scale;
+
+        }
+        private void Zoom_Out_Click(object sender, RoutedEventArgs e)
+        {
+            if (_zoomValue > 0.3)
+            {
+                _zoomValue -= 0.1;
+                ScaleTransform scale = new ScaleTransform(_zoomValue, _zoomValue);
+                MapViewbox.LayoutTransform = scale;
+            }
+        }
+        private void AcctualSizeZoom_Click(object sender, RoutedEventArgs e)
+        {
+            _zoomValue = 0.3;
+            ScaleTransform scale = new ScaleTransform(_zoomValue, _zoomValue);
+            MapViewbox.LayoutTransform = scale;
+        }
+
     }
 } 

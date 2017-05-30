@@ -155,6 +155,25 @@ namespace HCIProjekat
             e.CanExecute = true;
         }
 
-        
+        private void HelpCommand_Executed(object sender, ExecutedRoutedEventArgs e)
+        {
+            if (Application.Current != null)
+            {
+                
+                IInputElement focusedControl = FocusManager.GetFocusedElement(this);
+                
+                if (focusedControl is DependencyObject )
+                {
+                    string str = HelpProvider.GetHelpKey((DependencyObject)focusedControl);
+                    HelpProvider.ShowHelp(str, this);
+                }
+                if (focusedControl == null)
+                {
+                    string str = HelpProvider.GetHelpKey(this);
+                    HelpProvider.ShowHelp(str, this);
+                }
+            }
+        }
+
     }
 }

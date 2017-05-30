@@ -3,6 +3,9 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:proj="clr-namespace:HCIProjekat"
         Title="Tabele" Height="500" Width="1080" FontSize="20" DataContext="{Binding RelativeSource={RelativeSource Self}}" ResizeMode="NoResize">
+    <Window.CommandBindings>
+        <CommandBinding Command="ApplicationCommands.Help" Executed="HelpCommand_Executed"/>
+    </Window.CommandBindings>
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="1*"></ColumnDefinition>
@@ -12,7 +15,7 @@
             <RowDefinition Height="Auto"></RowDefinition>
             <RowDefinition Height="1*"></RowDefinition>
         </Grid.RowDefinitions>
-        <TabControl HorizontalAlignment="Left" Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="0" VerticalAlignment="Top" Height="400" ClipToBounds="True" TabStripPlacement="Left">
+        <TabControl x:Name="TabControl" HorizontalAlignment="Left" Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="0" VerticalAlignment="Top" Height="400" ClipToBounds="True" TabStripPlacement="Left">
             <TabControl.Resources>
                 <Style TargetType="{x:Type TabItem}">
                     <Setter Property="HeaderTemplate">
@@ -30,7 +33,7 @@
                     <Setter Property="Padding" Value="3" />
                 </Style>
             </TabControl.Resources>
-            <TabItem>
+            <TabItem proj:HelpProvider.HelpKey="tabelaSpomenika">
                 <TabItem.Header>
                     <StackPanel Orientation="Horizontal">
                         <BulletDecorator>
@@ -88,7 +91,7 @@
                     <Frame x:Name="SpomeniciFrame" Source="Tabele/SpomeniciTabela.xaml"></Frame>
                 </StackPanel>
             </TabItem>
-            <TabItem>
+            <TabItem proj:HelpProvider.HelpKey="tabelaTipova">
                 <TabItem.Header>
                     <StackPanel Orientation="Horizontal">
                         <BulletDecorator HorizontalAlignment="Left">
@@ -125,7 +128,7 @@
                     <Frame x:Name="TipFrame" Source="Tabele/TipoviTabela.xaml"></Frame>
                 </StackPanel>
             </TabItem>
-            <TabItem>
+            <TabItem proj:HelpProvider.HelpKey="tabelaEtiketa">
                 <TabItem.Header>
                     <StackPanel Orientation="Horizontal">
                         <BulletDecorator>

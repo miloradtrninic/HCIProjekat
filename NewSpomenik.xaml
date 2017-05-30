@@ -4,7 +4,7 @@
         xmlns:proj="clr-namespace:HCIProjekat"
         x:Name="NewSpomenikWindow"
         xmlns:sys="clr-namespace:System;assembly=mscorlib"
-        Title="Novi spomenik" Height="700" Width="750" WindowStartupLocation="CenterOwner" FontSize="16">
+        Title="Novi spomenik" Height="700" Width="750" WindowStartupLocation="CenterOwner" FontSize="16" proj:HelpProvider.HelpKey="spomenikDialog">
     
     <Window.Resources>
         <Style TargetType="TextBox">
@@ -45,6 +45,7 @@
     <Window.CommandBindings>
         <CommandBinding Command="proj:RoutedCommands.Accept" CanExecute="Accept_OnCanExecute" Executed="SaveButton_Click"></CommandBinding>
         <CommandBinding Command="proj:RoutedCommands.Escape" CanExecute="Escape_OnCanExecute" Executed="CloseButton_Click"></CommandBinding>
+        <CommandBinding Command="ApplicationCommands.Help" Executed="HelpCommand_Executed"/>
     </Window.CommandBindings>
 
 

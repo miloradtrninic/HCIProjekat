@@ -4,7 +4,7 @@
         xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:projek = "clr-namespace:HCIProjekat"
-        Title="Dodaj etiketu" Height="300" Width="500" WindowStartupLocation="CenterOwner" FontSize="16">
+        Title="Dodaj etiketu" Height="300" Width="500" WindowStartupLocation="CenterOwner" FontSize="16" projek:HelpProvider.HelpKey="etiketaDialog">
     <Window.Resources>
         <Style TargetType="TextBox">
             <Setter Property="Foreground" Value="Gray" />
@@ -30,6 +30,7 @@
     <Window.CommandBindings>
         <CommandBinding Command="projek:RoutedCommands.Accept" CanExecute="Accept_OnCanExecute" Executed="SaveButton_Click"></CommandBinding>
         <CommandBinding Command="projek:RoutedCommands.Escape" CanExecute="Escape_OnCanExecute" Executed="CloseButton_Click"></CommandBinding>
+        <CommandBinding Command="ApplicationCommands.Help" Executed="HelpCommand_Executed"/>
     </Window.CommandBindings>
 
 
@@ -47,7 +48,7 @@
         </Grid.RowDefinitions>
 
         <Label VerticalAlignment="Center" Grid.Column="0" Grid.Row="0" Content="Oznaka*:"></Label>
-        <TextBox Grid.Column="1" x:Name="OznakaBox" Grid.Row="0" Validation.ErrorTemplate="{StaticResource ValidationErrorTemplate}">
+        <TextBox Grid.Column="1" x:Name="OznakaBox" Grid.Row="0" Validation.ErrorTemplate="{StaticResource ValidationErrorTemplate}" projek:HelpProvider.HelpKey="etiketaDialog_oznaka" >
             <TextBox.Text>
                 <Binding Path="Oznaka" UpdateSourceTrigger="PropertyChanged">
                     <Binding.ValidationRules>

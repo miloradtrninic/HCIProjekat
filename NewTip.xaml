@@ -3,7 +3,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:projek="clr-namespace:HCIProjekat"
         x:Name="NewTipWindow"
-        Title="Novi tip" Height="360" Width="610" WindowStartupLocation="CenterOwner" FontSize="16">
+        Title="Novi tip" Height="360" Width="610" WindowStartupLocation="CenterOwner" FontSize="16" projek:HelpProvider.HelpKey="tipDialog">
     <Window.Resources>
         <Style TargetType="TextBox">
             <Setter Property="Foreground" Value="Gray" />
@@ -32,6 +32,7 @@
     <Window.CommandBindings>
         <CommandBinding Command="projek:RoutedCommands.Accept" CanExecute="Accept_OnCanExecute" Executed="SaveButton_Click"></CommandBinding>
         <CommandBinding Command="projek:RoutedCommands.Escape" CanExecute="Escape_OnCanExecute" Executed="CloseButton_Click"></CommandBinding>
+        <CommandBinding Command="ApplicationCommands.Help" Executed="HelpCommand_Executed"/>
     </Window.CommandBindings>
 
     <Grid Margin="5">
@@ -49,7 +50,7 @@
         </Grid.RowDefinitions>
 
         <Label VerticalAlignment="Center" Grid.Column="0" Grid.Row="0" Content="Oznaka*:"></Label>
-        <TextBox Grid.Column="1" x:Name="OznakaBox" Grid.Row="0" Validation.ErrorTemplate="{StaticResource ValidationErrorTemplate}">
+        <TextBox Grid.Column="1" x:Name="OznakaBox" Grid.Row="0" Validation.ErrorTemplate="{StaticResource ValidationErrorTemplate}" projek:HelpProvider.HelpKey="tipDialog_oznaka">
             <TextBox.Text>
                 <Binding Path="OznakaTip" UpdateSourceTrigger="PropertyChanged">
                     <Binding.ValidationRules>
@@ -63,7 +64,7 @@
 
 
         <Label VerticalAlignment="Center"  Grid.Column="0" Grid.Row="1"  Content="Ime*:"></Label>
-        <TextBox Grid.Column="1" x:Name="ImeBox" Grid.Row="1" Validation.ErrorTemplate="{StaticResource ValidationErrorTemplate}" >
+        <TextBox Grid.Column="1" x:Name="ImeBox" Grid.Row="1" Validation.ErrorTemplate="{StaticResource ValidationErrorTemplate}" projek:HelpProvider.HelpKey="tipDialog_ime">
             <TextBox.Text>
                 <Binding Path="ImeTip" UpdateSourceTrigger="PropertyChanged">
                     <Binding.ValidationRules>
@@ -74,7 +75,7 @@
         </TextBox>
 
         <Label VerticalAlignment="Top" Grid.Column="0" Grid.Row="2"  Content="Opis: "></Label>
-        <TextBox TextWrapping="Wrap" VerticalScrollBarVisibility="Auto" Grid.Column="1" x:Name="OpisBox" Text="{Binding Path=Opis}" Grid.Row="2" MinHeight="140px" BorderBrush="Black" VerticalAlignment="Top"/>
+        <TextBox TextWrapping="Wrap" VerticalScrollBarVisibility="Auto" Grid.Column="1" x:Name="OpisBox" Text="{Binding Path=Opis}" Grid.Row="2" MinHeight="140px" BorderBrush="Black" VerticalAlignment="Top" projek:HelpProvider.HelpKey="tipDialog_opis"/>
         <!--
         <Label Grid.Column="0" Grid.Row="3" VerticalAlignment="Center" Content="Ikonica*:"/>
         <StackPanel Orientation="Horizontal" Grid.Column="1" Grid.Row="3">
@@ -92,7 +93,7 @@
         -->
         <StackPanel Grid.Column="2" Grid.Row="0" Grid.RowSpan="3" Orientation="Vertical">
             <Image VerticalAlignment="Top" Source="{Binding FilePathTip}" MaxHeight="100" Margin="5"></Image>
-            <Button VerticalAlignment="Bottom" Margin="5" Content="Odaberi" Click="DialogButton_Click"/>
+            <Button VerticalAlignment="Bottom" Margin="5" Content="Odaberi" Click="DialogButton_Click" projek:HelpProvider.HelpKey="tipDialog_ikonica"/>
         </StackPanel>
 
 
