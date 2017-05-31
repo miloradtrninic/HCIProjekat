@@ -36,7 +36,11 @@ namespace HCIProjekat
         public ICollectionView View
         {
             get { return _listView; }
-            set { _listView = value; }
+            set
+            {
+                _listView = value;
+                OnPropertyChanged("View");
+            }
         }
 
         public string SearchString
@@ -49,7 +53,7 @@ namespace HCIProjekat
             }
         }
 
-        private bool Filter(object o)
+        public bool Filter(object o)
         {
             Spomenik spomenik = o as Spomenik;
             if (_searchEnable)

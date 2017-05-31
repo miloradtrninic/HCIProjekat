@@ -8,7 +8,7 @@
     
     <Window.Resources>
         <Style TargetType="TextBox">
-            <Setter Property="Foreground" Value="Gray" />
+            <Setter Property="Foreground" Value="Black" />
             <Setter Property="Margin" Value="0,15,0,0"></Setter>
             <Setter Property="MinHeight" Value="30px"></Setter>
             <Setter Property="FontSize" Value="24" />
@@ -74,7 +74,7 @@
         </Grid.RowDefinitions>
 
         <Label VerticalAlignment="Center" Grid.Column="0" Grid.Row="0" Content="Oznaka*:"></Label>
-        <TextBox  x:Name="OznakaBox" Grid.Column="1" Grid.Row="0" Validation.ErrorTemplate="{StaticResource ValidationErrorTemplate}" >
+        <TextBox  x:Name="OznakaBox" Grid.Column="1" Grid.Row="0" Validation.ErrorTemplate="{StaticResource ValidationErrorTemplate}" proj:HelpProvider.HelpKey="spomenikDialog_oznaka" >
             <TextBox.Text>
                 <Binding Path="Oznaka" UpdateSourceTrigger="PropertyChanged">
                     <Binding.ValidationRules>
@@ -89,7 +89,7 @@
 
 
         <Label VerticalAlignment="Center"  Grid.Column="0" Grid.Row="1"  Content="Ime*:"></Label>
-        <TextBox x:Name="ImeBox" Grid.Column="1" Grid.Row="1" Validation.ErrorTemplate="{StaticResource ValidationErrorTemplate}" >
+        <TextBox x:Name="ImeBox" Grid.Column="1" Grid.Row="1" Validation.ErrorTemplate="{StaticResource ValidationErrorTemplate}" proj:HelpProvider.HelpKey="spomenikDialog_ime" >
             <TextBox.Text>
                 <Binding Path="Ime" UpdateSourceTrigger="PropertyChanged">
                     <Binding.ValidationRules>
@@ -101,7 +101,7 @@
         </TextBox>
 
         <Label VerticalAlignment="Center" Grid.Column="0" Grid.Row="2" Content="Godišnji prihod ($)*:"/>
-        <TextBox x:Name="PrihodBox" Grid.Column="1" Grid.Row="2" Validation.ErrorTemplate="{StaticResource ValidationErrorTemplate}" >
+        <TextBox x:Name="PrihodBox" Grid.Column="1" Grid.Row="2" Validation.ErrorTemplate="{StaticResource ValidationErrorTemplate}" proj:HelpProvider.HelpKey="spomenikDialog_prihod" >
             <TextBox.Text>
                 <Binding Path="Prihod" UpdateSourceTrigger="PropertyChanged">
                     <Binding.ValidationRules>
@@ -116,7 +116,9 @@
         </TextBox>
 
         <Label Grid.Column="0" Grid.Row="3" Content="Etiketa*:"/>
-        <ListBox x:Name="EtiketaBox"  Grid.Column="1" Grid.Row="3" MaxHeight="80" MinHeight="20" ItemsSource="{Binding Source={StaticResource SingletonMain}, Path=EtiketaLista}" SelectionMode="Multiple" Margin="0,5,0,0">
+        <StackPanel Grid.Column="1" Grid.Row="3" Orientation="Vertical">
+        <Label x:Name="ErrorEtiketa"  Content="Odaberite bar jednu etiketu" Foreground="Red" FontSize="12" HorizontalAlignment="Left" VerticalAlignment="Center" Visibility="Collapsed"></Label>
+            <ListBox x:Name="EtiketaBox" MaxHeight="80" MinHeight="50" ItemsSource="{Binding Source={StaticResource SingletonMain}, Path=EtiketaLista}" SelectionMode="Multiple" SelectionChanged="EtiketaBox_OnSelectionChanged" Margin="0,5,0,0" proj:HelpProvider.HelpKey="spomenikDialog_etiketa">
             <ListBox.ItemTemplate>
                 <DataTemplate>
                     <StackPanel Orientation="Horizontal">
@@ -126,37 +128,41 @@
                 </DataTemplate>
             </ListBox.ItemTemplate>
         </ListBox>
-        <Button VerticalAlignment="Top" Grid.Column="2" Grid.Row="3" MaxHeight="30" Margin="5" Click="ButtonNovaEtiketa_OnClick">Nova etiketa</Button>
+        </StackPanel>
+        <Button VerticalAlignment="Top" Grid.Column="2" Grid.Row="3" MaxHeight="30" Margin="5" Click="ButtonNovaEtiketa_OnClick" proj:HelpProvider.HelpKey="etiketaDialog">Nova etiketa</Button>
 
         <Label Grid.Column="0" Grid.Row="4" Content="Tip spomenika*:"/>
-        <ComboBox x:Name="TipBox" Grid.Column="1" Grid.Row="4"  ItemsSource="{Binding Source={StaticResource SingletonMain}, Path=TipspomenikaLista}" SelectedItem="{Binding Spomenika}"/>
-        <Button Grid.Column="2" Grid.Row="4" Click="ButtonNoviTip_OnClick" Margin="5">Novi tip</Button>
+        <StackPanel Grid.Column="1" Grid.Row="4" Orientation="Vertical">
+            <Label x:Name="ErrorTip"  Content="Odaberite tip" Foreground="Red" FontSize="12" HorizontalAlignment="Left" VerticalAlignment="Center" Visibility="Collapsed"></Label>
+            <ComboBox x:Name="TipBox" ItemsSource="{Binding Source={StaticResource SingletonMain}, Path=TipspomenikaLista}" SelectedItem="{Binding Spomenika}" SelectionChanged="TipBox_OnSelectionChanged" proj:HelpProvider.HelpKey="spomenikDialog_tip" />
+        </StackPanel>
+        <Button Grid.Column="2" Grid.Row="4" Click="ButtonNoviTip_OnClick" Margin="5" proj:HelpProvider.HelpKey="tipDialog">Novi tip</Button>
 
         <Label Grid.Column="0" Grid.Row="5" Content="U naseljenom mestu? *:"/>
         <StackPanel Orientation="Horizontal" Grid.Column="1" Grid.Row="5">
-            <CheckBox IsChecked="{Binding NaseljeChecked}" Margin="0, 0 ,5px, 0"  VerticalAlignment="Center"/>
+            <CheckBox IsChecked="{Binding NaseljeChecked}" Margin="0, 0 ,5px, 0"  VerticalAlignment="Center" proj:HelpProvider.HelpKey="spomenikDialog_naselje"/>
         </StackPanel>
         
         <Label Grid.Column="0" Grid.Row="6" Content="Arheološki obrađen? *:" />
         <StackPanel Orientation="Horizontal" Grid.Column="1" Grid.Row="6">
-            <CheckBox IsChecked="{Binding AreheoChecked}" Margin="0, 0 ,5px, 0"  VerticalAlignment="Center"/>
+            <CheckBox IsChecked="{Binding AreheoChecked}" Margin="0, 0 ,5px, 0"  VerticalAlignment="Center" proj:HelpProvider.HelpKey="spomenikDialog_arheo"/>
         </StackPanel>
 
         <Label Grid.Column="0" Grid.Row="7" Content="UNESCO zasticen?*:" />
         <StackPanel Orientation="Horizontal" Grid.Column="1" Grid.Row="7">
-            <CheckBox IsChecked="{Binding UnescoChecked}" Margin="0, 0 ,5px, 0"  VerticalAlignment="Center"/>
+            <CheckBox IsChecked="{Binding UnescoChecked}" Margin="0, 0 ,5px, 0"  VerticalAlignment="Center" proj:HelpProvider.HelpKey="spomenikDialog_unesco"/>
 
         </StackPanel>
 
         <Label VerticalAlignment="Top" Grid.Column="0" Grid.Row="8"  Content="Opis: "></Label>
-        <TextBox TextWrapping="Wrap" VerticalScrollBarVisibility="Auto" x:Name="OpisBox" Text ="{Binding Path=Opis}"  Grid.Column="1" Grid.Row="8" MaxHeight="100" MinHeight="100" FontSize="14" BorderBrush="Black" VerticalAlignment="Top"/>
+        <TextBox TextWrapping="Wrap" VerticalScrollBarVisibility="Auto" x:Name="OpisBox" Text ="{Binding Path=Opis}"  Grid.Column="1" Grid.Row="8" MaxHeight="100" MinHeight="90" FontSize="14" BorderBrush="Black" VerticalAlignment="Top" proj:HelpProvider.HelpKey="spomenikDialog_opis"/>
 
         <Label Grid.Column="0" Grid.Row="9" Content="Era porekla:"/>
-        <ComboBox x:Name="EraBox"  ItemsSource="{Binding EraPorekla}" SelectedItem="{Binding Era}" Grid.Column="1" Grid.Row="9" >
+        <ComboBox x:Name="EraBox"  ItemsSource="{Binding EraPorekla}" SelectedItem="{Binding Era}" Grid.Column="1" Grid.Row="9" proj:HelpProvider.HelpKey="spomenikDialog_era" >
         </ComboBox>
 
         <Label Grid.Column="0" Grid.Row="10" Content="Turistički status:"/>
-        <ComboBox x:Name="StatusBox" ItemsSource="{Binding TuristickiStatus}" SelectedItem="{Binding Turizam}"  Grid.Column="1" Grid.Row="10"></ComboBox>
+        <ComboBox x:Name="StatusBox" ItemsSource="{Binding TuristickiStatus}" SelectedItem="{Binding Turizam}"  Grid.Column="1" Grid.Row="10" proj:HelpProvider.HelpKey="spomenikDialog_turizam"></ComboBox>
 
 
         <!-- <Label Grid.Column="0" Grid.Row="11" VerticalAlignment="Center">Ikonica:</Label>
@@ -166,7 +172,7 @@
         </StackPanel>-->
         
         <Label Grid.Column="0" Grid.Row="11" VerticalAlignment="Center">Datum otkrivanja:</Label>
-        <DatePicker  x:Name="Kalendar"  Grid.Column="1" Grid.Row="11" Height="30px" SelectedDate="{Binding DatumOtkrivanja}">
+        <DatePicker  x:Name="Kalendar"  Grid.Column="1" Grid.Row="11" Height="30px" SelectedDate="{Binding DatumOtkrivanja}" proj:HelpProvider.HelpKey="spomenikDialog_datum">
             <DatePicker.Resources>
                 <Style TargetType="DatePickerTextBox">
                     <Setter Property="IsReadOnly" Value="True"/>
@@ -184,7 +190,7 @@
 
         <StackPanel Grid.Column="2" Grid.Row="0" Grid.RowSpan="3" Orientation="Vertical">
             <Image VerticalAlignment="Top" Source="{Binding ImagePath}" MaxHeight="150" Margin="5"></Image>
-            <Button VerticalAlignment="Bottom" Margin="5" Content="Odaberi" Click="DialogButton_Click"/>
+            <Button VerticalAlignment="Bottom" Margin="5" Content="Odaberi" Click="DialogButton_Click" proj:HelpProvider.HelpKey="spomenikDialog_ikonica"/>
         </StackPanel>
 
 

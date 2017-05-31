@@ -49,9 +49,9 @@
             </DataGrid.Columns>
             <DataGrid.RowDetailsTemplate>
                 <DataTemplate>
-                    <Grid MaxWidth="380">
+                    <StackPanel MaxWidth="800">
                         <TextBlock TextWrapping="Wrap" Text="{Binding Opis}"></TextBlock>
-                    </Grid>
+                    </StackPanel>
                 </DataTemplate>
             </DataGrid.RowDetailsTemplate>
         </DataGrid>

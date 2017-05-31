@@ -163,6 +163,7 @@
                                 <Image Source="/resources/Search-30.png" Height="30"/>
                             </Button>
                         </Grid>
+                        
                         <ListView Name="SpomenikLista" PreviewMouseLeftButtonDown="ListView_PreviewMouseLeftButtonDown" PreviewMouseMove="ListView_MouseMove" MouseDoubleClick="SpomeniciLista_OnMouseDoubleClick" ItemsSource="{Binding SpomeniciView}" DockPanel.Dock="Left" MinHeight="600" MaxHeight="600">
                         <ListView.ItemTemplate>
                             <DataTemplate>

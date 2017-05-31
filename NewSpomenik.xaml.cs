@@ -299,35 +299,47 @@ namespace HCIProjekat
             {
                 //ispaljuje event na silu, jer bi inace mogao da prodje bez provere
                 if(OznakaBox.IsEnabled)
-                    OznakaBox.GetBindingExpression(TextBox.TextProperty).UpdateSource();
+                {
+                    var o = OznakaBox.GetBindingExpression(TextBox.TextProperty);
+                    if (o != null)
+                        o.UpdateSource();
+                }
 
-                ImeBox.GetBindingExpression(TextBox.TextProperty).UpdateSource();
-                PrihodBox.GetBindingExpression(TextBox.TextProperty).UpdateSource();
-                
+                var bindingExpression = ImeBox.GetBindingExpression(TextBox.TextProperty);
+                if (bindingExpression != null)
+                    bindingExpression.UpdateSource();
+                var expression = PrihodBox.GetBindingExpression(TextBox.TextProperty);
+                if (expression != null)
+                    expression.UpdateSource();
 
 
+                bool canSnimi = true;
                 if (Validation.GetHasError(ImeBox) ||
                     Validation.GetHasError(PrihodBox) || Kalendar.SelectedDate == null)
-                { 
-
-                   /* MessageBox.Show("Postoje greske u unosu. Molimo ispravite i pokusajte ponovo", "Unos neispravan",
-                        MessageBoxButton.OK, MessageBoxImage.Warning);*/
+                {
+                    canSnimi = false;
+                    /* MessageBox.Show("Postoje greske u unosu. Molimo ispravite i pokusajte ponovo", "Unos neispravan",
+                         MessageBoxButton.OK, MessageBoxImage.Warning);*/
                 } 
-                else if (Validation.GetHasError(OznakaBox) && OznakaBox.IsEnabled)
+                if (Validation.GetHasError(OznakaBox) && OznakaBox.IsEnabled)
                 {
-
+                    canSnimi = false;
                 }
-                else if (TipBox.SelectedIndex == -1)
+                if (TipBox.SelectedIndex == -1)
                 {
-                    MessageBox.Show("Postoje greske u unosu. Molimo izaberite tip spomenika", "Unos neispravan",
-                        MessageBoxButton.OK, MessageBoxImage.Warning);
+                    //MessageBox.Show("Postoje greske u unosu. Molimo izaberite tip spomenika", "Unos neispravan",
+                        //MessageBoxButton.OK, MessageBoxImage.Warning);
+                    canSnimi = false;
+                    ErrorTip.Visibility = Visibility.Visible;
                 }
-                else if (EtiketaBox.SelectedIndex == -1)
+                if (EtiketaBox.SelectedIndex == -1)
                 {
-                    MessageBox.Show("Postoje greske u unosu. Molimo izaberite bar jednu etiketu", "Unos neispravan",
-                        MessageBoxButton.OK, MessageBoxImage.Warning);
+                    canSnimi = false;
+                    ErrorEtiketa.Visibility = Visibility.Visible;
+                    EtiketaBox.BorderBrush = Brushes.Red;
+                    EtiketaBox.BorderThickness = new Thickness(2, 2, 2, 2); 
                 }
-                else
+                if(canSnimi)
                 {
                     bool unseco = _unescoChecked;
                     bool naselje = _naseljeChecked;
@@ -435,6 +447,36 @@ namespace HCIProjekat
                     HelpProvider.ShowHelp(str, this);
                 }
             }
+        }
+
+        private void EtiketaBox_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (EtiketaBox.SelectedItems.Count == 0)
+            {
+                ErrorEtiketa.Visibility = Visibility.Visible;
+                EtiketaBox.BorderBrush = Brushes.Red;
+                EtiketaBox.BorderThickness = new Thickness(2, 2, 2, 2); 
+            }
+            else
+            {
+                ErrorEtiketa.Visibility = Visibility.Collapsed;
+                EtiketaBox.BorderBrush = Brushes.Gray;
+                EtiketaBox.BorderThickness = new Thickness(1); 
+            }
+        }
+
+        private void TipBox_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (TipBox.SelectedIndex == -1)
+            {
+                ErrorTip.Visibility = Visibility.Visible;
+            }
+            else
+            {
+                ErrorTip.Visibility = Visibility.Collapsed;
+            }
+
+           
         }
 
     }

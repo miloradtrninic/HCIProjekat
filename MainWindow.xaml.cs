@@ -45,7 +45,7 @@ namespace HCIProjekat
             _spomeniciMapaView = new CollectionViewSource { Source = Main.GetInstance().SpomenikMapas }.View;
 
             InitializeComponent();
-            _zoomValue = 0.3;
+            _zoomValue = 0.29;
             ScaleTransform scale = new ScaleTransform(_zoomValue, _zoomValue);
             MapViewbox.LayoutTransform = scale;
 
@@ -482,7 +482,7 @@ namespace HCIProjekat
             {
                 _zoomValue += 0.1;
             }
-            else if (_zoomValue > 0.3)
+            else if (_zoomValue > 0.29)
             {
                 _zoomValue -= 0.1;
             }
@@ -501,7 +501,7 @@ namespace HCIProjekat
         }
         private void Zoom_Out_Click(object sender, RoutedEventArgs e)
         {
-            if (_zoomValue > 0.3)
+            if (_zoomValue > 0.29)
             {
                 _zoomValue -= 0.1;
                 ScaleTransform scale = new ScaleTransform(_zoomValue, _zoomValue);
@@ -510,7 +510,7 @@ namespace HCIProjekat
         }
         private void AcctualSizeZoom_Click(object sender, RoutedEventArgs e)
         {
-            _zoomValue = 0.3;
+            _zoomValue = 0.29;
             ScaleTransform scale = new ScaleTransform(_zoomValue, _zoomValue);
             MapViewbox.LayoutTransform = scale;
         }

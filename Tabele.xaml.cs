@@ -18,9 +18,10 @@ namespace HCIProjekat
         {
             _tipoView = new CollectionViewSource {Source = Main.GetInstance().TipspomenikaLista}.View;
             _etiketeView = new CollectionViewSource { Source = Main.GetInstance().EtiketaLista }.View;
-
+            
             InitializeComponent();
             EtiketeFilter.SelectedIndex = -1;
+        
             TipoviFilter.SelectedIndex = -1;
             this.DataContext = this;
            
@@ -75,36 +76,42 @@ namespace HCIProjekat
         {
             var contentTabele = (SpomeniciTabela)SpomeniciFrame.Content;
             ICollectionView viewSpomenika = contentTabele.View;
-            viewSpomenika.Filter += o =>
-            {
-                Spomenik spomenik = o as Spomenik;
-                bool filterTip = TipoviFilter.SelectedItem != null;
-                bool filterEtiketa = EtiketeFilter.SelectedItem != null;
-
-                if (filterTip && !filterEtiketa)
-                {
-                    return spomenik != null &&
-                           spomenik.Tip.Oznaka.Equals(((TipSpomenika) TipoviFilter.SelectedItem).Oznaka);
-                }
-                if (!filterTip && filterEtiketa)
-                {
-                    return spomenik != null &&
-                           spomenik.Etikete.Contains((Etiketa) EtiketeFilter.SelectedItem);
-                }
-                if (filterTip && filterEtiketa)
-                {
-                    return spomenik != null && spomenik.Etikete.Contains((Etiketa) EtiketeFilter.SelectedItem) &&
-                           spomenik.Tip.Oznaka.Equals(((TipSpomenika) TipoviFilter.SelectedItem).Oznaka);
-                }
-
-                return false;
-            };
+            viewSpomenika.Filter += Filter;
+            viewSpomenika.Refresh();
         }
+        public bool Filter(object o)
+        {
+            Spomenik spomenik = o as Spomenik;
+            bool filterEtiketa = EtiketeEnabled.IsChecked != null && EtiketeEnabled.IsChecked.Value;
+            bool filterTip = TipoviEnabled.IsChecked != null && TipoviEnabled.IsChecked.Value;
+            var contentTabele = (SpomeniciTabela)SpomeniciFrame.Content;
+            if (filterTip && !filterEtiketa)
+            {
+                var tipSpomenika = TipoviFilter.SelectedItem as TipSpomenika;
+                return tipSpomenika != null && spomenik != null && spomenik.Tip.Oznaka.Equals(tipSpomenika.Oznaka) && contentTabele.Filter(o);
+            }
+            if (!filterTip && filterEtiketa)
+            {
+                var etiketeFilterSelectedItem = (Etiketa)EtiketeFilter.SelectedItem;
+                return etiketeFilterSelectedItem != null && spomenik != null && spomenik.Etikete.Contains(etiketeFilterSelectedItem) && contentTabele.Filter(o);
+            }
+            if (filterTip && filterEtiketa)
+            {
+                var etiketeFilterSelectedItem = (Etiketa)EtiketeFilter.SelectedItem;
+                var tipoviFilterSelectedItem = (TipSpomenika)TipoviFilter.SelectedItem;
+                return etiketeFilterSelectedItem != null && tipoviFilterSelectedItem != null && spomenik != null && spomenik.Etikete.Contains(etiketeFilterSelectedItem) &&
+                                                                                                  spomenik.Tip.Oznaka.Equals(tipoviFilterSelectedItem.Oznaka) && contentTabele.Filter(o);
+            }
+            return contentTabele.Filter(o);
+        }
+
+
         private void DeFiltriraj_Spomenike_OnClick(object sender, RoutedEventArgs e)
         {
             var contentTabele = (SpomeniciTabela)SpomeniciFrame.Content;
             ICollectionView viewSpomenika = contentTabele.View;
-            viewSpomenika.Filter += o => { return true; };
+            viewSpomenika.Filter += o => contentTabele.Filter(o);
+            viewSpomenika.Refresh();
         }
         private void ButtonNewTip_OnClick(object sender, RoutedEventArgs e)
         {

@@ -50,27 +50,32 @@
                             <Button Click="ButtonNewSpomenik_OnClick">
                                 <StackPanel Orientation="Horizontal">
                                     <Image Width="30" Source="resources/AddGreen-50.png"></Image>
-                                    <TextBlock VerticalAlignment="Center">Dodaj spomenik</TextBlock>
+                                    <TextBlock VerticalAlignment="Center">Dodaj</TextBlock>
                                 </StackPanel>
                             </Button>
                             <Button Click="ButtonIzmeniSpomenik_OnClick">
                                 <StackPanel Orientation="Horizontal">
                                     <Image Width="30" Source="resources/Edit FilledGreen-50.png"></Image>
-                                    <TextBlock VerticalAlignment="Center">Izmeni spomenik</TextBlock>
+                                    <TextBlock VerticalAlignment="Center">Izmeni</TextBlock>
                                 </StackPanel>
                             </Button>
                             <Button Click="ButtonObrisiSpomenik_OnClick">
                                 <StackPanel Orientation="Horizontal">
                                     <Image Width="30" Source="resources/DeleteFilledGreen-50.png"></Image>
-                                    <TextBlock VerticalAlignment="Center">Obrši spomenik</TextBlock>
+                                    <TextBlock VerticalAlignment="Center">Obrši</TextBlock>
                                 </StackPanel>
                             </Button>
                         </ToolBar>
                         <ToolBar>
-                            <TextBlock VerticalAlignment="Center">Tipovi:</TextBlock>
-                            <ComboBox x:Name="TipoviFilter"  ItemsSource="{Binding TipoView}" Width="100" SelectedIndex="-1"></ComboBox>
-                            <TextBlock VerticalAlignment="Center">Etikete:</TextBlock>
-                            <ComboBox x:Name="EtiketeFilter" ItemsSource="{Binding EtiketeView}" Width="100" SelectedIndex="-1">
+                            <Label Content="Tipovi:"></Label>
+                            <StackPanel Orientation="Horizontal">
+                                <CheckBox x:Name="TipoviEnabled" IsChecked="False" VerticalAlignment="Center" HorizontalAlignment="Center"></CheckBox>
+                                <ComboBox x:Name="TipoviFilter"  ItemsSource="{Binding TipoView}" Width="170"></ComboBox>
+                            </StackPanel>
+                            <Label Content="Etikete:"></Label>
+                            <StackPanel Orientation="Horizontal">
+                                <CheckBox x:Name="EtiketeEnabled" IsChecked="False" VerticalAlignment="Center" HorizontalAlignment="Center"></CheckBox>
+                                <ComboBox x:Name="EtiketeFilter" ItemsSource="{Binding EtiketeView}" Width="170">
                                 <ComboBox.ItemTemplate>
                                     <DataTemplate>
                                         <StackPanel Orientation="Horizontal">
@@ -80,6 +85,7 @@
                                     </DataTemplate>
                                 </ComboBox.ItemTemplate>
                             </ComboBox>
+                            </StackPanel>
                             <ToggleButton x:Name="FilterButton" Checked="Filtriraj_Spomenike_OnClick" Unchecked="DeFiltriraj_Spomenike_OnClick">
                                 <StackPanel Orientation="Horizontal">
                                     <Image Width="30" Source="resources/FilterGreen-48.png"></Image>
